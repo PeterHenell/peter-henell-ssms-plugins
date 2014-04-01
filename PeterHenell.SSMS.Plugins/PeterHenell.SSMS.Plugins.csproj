@@ -92,14 +92,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConnectionManager.cs" />
-    <Compile Include="Menu.cs" />
+    <Compile Include="DataAccess\ConnectionManager.cs" />
+    <Compile Include="DataAccess\DbTypeConverter.cs" />
+    <Compile Include="ExtensionMethods\TableBuilderExtensions.cs" />
+    <Compile Include="Shell\Menu.cs" />
     <Compile Include="Extension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TempTablesFromSelectionCommand.cs" />
-    <Compile Include="ShellManager.cs" />
-    <Compile Include="SQLBuilder.cs" />
-    <Compile Include="Submenu.cs" />
+    <Compile Include="Commands\TempTablesFromSelectionCommand.cs" />
+    <Compile Include="Shell\ShellManager.cs" />
+    <Compile Include="DataAccess\DatabaseQueryManager.cs" />
+    <Compile Include="Shell\Submenu.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ExampleKey.snk" />

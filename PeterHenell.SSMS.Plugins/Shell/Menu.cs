@@ -1,6 +1,6 @@
 ﻿using RedGate.SIPFrameworkShared;
 
-namespace PeterHenell.SSMS.Plugins
+namespace PeterHenell.SSMS.Plugins.Shell
 {
     public class Menu : ActionSimpleOeMenuItemBase
     {

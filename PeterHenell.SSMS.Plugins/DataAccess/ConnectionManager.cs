@@ -4,7 +4,7 @@ using Microsoft.SqlServer.Management.UI.VSIntegration.Editors;
 using System;
 using System.Data.SqlClient;
 
-namespace PeterHenell.SSMS.Plugins
+namespace PeterHenell.SSMS.Plugins.DataAccess
 {
     class ConnectionManager
     {

@@ -1,5 +1,7 @@
 ﻿using System;
 using RedGate.SIPFrameworkShared;
+using PeterHenell.SSMS.Plugins.Shell;
+using PeterHenell.SSMS.Plugins.Commands;
 
 namespace PeterHenell.SSMS.Plugins
 {

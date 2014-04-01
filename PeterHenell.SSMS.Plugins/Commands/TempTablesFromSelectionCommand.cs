@@ -1,19 +1,24 @@
-﻿using RedGate.SIPFrameworkShared;
+﻿using PeterHenell.SSMS.Plugins.DataAccess;
+using PeterHenell.SSMS.Plugins.Shell;
+using RedGate.SIPFrameworkShared;
+using System;
 using System.Windows.Forms;
 
-namespace PeterHenell.SSMS.Plugins
+namespace PeterHenell.SSMS.Plugins.Commands
 {
     public class TempTablesFromSelectionCommand : ISharedCommandWithExecuteParameter
     {
         public readonly static string COMMAND_NAME = "GenerateTempTablesFromSelectedQuery_Command";
         
         private readonly ISsmsFunctionalityProvider4 provider;
+        ShellManager shellManager;
         private readonly ICommandImage m_CommandImage = new CommandImageNone();
-        
+
 
         public TempTablesFromSelectionCommand(ISsmsFunctionalityProvider4 provider)
         {
-            this.provider = provider;           
+            this.provider = provider;
+            this.shellManager = new ShellManager(provider);
         }
 
         
@@ -24,18 +29,16 @@ namespace PeterHenell.SSMS.Plugins
 
         private void PerformCommand()
         {
-            var editPoint = ShellManager.GetEditPointAtBottomOfSelection(provider);
-            var currentWindow = provider.GetQueryWindowManager();
-            var contents = currentWindow.GetActiveAugmentedQueryWindowContents();
-
-            if (editPoint == null || string.IsNullOrEmpty(contents) || string.IsNullOrWhiteSpace(contents))
+            try
             {
-                MessageBox.Show("Select the query you wish to generate temporary tables for and then run the command again.");
-                return;
+                string selectedText = shellManager.GetSelectedText();
+                string tempTableDefinitions = DatabaseQueryManager.CreateTempTablesFromQueryResult(selectedText);
+                shellManager.AddTextToEndOfSelection(tempTableDefinitions);
             }
-
-            string tempTableDefinitions = SQLBuilder.CreateTempTablesFromQueryResult(contents);
-            editPoint.Insert("\n" + tempTableDefinitions);
+            catch (System.Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
 
