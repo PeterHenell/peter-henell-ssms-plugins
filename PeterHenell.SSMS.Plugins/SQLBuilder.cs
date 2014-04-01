@@ -1,15 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Text;
 
 namespace PeterHenell.SSMS.Plugins
 {
     class SQLBuilder
     {
-        internal static void CreateTemporaryTablesFromQueries(StringBuilder sb, string input)
+        internal static string CreateTempTablesFromQueryResult(string input)
+        {
+            var sb = new StringBuilder();
+
+            try
+            {
+                SQLBuilder.CreateTemporaryTablesFromQueries(sb, input);
+            }
+            catch (Exception ex)
+            {
+                sb.AppendLine(" ... ");
+                sb.AppendFormat("An error occured during generation: [{0}]", ex.ToString());
+            }
+
+            return sb.ToString();
+        }
+
+        private static void CreateTemporaryTablesFromQueries(StringBuilder sb, string input)
         {
             var connectionString = ConnectionManager.GetConnectionStringForCurrentWindow();
 

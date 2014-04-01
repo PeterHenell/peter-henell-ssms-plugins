@@ -22,11 +22,11 @@ namespace PeterHenell.SSMS.Plugins
                 new Menu("Command 1", m_Provider4)
             };
 
-            m_Provider4.AddGlobalCommand(new SharedCommand(m_Provider4));
+            m_Provider4.AddGlobalCommand(new TempTablesFromSelectionCommand(m_Provider4));
 
             m_Provider4.MenuBar.MainMenu.BeginSubmenu("Peter Henell", "Peter Henell")
                 .BeginSubmenu("Code Generation", "Code Generation")
-                .AddCommand("GenerateTempTablesFromSelectedQuery_Command")
+                .AddCommand(TempTablesFromSelectionCommand.COMMAND_NAME)
                 .EndSubmenu();
 
             m_Provider4.AddTopLevelMenuItem(new Submenu(subMenus));
