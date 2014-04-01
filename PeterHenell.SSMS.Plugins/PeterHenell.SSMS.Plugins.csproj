@@ -92,10 +92,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConnectionManager.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Extension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SharedCommand.cs" />
+    <Compile Include="SQLBuilder.cs" />
     <Compile Include="Submenu.cs" />
   </ItemGroup>
   <ItemGroup>

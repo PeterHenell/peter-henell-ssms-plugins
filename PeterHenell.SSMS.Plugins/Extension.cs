@@ -1,7 +1,7 @@
 ﻿using System;
 using RedGate.SIPFrameworkShared;
 
-namespace SampleSsmsEcosystemAddin
+namespace PeterHenell.SSMS.Plugins
 {
     public class Extension : ISsmsAddin
     {

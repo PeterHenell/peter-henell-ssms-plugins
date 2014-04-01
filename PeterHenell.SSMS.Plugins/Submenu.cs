@@ -1,6 +1,6 @@
 ﻿using RedGate.SIPFrameworkShared;
 
-namespace SampleSsmsEcosystemAddin
+namespace PeterHenell.SSMS.Plugins
 {
     class Submenu : SubmenuSimpleOeMenuItemBase
     {
