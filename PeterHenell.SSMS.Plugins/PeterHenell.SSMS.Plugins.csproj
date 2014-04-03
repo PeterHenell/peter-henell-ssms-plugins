@@ -92,6 +92,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Commands\DecompressResultCommand.cs" />
+    <Compile Include="Commands\ParseTraceResultTextCommand.cs" />
     <Compile Include="DataAccess\ConnectionManager.cs" />
     <Compile Include="DataAccess\DbTypeConverter.cs" />
     <Compile Include="ExtensionMethods\TableBuilderExtensions.cs" />
@@ -102,6 +104,8 @@
     <Compile Include="Shell\ShellManager.cs" />
     <Compile Include="DataAccess\DatabaseQueryManager.cs" />
     <Compile Include="Shell\Submenu.cs" />
+    <Compile Include="Utils\GZipManager.cs" />
+    <Compile Include="Utils\NotepadHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ExampleKey.snk" />

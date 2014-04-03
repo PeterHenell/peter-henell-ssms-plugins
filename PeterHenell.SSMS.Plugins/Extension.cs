@@ -25,10 +25,12 @@ namespace PeterHenell.SSMS.Plugins
             };
 
             m_Provider4.AddGlobalCommand(new TempTablesFromSelectionCommand(m_Provider4));
+            m_Provider4.AddGlobalCommand(new DecompressResultCommand(m_Provider4));
 
             m_Provider4.MenuBar.MainMenu.BeginSubmenu("Peter Henell", "Peter Henell")
                 .BeginSubmenu("Code Generation", "Code Generation")
                 .AddCommand(TempTablesFromSelectionCommand.COMMAND_NAME)
+                .AddCommand(DecompressResultCommand.COMMAND_NAME)
                 .EndSubmenu();
 
             m_Provider4.AddTopLevelMenuItem(new Submenu(subMenus));

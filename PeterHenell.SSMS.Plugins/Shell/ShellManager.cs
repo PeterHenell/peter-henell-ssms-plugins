@@ -35,10 +35,10 @@ namespace PeterHenell.SSMS.Plugins.Shell
             return null;
         }
 
-        internal  void AddTextToEndOfSelection(string tempTableDefinitions)
+        internal  void AddTextToEndOfSelection(string text)
         {
             var editPoint = GetEditPointAtBottomOfSelection();
-            editPoint.Insert("\n" + tempTableDefinitions);
+            editPoint.Insert(Environment.NewLine + text);
         }
 
         internal  string GetSelectedText()
