@@ -34,6 +34,21 @@ namespace PeterHenell.SSMS.Plugins.Shell
             }
             return null;
         }
+        internal EditPoint GetEditPointAtTopOfSelection()
+        {
+            DTE2 a = (DTE2)provider.SsmsDte2;
+            Document document = a.ActiveDocument;
+            if (document != null)
+            {
+                // find the selected text, and return the edit point at the bottom of it.
+                TextSelection selection = document.Selection as TextSelection;
+                if (selection == null)
+                    return null;
+
+                return selection.TopPoint.CreateEditPoint();
+            }
+            return null;
+        }
 
         internal  void AddTextToEndOfSelection(string text)
         {
@@ -41,7 +56,7 @@ namespace PeterHenell.SSMS.Plugins.Shell
             editPoint.Insert(Environment.NewLine + text);
         }
 
-        internal  string GetSelectedText()
+        internal  string GetSelectedQuery()
         {
             var currentWindow = provider.GetQueryWindowManager();
             var selectedText = "";
@@ -60,6 +75,12 @@ namespace PeterHenell.SSMS.Plugins.Shell
                 throw new Exception("There is no selection made. Select one or more queries, then try running again.");
             }
             return selectedText;
+        }
+
+        internal void AddTextToTopOfSelection(string text)
+        {
+            var editPoint = GetEditPointAtTopOfSelection();
+            editPoint.Insert(text + Environment.NewLine);
         }
     }
 }

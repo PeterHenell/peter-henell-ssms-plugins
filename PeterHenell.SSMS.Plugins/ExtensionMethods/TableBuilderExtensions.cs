@@ -43,6 +43,19 @@ namespace PeterHenell.SSMS.Plugins.ExtensionMethods
                 sb.AppendLine();
             }
         }
+        public static void AppendColumnNameList(this StringBuilder sb, DataTable dt)
+        {
+            int columnCount = 1;
+            foreach (DataColumn col in dt.Columns)
+            {
+                sb.AppendFormat("\t[{0}]", col.ColumnName);
+
+                if (columnCount++ < dt.Columns.Count)
+                    sb.Append(",");
+
+                sb.AppendLine();
+            }
+        }
 
     }
 }

@@ -10,28 +10,24 @@ namespace PeterHenell.SSMS.Plugins.DataAccess
 {
     class DatabaseQueryManager
     {
-        internal static string CreateTempTablesFromQueryResult(string sqlQuery)
-        {
-            try
-            {
-                var sb = new StringBuilder();
-                CreateTemporaryTablesFromQueries(sb, sqlQuery);
-                return sb.ToString();
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(string.Format("An error occured during generation: [{0}]", ex.Message));
-            }
-        }
+        //internal static string CreateTempTablesFromQueryResult(string sqlQuery)
+        //{
+        //    try
+        //    {
+        //        var sb = new StringBuilder();
+        //        CreateTemporaryTablesFromQueries(sb, sqlQuery);
+        //        return sb.ToString();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception(string.Format("An error occured during generation: [{0}]", ex.Message));
+        //    }
+        //}
 
-        private static void CreateTemporaryTablesFromQueries(StringBuilder sb, string sqlQuery)
-        {
-            using (var ds = new DataSet())
-            {
-                ExecuteQuery(string.Format("SET ROWCOUNT 1; {0}", sqlQuery), ds);
-                sb.AppendTempTablesFor(ds);
-            }
-        }
+        //private static void CreateTemporaryTablesFromQueries(StringBuilder sb, string sqlQuery)
+        //{
+           
+        //}
 
         /// <summary>
         /// Fills a dataset by executing the supplied command in the current window connection
