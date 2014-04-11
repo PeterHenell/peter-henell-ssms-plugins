@@ -25,7 +25,9 @@ namespace PeterHenell.SSMS.Plugins.DataAccess
                 case SqlDbType.DateTime:
                     return SqlDbType.DateTime2.ToString();
                 case SqlDbType.Decimal:
-                    return dbt.ToString() + "(19,6)";
+                    return dbt.ToString() + "(30,6)";
+                case SqlDbType.VarBinary:
+                    return dbt.ToString() + "(max)";
                 default:
                     return dbt.ToString();
             }
@@ -39,9 +41,13 @@ namespace PeterHenell.SSMS.Plugins.DataAccess
         /// <returns></returns>
         private static SqlDbType GetDBType(System.Type theType)
         {
+            if (theType == typeof(byte[]))
+            {
+                return SqlDbType.VarBinary;
+            }
+            
             var p1 = new System.Data.SqlClient.SqlParameter();
             var tc = System.ComponentModel.TypeDescriptor.GetConverter(p1.DbType);
-
             if (tc.CanConvertFrom(theType))
             {
                 p1.DbType = (DbType)tc.ConvertFrom(theType.Name);

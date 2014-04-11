@@ -19,10 +19,10 @@ namespace PeterHenell.SSMS.Plugins
             if(m_Provider4 == null)
                 throw new ArgumentException();
 
-            var subMenus = new SimpleOeMenuItemBase[]
-            {
-                new Menu("Command 1", m_Provider4)
-            };
+            //var subMenus = new SimpleOeMenuItemBase[]
+            //{
+            //    new Menu("Command 1", m_Provider4)
+            //};
 
             m_Provider4.AddGlobalCommand(new TempTablesFromSelectionCommand(m_Provider4));
             m_Provider4.AddGlobalCommand(new DecompressResultCommand(m_Provider4));
@@ -33,7 +33,7 @@ namespace PeterHenell.SSMS.Plugins
                 .AddCommand(DecompressResultCommand.COMMAND_NAME)
                 .EndSubmenu();
 
-            m_Provider4.AddTopLevelMenuItem(new Submenu(subMenus));
+           // m_Provider4.AddTopLevelMenuItem(new Submenu(subMenus));
         }
 
         public void OnNodeChanged(ObjectExplorerNodeDescriptorBase node)
