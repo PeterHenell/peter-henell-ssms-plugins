@@ -38,6 +38,7 @@ namespace PeterHenell.SSMS.Plugins.Shell
         {
             DTE2 a = (DTE2)provider.SsmsDte2;
             Document document = a.ActiveDocument;
+            
             if (document != null)
             {
                 // find the selected text, and return the edit point at the bottom of it.
@@ -47,13 +48,14 @@ namespace PeterHenell.SSMS.Plugins.Shell
 
                 return selection.TopPoint.CreateEditPoint();
             }
-            return null;
+            return null;            
         }
 
         internal  void AddTextToEndOfSelection(string text)
         {
             var editPoint = GetEditPointAtBottomOfSelection();
             editPoint.Insert(Environment.NewLine + text);
+            
         }
 
         internal  string GetSelectedQuery()
