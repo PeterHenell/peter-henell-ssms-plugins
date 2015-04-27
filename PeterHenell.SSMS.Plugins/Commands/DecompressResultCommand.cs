@@ -73,5 +73,6 @@ namespace PeterHenell.SSMS.Plugins.Commands
         {
 
         }
+
     }
 }

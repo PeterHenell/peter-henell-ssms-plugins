@@ -78,5 +78,9 @@ namespace PeterHenell.SSMS.Plugins.Commands
         {
             
         }
+
+        public void SetSelectedDBNode(ObjectExplorerNodeDescriptorBase theSelectedNode)
+        {
+        }
     }
 }

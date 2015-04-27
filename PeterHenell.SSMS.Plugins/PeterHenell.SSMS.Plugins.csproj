@@ -78,13 +78,14 @@
       <HintPath>..\ReferencedDlls\RedGate.SIPFrameworkShared.dll</HintPath>
     </Reference>
     <Reference Include="SqlPackageBase">
-      <HintPath>..\..\..\..\Program Files (x86)\Microsoft SQL Server\110\Tools\Binn\ManagementStudio\SqlPackageBase.dll</HintPath>
+      <HintPath>..\ReferencedDlls\SqlPackageBase.dll</HintPath>
     </Reference>
     <Reference Include="SqlWorkbench.Interfaces">
-      <HintPath>..\..\..\..\Program Files (x86)\Microsoft SQL Server\110\Tools\Binn\ManagementStudio\SqlWorkbench.Interfaces.dll</HintPath>
+      <HintPath>..\ReferencedDlls\SqlWorkbench.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -93,10 +94,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\DecompressResultCommand.cs" />
+    <Compile Include="Commands\GenerateInsertStatementCommand.cs" />
     <Compile Include="Commands\ParseTraceResultTextCommand.cs" />
     <Compile Include="DataAccess\ConnectionManager.cs" />
     <Compile Include="DataAccess\DbTypeConverter.cs" />
     <Compile Include="ExtensionMethods\TableBuilderExtensions.cs" />
+    <Compile Include="Forms\InputSingleValueForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\InputSingleValueForm.Designer.cs">
+      <DependentUpon>InputSingleValueForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Shell\Menu.cs" />
     <Compile Include="Extension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -104,11 +112,18 @@
     <Compile Include="Shell\ShellManager.cs" />
     <Compile Include="DataAccess\DatabaseQueryManager.cs" />
     <Compile Include="Shell\Submenu.cs" />
+    <Compile Include="Utils\DialogManager.cs" />
     <Compile Include="Utils\GZipManager.cs" />
+    <Compile Include="Utils\NodeManager.cs" />
     <Compile Include="Utils\NotepadHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ExampleKey.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Forms\InputSingleValueForm.resx">
+      <DependentUpon>InputSingleValueForm.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
