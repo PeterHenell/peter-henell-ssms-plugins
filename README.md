@@ -10,8 +10,8 @@ You should create the registry entry in either:
 * 32-bit machines: HKEY_LOCAL_MACHINE\SOFTWARE\Red Gate\SIPFramework\Plugins
 * 64-bit machines: HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Red Gate\SIPFramework\Plugins
 
-Create a new String Value (REG_SZ) with a unique name and set the value to the path of the sample's SampleSsmsEcosystemAddin.dll.
+Create a new String Value (REG_SZ) with a unique name and set the value to the path of the plugin.
 
-For example: C:\Users\david\Documents\SampleSsmsEcosystemAddin\SampleSsmsEcosystemAddin\bin\Debug\SampleSsmsEcosystemAddin.dll
+For example: C:\CoolSoftware\PeterHenell.SSMS.Plugins.dll
 
-Now start SSMS and confirm that the plugin have been loaded.
+Now start SSMS and verify that the plugin have been loaded.
