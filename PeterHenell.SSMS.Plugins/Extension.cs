@@ -32,17 +32,8 @@ namespace PeterHenell.SSMS.Plugins
             // STEP 1: Add command to the provider
             foreach (var command in commands)
             {
-                //var c = command as IDBNodeSelectable;
-                //if (c != null)
-                //{
-                //    c.SetSelectedDBNode(currentNode);
-                //}
-
                 m_Provider4.AddGlobalCommand(command);
             }
-
-
-            //m_Provider4.AddGlobalCommand(insertCommand);
 
             // STEP 2: Add command to menu
             m_Provider4.MenuBar.MainMenu.BeginSubmenu("Peter Henell", "Peter Henell")
@@ -51,8 +42,6 @@ namespace PeterHenell.SSMS.Plugins
                 .AddCommand(DecompressResultCommand.COMMAND_NAME)
                 .AddCommand(GenerateInsertStatementCommand.COMMAND_NAME)
                 .EndSubmenu();
-
-            // m_Provider4.AddTopLevelMenuItem(new Submenu(subMenus));
         }
 
         public void OnNodeChanged(ObjectExplorerNodeDescriptorBase node)
@@ -60,6 +49,9 @@ namespace PeterHenell.SSMS.Plugins
             NodeManager.CurrentNode = node;
         }
 
-        public string Version { get { return "Peter Henell SSMS Plugins 2015 1.1"; } }
+        public string Version { get { return "Peter Henell SSMS Plugins 2015 1.1.0"; } }
+        public string Author { get { return "Peter Henell"; } }
+        public string URL { get { return "https://github.com/PeterHenell/peter-henell-ssms-plugins"; } }
+
     }
 }
