@@ -14,3 +14,4 @@ Create a new String Value (REG_SZ) with a unique name and set the value to the p
 
 For example: C:\Users\david\Documents\SampleSsmsEcosystemAddin\SampleSsmsEcosystemAddin\bin\Debug\SampleSsmsEcosystemAddin.dll
 
+Now start SSMS and confirm that the plugin have been loaded.
