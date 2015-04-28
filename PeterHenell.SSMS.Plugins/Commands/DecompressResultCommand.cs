@@ -53,7 +53,8 @@ namespace PeterHenell.SSMS.Plugins.Commands
                     errorCount++;
             });
 
-            DataAccess.DatabaseQueryManager.ExecuteQuery(selectedText, dataReaderCallback);
+            var queryManager = new DatabaseQueryManager(ConnectionManager.GetConnectionStringForCurrentWindow());
+            queryManager.ExecuteQuery(selectedText, dataReaderCallback);
 
             if (errorCount > 0)
                 MessageBox.Show("Processed results with some errors, some of the rows contain non-64base strings. The successfull results will be displayed.");

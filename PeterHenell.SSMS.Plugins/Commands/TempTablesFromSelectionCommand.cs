@@ -12,7 +12,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
     public class TempTablesFromSelectionCommand : ISharedCommandWithExecuteParameter
     {
         public readonly static string COMMAND_NAME = "GenerateTempTablesFromSelectedQuery_Command";
-        
+
         private readonly ISsmsFunctionalityProvider4 provider;
         ShellManager shellManager;
         private readonly ICommandImage m_CommandImage = new CommandImageNone();
@@ -24,7 +24,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
             this.shellManager = new ShellManager(provider);
         }
 
-        
+
         public void Execute(object parameter)
         {
             PerformCommand();
@@ -38,7 +38,8 @@ namespace PeterHenell.SSMS.Plugins.Commands
                 var sb = new StringBuilder();
                 using (var ds = new DataSet())
                 {
-                    DatabaseQueryManager.ExecuteQuery(string.Format("SET ROWCOUNT 1; {0}", selectedText), ds);
+                    var queryManager = new DatabaseQueryManager(ConnectionManager.GetConnectionStringForCurrentWindow());
+                    queryManager.ExecuteQuery(string.Format("SET ROWCOUNT 1; {0}", selectedText), ds);
                     sb.AppendTempTablesFor(ds);
 
                     if (ds.Tables.Count == 1)
@@ -46,7 +47,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
                         sb.Append("INSERT INTO #temp1");
 
                         shellManager.AddTextToTopOfSelection(sb.ToString());
-                        
+
                         sb.Clear();
                         sb.AppendColumnNameList(ds.Tables[0]);
                         shellManager.AddTextToEndOfSelection(
@@ -66,9 +67,9 @@ namespace PeterHenell.SSMS.Plugins.Commands
         }
 
 
-        public string Name { get { return COMMAND_NAME ; } }
+        public string Name { get { return COMMAND_NAME; } }
         public string Caption { get { return "Generate Temp Tables From Selected Queries"; } }
-        public string Tooltip { get { return "Select a query, the result will be fitted into a generated temporary table."; }}
+        public string Tooltip { get { return "Select a query, the result will be fitted into a generated temporary table."; } }
         public ICommandImage Icon { get { return m_CommandImage; } }
         public string[] DefaultBindings { get { return new[] { "global::Ctrl+Alt+D" }; } }
         public bool Visible { get { return true; } }
@@ -76,7 +77,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
 
         public void Execute()
         {
-            
+
         }
 
         public void SetSelectedDBNode(ObjectExplorerNodeDescriptorBase theSelectedNode)

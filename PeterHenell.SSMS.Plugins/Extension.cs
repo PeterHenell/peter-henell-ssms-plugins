@@ -4,6 +4,7 @@ using PeterHenell.SSMS.Plugins.Shell;
 using PeterHenell.SSMS.Plugins.Commands;
 using System.Collections.Generic;
 using PeterHenell.SSMS.Plugins.Utils;
+using System.Windows.Forms;
 
 namespace PeterHenell.SSMS.Plugins
 {
@@ -11,7 +12,6 @@ namespace PeterHenell.SSMS.Plugins
     {
         private ISsmsFunctionalityProvider4 m_Provider4;
         private object m_Dte2;
-        private ObjectExplorerNodeDescriptorBase currentNode;
 
         List<ISharedCommandWithExecuteParameter> commands = new List<ISharedCommandWithExecuteParameter>();
 
@@ -28,6 +28,7 @@ namespace PeterHenell.SSMS.Plugins
             commands.Add(new TempTablesFromSelectionCommand(m_Provider4));
             commands.Add(new DecompressResultCommand(m_Provider4));
             commands.Add(new GenerateInsertStatementCommand(m_Provider4));
+            commands.Add(new MockAndInsertCommand(m_Provider4));
 
             // STEP 1: Add command to the provider
             foreach (var command in commands)
@@ -41,7 +42,8 @@ namespace PeterHenell.SSMS.Plugins
                 .AddCommand(TempTablesFromSelectionCommand.COMMAND_NAME)
                 .AddCommand(DecompressResultCommand.COMMAND_NAME)
                 .AddCommand(GenerateInsertStatementCommand.COMMAND_NAME)
-                .EndSubmenu();
+                .AddCommand(MockAndInsertCommand.COMMAND_NAME)
+                .EndSubmenu().EndSubmenu();
         }
 
         public void OnNodeChanged(ObjectExplorerNodeDescriptorBase node)
@@ -50,8 +52,8 @@ namespace PeterHenell.SSMS.Plugins
         }
 
         public string Version { get { return "Peter Henell SSMS Plugins 2015 1.1.0"; } }
-        public string Author { get { return "Peter Henell"; } }
-        public string URL { get { return "https://github.com/PeterHenell/peter-henell-ssms-plugins"; } }
+        //public string Author { get { return "Peter Henell"; } }
+        //public string URL { get { return "https://github.com/PeterHenell/peter-henell-ssms-plugins"; } }
 
     }
 }

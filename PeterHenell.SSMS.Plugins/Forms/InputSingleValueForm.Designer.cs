@@ -81,6 +81,7 @@
             this.Controls.Add(this.cancel_button);
             this.Controls.Add(this.ok_button);
             this.Name = "InputSingleValueForm";
+            this.Shown += new System.EventHandler(this.InputSingleValueForm_Shown);
             this.ResumeLayout(false);
             this.PerformLayout();
 

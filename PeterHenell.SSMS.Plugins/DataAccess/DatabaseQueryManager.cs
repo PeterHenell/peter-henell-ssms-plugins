@@ -10,24 +10,13 @@ namespace PeterHenell.SSMS.Plugins.DataAccess
 {
     class DatabaseQueryManager
     {
-        //internal static string CreateTempTablesFromQueryResult(string sqlQuery)
-        //{
-        //    try
-        //    {
-        //        var sb = new StringBuilder();
-        //        CreateTemporaryTablesFromQueries(sb, sqlQuery);
-        //        return sb.ToString();
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new Exception(string.Format("An error occured during generation: [{0}]", ex.Message));
-        //    }
-        //}
+        private string connectionString;
 
-        //private static void CreateTemporaryTablesFromQueries(StringBuilder sb, string sqlQuery)
-        //{
-           
-        //}
+        public DatabaseQueryManager(string connectionString)
+        {
+            this.connectionString = connectionString;
+        }
+
 
         /// <summary>
         /// Fills a dataset by executing the supplied command in the current window connection
@@ -35,9 +24,9 @@ namespace PeterHenell.SSMS.Plugins.DataAccess
         /// <param name="query"></param>
         /// <param name="ds"></param>
         /// <returns></returns>
-        internal static DataSet ExecuteQuery(string query, DataSet ds)
+        internal DataSet ExecuteQuery(string query, DataSet ds)
         {
-            var connectionString = ConnectionManager.GetConnectionStringForCurrentWindow();
+            //var connectionString = ConnectionManager.GetConnectionStringForCurrentWindow();
             
             using (var con = new SqlConnection(connectionString))
             using (var cmd = new SqlCommand(query, con))
@@ -48,9 +37,9 @@ namespace PeterHenell.SSMS.Plugins.DataAccess
             }
         }
 
-        internal static void ExecuteQuery(string sql, Action<SqlDataReader> streamReaderCallback)
+        internal void ExecuteQuery(string sql, Action<SqlDataReader> streamReaderCallback)
         {
-            var connectionString = ConnectionManager.GetConnectionStringForCurrentWindow();
+            //var connectionString = ConnectionManager.GetConnectionStringForCurrentWindow();
             using (var con = new SqlConnection(connectionString))
             using (SqlCommand cmd = new SqlCommand(sql, con))
             {

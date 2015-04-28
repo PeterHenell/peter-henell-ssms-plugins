@@ -58,7 +58,7 @@ namespace PeterHenell.SSMS.Plugins.Shell
             
         }
 
-        internal  string GetSelectedQuery()
+        internal string GetSelectedQuery()
         {
             var currentWindow = provider.GetQueryWindowManager();
             var selectedText = "";
@@ -82,6 +82,20 @@ namespace PeterHenell.SSMS.Plugins.Shell
         internal void AddTextToTopOfSelection(string text)
         {
             var editPoint = GetEditPointAtTopOfSelection();
+            editPoint.Insert(text + Environment.NewLine);
+            
+        }
+
+        internal void ReplaceSelectionWith(string text)
+        {
+            DTE2 a = (DTE2)provider.SsmsDte2;
+            Document document = a.ActiveDocument;
+            TextSelection selection = document.Selection as TextSelection;
+            selection.Delete();
+
+            var editPoint = GetEditPointAtTopOfSelection();
+            var endPoint = GetEditPointAtTopOfSelection();
+            editPoint.Delete(endPoint);
             editPoint.Insert(text + Environment.NewLine);
         }
     }

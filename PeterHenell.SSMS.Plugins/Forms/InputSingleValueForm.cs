@@ -25,5 +25,10 @@ namespace PeterHenell.SSMS.Plugins.Forms
             this.description_lbl.Text = questionText;
         }
 
+        private void InputSingleValueForm_Shown(object sender, EventArgs e)
+        {
+            this.input_txt.SelectAll();
+            this.input_txt.Focus();
+        }
     }
 }

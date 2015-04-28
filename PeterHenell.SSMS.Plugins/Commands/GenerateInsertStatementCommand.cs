@@ -9,6 +9,8 @@ using System.Text;
 using System.Windows.Forms;
 using System.Linq;
 using System.Data.SqlClient;
+using System.Collections.Generic;
+using PeterHenell.SSMS.Plugins.ExtensionMethods;
 
 namespace PeterHenell.SSMS.Plugins.Commands
 {
@@ -19,7 +21,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
         private readonly ISsmsFunctionalityProvider4 provider;
         ShellManager shellManager;
         private ObjectExplorerNodeDescriptorBase currentNode = null;
-        
+
         private readonly ICommandImage m_CommandImage = new CommandImageNone();
 
 
@@ -61,7 +63,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
             {
                 long numRows = 0;
                 if (!long.TryParse(result, out numRows))
-	            {
+                {
                     MessageBox.Show("Please input a valid number");
                     return;
                 }
@@ -72,7 +74,8 @@ namespace PeterHenell.SSMS.Plugins.Commands
 set rowcount {0}; 
 {1}; 
 set rowcount 0;", numRows, selectedText);
-                DataAccess.DatabaseQueryManager.ExecuteQuery(query, ds);
+                var queryManager = new DatabaseQueryManager(ConnectionManager.GetConnectionStringForCurrentWindow());
+                queryManager.ExecuteQuery(query, ds);
 
                 if (ds.Tables.Count > 0)
                 {
@@ -85,62 +88,24 @@ set rowcount 0;", numRows, selectedText);
                 }
             });
 
-            DialogManager.GetDialogInputFromUser("How many rows to select? (0=all)", "0", ok, cancelCallback);
+            DialogManager.GetDialogInputFromUser("How many rows to select? (0=max)", "0", ok, cancelCallback);
         }
 
         private string GenerateInsertFor(DataTable dataTable)
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("INSERT INTO ### (");
-            string colSep = "";
-            foreach (DataColumn col in dataTable.Columns)
-            {
-                sb.Append(colSep+col.ColumnName);
-                colSep = ", ";
-            }
+            sb.AppendLine("INSERT INTO ### (");
+            sb.AppendColumnNameList(dataTable);
             sb.AppendLine(")");
             sb.AppendLine("VALUES ");
-            string rowSep = "";
-            foreach (DataRow row in dataTable.Rows)
-            {
-                colSep = "";
-                sb.Append(rowSep + "(");
-                foreach (DataColumn col in dataTable.Columns)
-                {
-                    var value = GetValue(row, col);
-                    sb.Append(colSep + value);
-                    colSep = ", ";
-                }
-                sb.Append(")");
-                rowSep = ", " + Environment.NewLine;
-            }
-
+            sb.AppendListOfRows(dataTable);
+            sb.Append(";");
             return sb.ToString();
-        }
-
-        private object GetValue(DataRow row, DataColumn col)
-        {
-            //var type = DbTypeConverter.TranslateToSqlType(col.DataType);
-            var value = row[col];
-
-            switch (col.DataType.ToString().ToLowerInvariant())
-            {
-
-                case "system.boolean":
-                    return ((bool)value) ? 1 : 0;
-                case "system.string":
-                    return string.Format("'{0}'", value);
-
-                default:
-                    return value.ToString();
-            }
-            
         }
 
         private void cancelCallback()
         {
         }
-
 
         public string Name { get { return COMMAND_NAME; } }
         public string Caption { get { return "Generate Insert statement for selected query"; } }

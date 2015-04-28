@@ -56,6 +56,50 @@ namespace PeterHenell.SSMS.Plugins.ExtensionMethods
                 sb.AppendLine();
             }
         }
+        public static void AppendListOfRows(this StringBuilder sb, DataTable dataTable)
+        {
+            string rowSep = "";
+            string colSep = "";
+            foreach (DataRow row in dataTable.Rows)
+            {
+                colSep = "";
+                sb.Append(rowSep + "\t(");
+                foreach (DataColumn col in dataTable.Columns)
+                {
+                    var value = GetValue(row, col);
+                    sb.Append(colSep + value);
+                    colSep = ", ";
+                }
+                sb.Append(")");
+                rowSep = ", " + Environment.NewLine;
+            }
+        }
+        private static object GetValue(DataRow row, DataColumn col)
+        {
+            //var type = DbTypeConverter.TranslateToSqlType(col.DataType);
+            var value = row[col];
+
+            if (row.IsNull(col))
+            {
+                return "NULL";
+            }
+
+            switch (col.DataType.ToString().ToLowerInvariant())
+            {
+                case "system.boolean":
+                    return ((bool)value) ? 1 : 0;
+                case "system.string":
+                    return string.Format("'{0}'", value);
+                case "system.datetime":
+                    return string.Format("'{0}'", value);
+                case "system.decimal":
+                    return value.ToString().Replace(",", ".");
+                    
+                default:
+                    return value.ToString();
+            }
+
+        }
 
     }
 }
