@@ -25,19 +25,24 @@ namespace PeterHenell.SSMS.Plugins.DataAccess
             return builder.ToString();
         }
 
+        internal static string GetConnectionStringForCurrentNode()
+        {
+            var objectExplorerNode = NodeManager.CurrentNode as IOeNode;
+
+            IConnectionInfo ci = null;
+            if (objectExplorerNode != null
+                    && objectExplorerNode.HasConnection
+                    && objectExplorerNode.TryGetConnection(out ci))
+            {
+                var builder = new SqlConnectionStringBuilder(ci.ConnectionString);
+                return builder.ConnectionString;
+            }
+            throw new InvalidOperationException("No selected db node or other problem...");
+        }
+
         internal static string GetConnectionStringForCurrentWindow()
         {
-            //var objectExplorerNode = NodeManager.CurrentNode as IOeNode;
-            
-            //IConnectionInfo ci = null;
-            //if (objectExplorerNode != null
-            //        && objectExplorerNode.HasConnection
-            //        && objectExplorerNode.TryGetConnection(out ci))
-            //{
-            //        var builder = new SqlConnectionStringBuilder(ci.ConnectionString);
-            //        return builder.ConnectionString;
-            //}
-            //throw new InvalidOperationException("No selected db node or other problem...");
+           
 
             IScriptFactory scriptFactory = ServiceCache.ScriptFactory;
 
