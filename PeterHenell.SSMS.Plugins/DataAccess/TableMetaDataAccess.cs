@@ -15,10 +15,10 @@ namespace PeterHenell.SSMS.Plugins.DataAccess
             this.connectionString = connectionString;
         }
 
-        public DataTable GetMetaDataForTable(TableMetadata table)
+        public DataTable SelectTopNFrom(TableMetadata table, int limit = 1)
         {
             DatabaseQueryManager queryManager = new DatabaseQueryManager(connectionString);
-            string query = String.Format(@"set rowcount 1; select * from {0}; set rowcount 0;", table.ToFullString());
+            string query = String.Format(@"set rowcount {1}; select * from {0}; set rowcount 0;", table.ToFullString(), limit);
 
             DataSet ds = new DataSet();
             queryManager.ExecuteQuery(query, ds);
@@ -32,5 +32,7 @@ namespace PeterHenell.SSMS.Plugins.DataAccess
                 throw new ArgumentException("table does not exist");
             }
         }
+        
+       
     }
 }

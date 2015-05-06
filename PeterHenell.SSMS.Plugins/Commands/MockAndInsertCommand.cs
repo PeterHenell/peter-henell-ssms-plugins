@@ -44,38 +44,49 @@ namespace PeterHenell.SSMS.Plugins.Commands
 
         private void PerformCommand()
         {
-            try
+            Action<string> ok = new Action<string>(result =>
             {
-                var selectedText = shellManager.GetSelectedQuery();
+                int numRows = 0;
+                if (!int.TryParse(result, out numRows))
+                {
+                    MessageBox.Show("Please input a valid number");
+                    return;
+                } else
+                {
+                    if (numRows <= 0)
+                    {
+                        numRows = 0;
+                    }
+                    else if (numRows > 1000)
+                    {
+                        numRows = 1000;
+                    }
+                }
 
-                var meta = TableMetadata.FromQualifiedString(selectedText);
-                TableMetaDataAccess da = new TableMetaDataAccess(ConnectionManager.GetConnectionStringForCurrentWindow());
-                var table = da.GetMetaDataForTable(meta);
+                try
+                {
+                    var selectedText = shellManager.GetSelectedText();
 
-                StringBuilder sb = new StringBuilder();
-                sb.Append(TsqltManager.GetFakeTableStatement(selectedText));
-                sb.AppendLine();
-                sb.Append(TsqltManager.GenerateInsertFor(table, meta));
+                    var meta = TableMetadata.FromQualifiedString(selectedText);
+                    TableMetaDataAccess da = new TableMetaDataAccess(ConnectionManager.GetConnectionStringForCurrentWindow());
+                    var table = da.SelectTopNFrom(meta, numRows);
 
-                shellManager.ReplaceSelectionWith(sb.ToString());
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
+                    StringBuilder sb = new StringBuilder();
+                    sb.Append(TsqltManager.GetFakeTableStatement(selectedText));
+                    sb.AppendLine();
+                    sb.Append(TsqltManager.GenerateInsertFor(table, meta));
+
+                    shellManager.ReplaceSelectionWith(sb.ToString());
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
+            });
+
+            DialogManager.GetDialogInputFromUser("How many rows to select? (0=max)", "1", ok, cancelCallback);
         }
 
-        private string GenerateInsertFor(DataTable dataTable)
-        {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine("INSERT INTO ### (");
-            sb.AppendColumnNameList(dataTable);
-            sb.AppendLine(")");
-            sb.AppendLine("VALUES ");
-            sb.AppendListOfRows(dataTable);
-            sb.Append(";");
-            return sb.ToString();
-        }
 
         private void cancelCallback()
         {

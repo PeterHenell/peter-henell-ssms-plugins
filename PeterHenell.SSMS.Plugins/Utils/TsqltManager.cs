@@ -38,7 +38,6 @@ namespace PeterHenell.SSMS.Plugins.Utils
             sb.AppendListOfRows(table);
             sb.Append(";");
             return sb.ToString();
-
         }
 
         private static void AddRowWithDefaultValuesTo(DataTable table)

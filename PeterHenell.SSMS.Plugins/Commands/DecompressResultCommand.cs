@@ -39,7 +39,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
 
         private void PerformCommand()
         {
-            var selectedText = shellManager.GetSelectedQuery();
+            var selectedText = shellManager.GetSelectedText();
             var sb = new StringBuilder();
             int errorCount = 0;
 

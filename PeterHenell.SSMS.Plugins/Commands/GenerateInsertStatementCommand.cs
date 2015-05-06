@@ -68,7 +68,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
                     return;
                 }
 
-                string selectedText = shellManager.GetSelectedQuery();
+                string selectedText = shellManager.GetSelectedText();
                 DataSet ds = new DataSet();
                 string query = string.Format(@"
 set rowcount {0}; 

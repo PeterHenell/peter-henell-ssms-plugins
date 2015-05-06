@@ -34,7 +34,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
         {
             try
             {
-                string selectedText = shellManager.GetSelectedQuery();
+                string selectedText = shellManager.GetSelectedText();
                 var sb = new StringBuilder();
                 using (var ds = new DataSet())
                 {

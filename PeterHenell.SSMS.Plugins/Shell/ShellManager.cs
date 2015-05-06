@@ -58,7 +58,7 @@ namespace PeterHenell.SSMS.Plugins.Shell
             
         }
 
-        internal string GetSelectedQuery()
+        internal string GetSelectedText()
         {
             var currentWindow = provider.GetQueryWindowManager();
             var selectedText = "";

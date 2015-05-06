@@ -93,7 +93,7 @@ namespace PluginTests
 
             TableMetaDataAccess da = new TableMetaDataAccess(GetLocalConnection());
 
-            var actual = da.GetMetaDataForTable(tableA);
+            var actual = da.SelectTopNFrom(tableA);
             Assert.That(actual.Columns.Count, Is.EqualTo(4));
         }
 
@@ -103,7 +103,7 @@ namespace PluginTests
             var meta = TableMetadata.FromQualifiedString("msdb.[dbo].[syscategories]");
             TableMetaDataAccess da = new TableMetaDataAccess(GetLocalConnection());
 
-            var table = da.GetMetaDataForTable(meta);
+            var table = da.SelectTopNFrom(meta);
             var actual = TsqltManager.GenerateInsertFor(table, meta);
 
             var expected = @"INSERT INTO [msdb].[dbo].[syscategories] (
