@@ -117,6 +117,12 @@
     <Compile Include="Forms\InputSingleValueForm.Designer.cs">
       <DependentUpon>InputSingleValueForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\TextBoxAndCheckboxesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\TextBoxAndCheckboxesForm.Designer.cs">
+      <DependentUpon>TextBoxAndCheckboxesForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Shell\Menu.cs" />
     <Compile Include="Extension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -141,6 +147,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Forms\InputSingleValueForm.resx">
       <DependentUpon>InputSingleValueForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\TextBoxAndCheckboxesForm.resx">
+      <DependentUpon>TextBoxAndCheckboxesForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

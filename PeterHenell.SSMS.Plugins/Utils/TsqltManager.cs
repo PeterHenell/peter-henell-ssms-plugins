@@ -24,18 +24,19 @@ namespace PeterHenell.SSMS.Plugins.Utils
                 table.TableName);
         }
 
-        public static string GenerateInsertFor(DataTable table, TableMetadata meta)
+        public static string GenerateInsertFor(DataTable table, TableMetadata meta, bool newLineBetweenColumns = true, bool newLineBetweenValues = false)
         {
             if (table.Rows.Count == 0)
             {
                 AddRowWithDefaultValuesTo(table);
+                
             }
             var sb = new StringBuilder();
             sb.AppendLine("INSERT INTO " + meta.ToFullString() + " (");
-            sb.AppendColumnNameList(table);
+            sb.AppendColumnNameList(table, newLineBetweenColumns);
             sb.AppendLine(")");
             sb.Append("VALUES");
-            sb.AppendListOfRows(table);
+            sb.AppendListOfRows(table, newLineBetweenValues);
             sb.Append(";");
             return sb.ToString();
         }
@@ -49,7 +50,7 @@ namespace PeterHenell.SSMS.Plugins.Utils
                 switch (col.DataType.ToString().ToLowerInvariant())
                 {
                     case "system.boolean":
-                        value=  "1";
+                        value=  true;
                         break;
                     case "system.string":
                         value = "abc";
@@ -58,10 +59,10 @@ namespace PeterHenell.SSMS.Plugins.Utils
                         value = DateTime.Now.ToShortDateString();
                         break;
                     case "system.decimal":
-                        value = "1.0";
+                        value = 1.0M;
                         break;
                     default:
-                        value = "123";
+                        value = 123;
                         break;
                 }
                 row[col] = value;

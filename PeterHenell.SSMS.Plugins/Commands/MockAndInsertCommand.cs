@@ -44,14 +44,17 @@ namespace PeterHenell.SSMS.Plugins.Commands
 
         private void PerformCommand()
         {
-            Action<string> ok = new Action<string>(result =>
+            var options = new MockOptionsDictionary();
+
+            var ok = new Action<string, MockOptionsDictionary>((result, checkedOptions) =>
             {
                 int numRows = 0;
                 if (!int.TryParse(result, out numRows))
                 {
                     MessageBox.Show("Please input a valid number");
                     return;
-                } else
+                }
+                else
                 {
                     if (numRows <= 0)
                     {
@@ -74,7 +77,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
                     StringBuilder sb = new StringBuilder();
                     sb.Append(TsqltManager.GetFakeTableStatement(selectedText));
                     sb.AppendLine();
-                    sb.Append(TsqltManager.GenerateInsertFor(table, meta));
+                    sb.Append(TsqltManager.GenerateInsertFor(table, meta, options.EachColumnInSelectOnNewRow, options.EachColumnInValuesOnNewRow));
 
                     shellManager.ReplaceSelectionWith(sb.ToString());
                 }
@@ -84,7 +87,51 @@ namespace PeterHenell.SSMS.Plugins.Commands
                 }
             });
 
-            DialogManager.GetDialogInputFromUser("How many rows to select? (0=max)", "1", ok, cancelCallback);
+            var diagManager = new DialogManager.InputWithCheckboxesDialogManager<MockOptionsDictionary>();
+            diagManager.Show("How many rows to select? (0=max)", "1", options, ok, cancelCallback);
+        }
+
+        public class MockOptionsDictionary : Dictionary<string, bool>
+        {
+            public MockOptionsDictionary()
+            {
+                EachColumnInSelectOnNewRow = false;
+                EachColumnInValuesOnNewRow = false;
+            }
+
+            public bool EachColumnInSelectOnNewRow
+            {
+                get
+                {
+                    return this["Each Column in new row in INSERT?"];
+                }
+                set
+                {
+                    if (this.ContainsKey("Each Column in new row in INSERT?"))
+                    {
+                        this["Each Column in new row in INSERT?"] = value;
+                        return;
+                    }
+                    this.Add("Each Column in new row in INSERT?", value);
+                }
+            }
+
+            public bool EachColumnInValuesOnNewRow
+            {
+                get
+                {
+                    return this["Each Column in new row in VALUES?"];
+                }
+                set
+                {
+                    if (this.ContainsKey("Each Column in new row in VALUES?"))
+                    {
+                        this["Each Column in new row in VALUES?"] = value;
+                        return;
+                    }
+                    this.Add("Each Column in new row in VALUES?", value);
+                }
+            }
         }
 
 

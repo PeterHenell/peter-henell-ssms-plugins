@@ -43,7 +43,7 @@ namespace PeterHenell.SSMS.Plugins.ExtensionMethods
                 sb.AppendLine();
             }
         }
-        public static void AppendColumnNameList(this StringBuilder sb, DataTable dt)
+        public static void AppendColumnNameList(this StringBuilder sb, DataTable dt, bool newLineBetweenColumns = true)
         {
             int columnCount = 1;
             foreach (DataColumn col in dt.Columns)
@@ -52,11 +52,11 @@ namespace PeterHenell.SSMS.Plugins.ExtensionMethods
 
                 if (columnCount++ < dt.Columns.Count)
                     sb.Append(",");
-
-                sb.AppendLine();
+                if (newLineBetweenColumns)
+                    sb.AppendLine();
             }
         }
-        public static void AppendListOfRows(this StringBuilder sb, DataTable dataTable)
+        public static void AppendListOfRows(this StringBuilder sb, DataTable dataTable, bool newLineBetweenValues = false)
         {
             string rowSep = "";
             string colSep = "";
@@ -69,6 +69,8 @@ namespace PeterHenell.SSMS.Plugins.ExtensionMethods
                     var value = GetValue(row, col);
                     sb.Append(colSep + value);
                     colSep = ", ";
+                    if (newLineBetweenValues)
+                        sb.AppendLine();
                 }
                 sb.Append(")");
                 rowSep = ", " + Environment.NewLine;
@@ -76,7 +78,6 @@ namespace PeterHenell.SSMS.Plugins.ExtensionMethods
         }
         private static object GetValue(DataRow row, DataColumn col)
         {
-            //var type = DbTypeConverter.TranslateToSqlType(col.DataType);
             var value = row[col];
 
             if (row.IsNull(col))

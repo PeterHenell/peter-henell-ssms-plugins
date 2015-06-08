@@ -31,6 +31,38 @@ namespace PeterHenell.SSMS.Plugins.Utils
             }
         }
 
+        public class InputWithCheckboxesDialogManager<T> where T : Dictionary<string, bool>
+        {
+            public void Show(
+                                    string question,
+                                    string defaultAnswer,
+                                    T options,
+                                    Action<string, T> okPressedCallback,
+                                    Action cancelPressedcallback = null)
+            {
+                using (TextBoxAndCheckboxesForm<T> testDialog = new TextBoxAndCheckboxesForm<T>(question, defaultAnswer, options))
+                {
+                    // Show testDialog as a modal dialog and determine if DialogResult = OK.
+                    if (testDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        var t = testDialog.input_txt.Text;
+                        var checkedBoxes = testDialog.CheckedOptions;
+                        okPressedCallback(t, checkedBoxes);
+                    }
+                    else
+                    {
+                        // dialog was cancelled
+                        if (cancelPressedcallback != null)
+                        {
+                            cancelPressedcallback.Invoke();
+                        }
+                    }
+                }
+            }
+        }
+
+        
+
         public static FileInfo ShowExcelSaveFileDialog()
         {
             var saveFileDialog = new System.Windows.Forms.SaveFileDialog();

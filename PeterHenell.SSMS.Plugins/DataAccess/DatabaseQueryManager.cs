@@ -47,7 +47,7 @@ namespace PeterHenell.SSMS.Plugins.DataAccess
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
-                    {
+                    {                        
                         streamReaderCallback(reader);
                     }
                 }
