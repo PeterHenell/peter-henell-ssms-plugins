@@ -30,19 +30,27 @@ namespace PeterHenell.SSMS.Plugins.ExtensionMethods
             sb.AppendLine();
         }
 
+        public static void AppendDropTempTableIfExists(this StringBuilder sb, string tempTableName) {
+            sb.AppendFormat("IF OBJECT_ID('tempdb..{0}') IS NOT NULL DROP TABLE {0};", tempTableName);
+        }
+
+        public static void AppendTempTablesFor(this StringBuilder sb, DataTable metaTable, string tempTableName)
+        {
+            sb.AppendTableDefinitionFrom(metaTable, tempTableName);
+            sb.AppendLine();
+        }
+
         public static void AppendTempTablesFor(this StringBuilder sb, DataSet ds)
         {
             int tableCounter = 1;
             foreach (DataTable metaTable in ds.Tables)
             {
-                string tempTableName = string.Format("#temp{0}", tableCounter++);
-                sb.AppendFormat("IF OBJECT_ID('tempdb..{0}') IS NOT NULL DROP TABLE {0};", tempTableName);
-
-                sb.AppendTableDefinitionFrom(metaTable, tempTableName);
-
-                sb.AppendLine();
+                string tableName = string.Format("{0}{1}", "#temp", tableCounter++);
+                sb.AppendDropTempTableIfExists(tableName);
+                sb.AppendTableDefinitionFrom(metaTable, tableName);
             }
         }
+
         public static void AppendColumnNameList(this StringBuilder sb, DataTable dt, bool newLineBetweenColumns = true)
         {
             int columnCount = 1;
@@ -95,7 +103,7 @@ namespace PeterHenell.SSMS.Plugins.ExtensionMethods
                     return string.Format("'{0}'", value);
                 case "system.decimal":
                     return value.ToString().Replace(",", ".");
-                    
+
                 default:
                     return value.ToString();
             }

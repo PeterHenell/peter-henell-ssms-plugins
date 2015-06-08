@@ -103,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\DecompressResultCommand.cs" />
+    <Compile Include="Commands\ActualAndExpectedCommand.cs" />
     <Compile Include="Commands\ResultToExcelCommand.cs" />
     <Compile Include="Commands\MockAndInsertCommand.cs" />
     <Compile Include="Commands\GenerateInsertStatementCommand.cs" />

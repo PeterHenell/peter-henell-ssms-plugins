@@ -9,11 +9,11 @@ using System.Windows.Forms;
 
 namespace PeterHenell.SSMS.Plugins.Forms
 {
-    public partial class TextBoxAndCheckboxesForm<T> : Form where T : Dictionary<string, bool>
+    public partial class TextBoxAndCheckboxesForm<TDict> : Form where TDict : Dictionary<string, bool>
     {
-        private T _originalOptions;
+        private TDict _originalOptions;
 
-        public T CheckedOptions
+        public TDict CheckedOptions
         {
             get
             {
@@ -36,7 +36,7 @@ namespace PeterHenell.SSMS.Plugins.Forms
             InitializeComponent();
         }
 
-        public TextBoxAndCheckboxesForm(string questionText, string defaultAnswer, T checkBoxOptions)
+        public TextBoxAndCheckboxesForm(string questionText, string defaultAnswer, TDict checkBoxOptions)
         {
             InitializeComponent();
             optionsCheckboxList.Items.Clear();

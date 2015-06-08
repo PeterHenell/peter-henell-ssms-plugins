@@ -1,6 +1,6 @@
 ﻿namespace PeterHenell.SSMS.Plugins.Forms
 {
-    partial class TextBoxAndCheckboxesForm<T> where T : System.Collections.Generic.Dictionary<string, bool>
+    partial class TextBoxAndCheckboxesForm<TDict> where TDict : System.Collections.Generic.Dictionary<string, bool>
     {
         /// <summary>
         /// Required designer variable.
@@ -73,6 +73,7 @@
             // 
             // optionsCheckboxList
             // 
+            this.optionsCheckboxList.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.optionsCheckboxList.FormattingEnabled = true;
             this.optionsCheckboxList.Location = new System.Drawing.Point(12, 55);
             this.optionsCheckboxList.Name = "optionsCheckboxList";

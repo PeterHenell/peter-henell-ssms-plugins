@@ -30,6 +30,7 @@ namespace PeterHenell.SSMS.Plugins
             commands.Add(new GenerateInsertStatementCommand(m_Provider4));
             commands.Add(new MockAndInsertCommand(m_Provider4));
             commands.Add(new ResultToExcelCommand(m_Provider4));
+            commands.Add(new ActualAndExpectedCommand(m_Provider4));
 
             // STEP 1: Add command to the provider
             foreach (var command in commands)
@@ -47,6 +48,7 @@ namespace PeterHenell.SSMS.Plugins
                 .EndSubmenu()
                 .BeginSubmenu("tSQLt - Tools", "tSQLt - Tools")
                 .AddCommand(MockAndInsertCommand.COMMAND_NAME)
+                .AddCommand(ActualAndExpectedCommand.COMMAND_NAME)
                 .EndSubmenu()
                 .EndSubmenu();
         }
