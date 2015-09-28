@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>PeterHenell.SSMS.Plugins</RootNamespace>
     <AssemblyName>PeterHenell.SSMS.Plugins</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -30,6 +31,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -47,6 +49,10 @@
     <Reference Include="EPPlus">
       <HintPath>..\..\..\..\Users\pehe\Downloads\EPPlus.dll</HintPath>
     </Reference>
+    <Reference Include="FizzWare.NBuilder">
+      <HintPath>..\packages\NBuilder.3.0.1.1\lib\FizzWare.NBuilder.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ReferencedDlls\2014\Microsoft.SqlServer.ConnectionInfo.dll</HintPath>
@@ -104,6 +110,7 @@
   <ItemGroup>
     <Compile Include="Commands\DecompressResultCommand.cs" />
     <Compile Include="Commands\ActualAndExpectedCommand.cs" />
+    <Compile Include="Commands\GenerateDataForTableCommand.cs" />
     <Compile Include="Commands\ResultToExcelCommand.cs" />
     <Compile Include="Commands\MockAndInsertCommand.cs" />
     <Compile Include="Commands\GenerateInsertStatementCommand.cs" />
@@ -131,6 +138,9 @@
     <Compile Include="Shell\ShellManager.cs" />
     <Compile Include="DataAccess\DatabaseQueryManager.cs" />
     <Compile Include="Shell\Submenu.cs" />
+    <Compile Include="TypeBuilders\DynamicTypeBuilder.cs" />
+    <Compile Include="Utils\Generators\DataGenerator.cs" />
+    <Compile Include="Utils\Generators\QueryGenerator.cs" />
     <Compile Include="Tests\QueryGeneratorTest.cs" />
     <Compile Include="Tests\TsqltManagerTest.cs" />
     <Compile Include="Utils\DialogManager.cs" />
