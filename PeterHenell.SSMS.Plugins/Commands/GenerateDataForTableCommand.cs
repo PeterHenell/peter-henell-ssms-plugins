@@ -64,9 +64,9 @@ namespace PeterHenell.SSMS.Plugins.Commands
                 
                 DataSet ds = new DataSet();
                 string query = string.Format(@"
-set rowcount {0}; 
-select * from {1}; 
-set rowcount 0;", numRows, meta.ToFullString());
+set fmtonly on 
+select * from {0}; 
+set fmtonly off;", meta.ToFullString());
                 var queryManager = new DatabaseQueryManager(ConnectionManager.GetConnectionStringForCurrentWindow());
                 queryManager.ExecuteQuery(query, ds);
 
