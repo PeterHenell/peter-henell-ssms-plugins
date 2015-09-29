@@ -19,17 +19,17 @@ namespace PeterHenell.SSMS.Plugins.Commands
     {
         public readonly static string COMMAND_NAME = "GenerateDataForTable_Command";
 
-        private readonly ISsmsFunctionalityProvider4 provider;
-        ShellManager shellManager;
-        private ObjectExplorerNodeDescriptorBase currentNode = null;
-
-        private readonly ICommandImage m_CommandImage = new CommandImageNone();
-
+        readonly ISsmsFunctionalityProvider4 provider;
+        readonly ICommandImage m_CommandImage = new CommandImageNone();
+        readonly ShellManager shellManager;
+        readonly ObjectExplorerNodeDescriptorBase currentNode = null;
+        readonly TableMetaDataAccess tableMetaAccess;
 
         public GenerateDataForTableCommand(ISsmsFunctionalityProvider4 provider)
         {
             this.provider = provider;
             this.shellManager = new ShellManager(provider);
+            this.tableMetaAccess = new TableMetaDataAccess(ConnectionManager.GetConnectionStringForCurrentWindow());
         }
 
         public void Execute(object parameter)
@@ -46,46 +46,50 @@ namespace PeterHenell.SSMS.Plugins.Commands
 
         private void PerformCommand()
         {
-            Action<string> ok = new Action<string>(result =>
+            Action<string> okAction = new Action<string>(userInput =>
             {
                 int numRows = 0;
-                if (!int.TryParse(result, out numRows))
-                {
-                    MessageBox.Show("Please input a valid number");
-                    return;
-                }
-                if (numRows > 1000)
-                {
-                    numRows = 1000;
-                }
+                ParseParam(userInput, out numRows);
 
-                string selectedText = shellManager.GetSelectedText();
-                var meta = TableMetadata.FromQualifiedString(selectedText);
-                
-                DataSet ds = new DataSet();
-                string query = string.Format(@"
-set fmtonly on 
-select * from {0}; 
-set fmtonly off;", meta.ToFullString());
-                var queryManager = new DatabaseQueryManager(ConnectionManager.GetConnectionStringForCurrentWindow());
-                queryManager.ExecuteQuery(query, ds);
+                var meta = GetTableMetaFromSelectedText();
+                DataTable table = tableMetaAccess.GetTableSchema(meta);
 
-                if (ds.Tables.Count > 0)
-                {
-                    var table = ds.Tables[0];
-                    DataGenerator generator = new DataGenerator();
-                    generator.Fill(table, numRows);
-                    
-                    string output = GenerateInsertFor(table, meta.ToFullString());
-                    shellManager.AddTextToEndOfSelection(output);
-                }
-                else
-                {
-                    MessageBox.Show("Query did not produce any result");
-                }
+                DataGenerator generator = new DataGenerator();
+                generator.Fill(table, numRows);
+
+                string output = GenerateInsertFor(table, meta.ToFullString());
+                shellManager.AppendToEndOfSelection(output);
             });
 
-            DialogManager.GetDialogInputFromUser("How many rows to generate? (0-1000)", "10", ok, cancelCallback);
+            try
+            {
+                DialogManager.GetDialogInputFromUser("How many rows to generate? (0-1000)", "10", okAction, cancelCallback);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
+        }
+
+        
+
+        private TableMetadata GetTableMetaFromSelectedText()
+        {
+            string selectedText = shellManager.GetSelectedText();
+            var meta = TableMetadata.FromQualifiedString(selectedText);
+            return meta;
+        }
+
+        private void ParseParam(string result, out int numRows)
+        {
+            if (!int.TryParse(result, out numRows))
+            {
+                throw new InvalidOperationException("Please input a valid number");
+            }
+            if (numRows > 1000)
+            {
+                numRows = 1000;
+            }
         }
 
         private string GenerateInsertFor(DataTable dataTable, string targetTable)

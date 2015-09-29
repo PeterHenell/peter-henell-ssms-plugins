@@ -89,10 +89,10 @@ namespace PeterHenell.SSMS.Plugins.Commands
 
                                 sb.Clear();
                                 sb.AppendColumnNameList(ds.Tables[0]);
-                                shellManager.AddTextToEndOfSelection(
+                                shellManager.AppendToEndOfSelection(
                                         string.Format("{0}SELECT {1}INTO #Expected{0}FROM #Actual{0}WHERE 1=0;{0}", Environment.NewLine, sb.ToString())
                                         );
-                                shellManager.AddTextToEndOfSelection(
+                                shellManager.AppendToEndOfSelection(
                                     TsqltManager.GenerateInsertFor(ds.Tables[0], TableMetadata.FromQualifiedString("#Expected"), false, false));
                             }
                             else

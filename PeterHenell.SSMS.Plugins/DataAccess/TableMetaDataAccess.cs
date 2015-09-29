@@ -32,7 +32,25 @@ namespace PeterHenell.SSMS.Plugins.DataAccess
                 throw new ArgumentException("table does not exist");
             }
         }
-        
+
+        public DataTable GetTableSchema(TableMetadata meta)
+        {
+            DataSet ds = new DataSet();
+            string query = string.Format(@"
+SET FMTONLY ON; 
+select * from {0}; 
+SET FMTONLY OFF;", meta.ToFullString());
+            var queryManager = new DatabaseQueryManager(connectionString);
+            queryManager.ExecuteQuery(query, ds);
+
+            if (ds.Tables.Count == 0)
+            {
+                throw new InvalidOperationException("Trying to get table schema, got no result.");
+            }
+
+            var table = ds.Tables[0];
+            return table;
+        }
        
     }
 }

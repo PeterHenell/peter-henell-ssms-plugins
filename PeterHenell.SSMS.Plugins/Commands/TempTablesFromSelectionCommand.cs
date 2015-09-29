@@ -50,13 +50,13 @@ namespace PeterHenell.SSMS.Plugins.Commands
 
                         sb.Clear();
                         sb.AppendColumnNameList(ds.Tables[0]);
-                        shellManager.AddTextToEndOfSelection(
+                        shellManager.AppendToEndOfSelection(
                                 string.Format("{0}SELECT{0}{1}{0}FROM #temp1", Environment.NewLine, sb.ToString())
                                 );
                     }
                     else
                     {
-                        shellManager.AddTextToEndOfSelection(sb.ToString());
+                        shellManager.AppendToEndOfSelection(sb.ToString());
                     }
                 }
             }

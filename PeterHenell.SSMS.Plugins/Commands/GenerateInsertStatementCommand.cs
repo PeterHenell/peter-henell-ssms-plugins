@@ -80,7 +80,7 @@ set rowcount 0;", numRows, selectedText);
                 if (ds.Tables.Count > 0)
                 {
                     string output = GenerateInsertFor(ds.Tables[0]);
-                    shellManager.AddTextToEndOfSelection(output);
+                    shellManager.AppendToEndOfSelection(output);
                 }
                 else
                 {

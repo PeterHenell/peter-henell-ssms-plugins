@@ -51,7 +51,7 @@ namespace PeterHenell.SSMS.Plugins.Shell
             return null;            
         }
 
-        internal  void AddTextToEndOfSelection(string text)
+        internal  void AppendToEndOfSelection(string text)
         {
             var editPoint = GetEditPointAtBottomOfSelection();
             editPoint.Insert(Environment.NewLine + text);
