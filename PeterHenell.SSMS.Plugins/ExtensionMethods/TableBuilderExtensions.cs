@@ -90,6 +90,7 @@ namespace PeterHenell.SSMS.Plugins.ExtensionMethods
 
             if (row.IsNull(col))
             {
+                
                 return "NULL";
             }
 
@@ -98,6 +99,7 @@ namespace PeterHenell.SSMS.Plugins.ExtensionMethods
                 case "system.boolean":
                     return ((bool)value) ? 1 : 0;
                 case "system.string":
+                case "system.guid":
                     return string.Format("'{0}'", value);
                 case "system.datetime":
                     return string.Format("'{0}'", value);
