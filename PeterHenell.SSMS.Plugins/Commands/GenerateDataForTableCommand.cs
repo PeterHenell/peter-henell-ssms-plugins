@@ -23,13 +23,12 @@ namespace PeterHenell.SSMS.Plugins.Commands
         readonly ICommandImage m_CommandImage = new CommandImageNone();
         readonly ShellManager shellManager;
         readonly ObjectExplorerNodeDescriptorBase currentNode = null;
-        readonly TableMetaDataAccess tableMetaAccess;
+        TableMetaDataAccess tableMetaAccess;
 
         public GenerateDataForTableCommand(ISsmsFunctionalityProvider4 provider)
         {
             this.provider = provider;
             this.shellManager = new ShellManager(provider);
-            this.tableMetaAccess = new TableMetaDataAccess(ConnectionManager.GetConnectionStringForCurrentWindow());
         }
 
         public void Execute(object parameter)
@@ -46,6 +45,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
 
         private void PerformCommand()
         {
+            this.tableMetaAccess = new TableMetaDataAccess(ConnectionManager.GetConnectionStringForCurrentWindow());
             Action<string> okAction = new Action<string>(userInput =>
             {
                 int numRows = 0;

@@ -131,6 +131,8 @@
     <Compile Include="Forms\TextBoxAndCheckboxesForm.Designer.cs">
       <DependentUpon>TextBoxAndCheckboxesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Plugins\ICommandPlugin.cs" />
+    <Compile Include="Plugins\PluginLoader.cs" />
     <Compile Include="Shell\Menu.cs" />
     <Compile Include="Extension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -138,6 +140,7 @@
     <Compile Include="Shell\ShellManager.cs" />
     <Compile Include="DataAccess\DatabaseQueryManager.cs" />
     <Compile Include="Shell\Submenu.cs" />
+    <Compile Include="Tests\PluginLoaderTests.cs" />
     <Compile Include="TypeBuilders\DynamicTypeBuilder.cs" />
     <Compile Include="Utils\Generators\DataGenerator.cs" />
     <Compile Include="Utils\Generators\QueryGenerator.cs" />
