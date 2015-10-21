@@ -105,11 +105,19 @@ namespace PeterHenell.SSMS.Plugins.ExtensionMethods
                     return string.Format("'{0}'", value);
                 case "system.decimal":
                     return value.ToString().Replace(",", ".");
-
+                case "system.byte[]":
+                    return ByteArrayToString((byte[])value);
                 default:
                     return value.ToString();
             }
 
+        }
+        public static string ByteArrayToString(byte[] ba)
+        {
+            StringBuilder hex = new StringBuilder(ba.Length * 2);
+            foreach (byte b in ba)
+                hex.AppendFormat("{0:x2}", b);
+            return string.Format("'0x{0}'", hex.ToString());
         }
 
     }
