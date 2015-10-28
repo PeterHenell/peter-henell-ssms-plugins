@@ -6,7 +6,8 @@ Only SSMS 2014 supported at this time.
 How to install:
 * Download the latest framework from http://documentation.red-gate.com/display/MA/Redistributing+the+framework
 (This is probably already installed if you are using any of the RedGate Toolkits.)
-* Download the latest version of peter-henlel-ssms-plugins and place the DLL in an appropriate location of your choice.
+* Download the latest version of peter-henell-ssms-plugins from this location: https://github.com/PeterHenell/peter-henell-ssms-plugins/tree/master/released-binaries
+* Unzip the binaries at a location of your choice (You will need to reference this path in a later step).
 * Make an entry in the Registry to tell the SIPframework where to load the add-in from. 
 
 You should create the registry entry in either:
