@@ -52,39 +52,7 @@ namespace PluginTests
             Assert.That(actual, Is.EqualTo(expected));
         }
 
-        [MSTest.TestMethod]
-        public void ShouldGetFullyQualifiedNamesFromFullyQuailifiedTableMetaData()
-        {
-            var tableA = TableMetadata.FromQualifiedString("MYDB.MySchema.MockingTable").ToFullString();
-            var tableB = TableMetadata.FromQualifiedString("MySchema.MockingTable").ToFullString();
-            var tableC = TableMetadata.FromQualifiedString("MockingTable").ToFullString();
-
-            Assert.That(tableA, Is.EqualTo("[MYDB].[MySchema].[MockingTable]"));
-            Assert.That(tableB, Is.EqualTo("[MySchema].[MockingTable]"));
-            Assert.That(tableC, Is.EqualTo("[dbo].[MockingTable]"));
-        }
-
-        [MSTest.TestMethod]
-        public void ShouldGetFullyQualifiedNamesFromTableMetaData()
-        {
-            var tableA = TableMetadata.FromQualifiedString("[MYDB].[MySchema].[MockingTable]").ToFullString();
-            var tableB = TableMetadata.FromQualifiedString("[MySchema].[MockingTable]").ToFullString();
-            var tableC = TableMetadata.FromQualifiedString("[MockingTable]").ToFullString();
-
-            Assert.That(tableA, Is.EqualTo("[MYDB].[MySchema].[MockingTable]"));
-            Assert.That(tableB, Is.EqualTo("[MySchema].[MockingTable]"));
-            Assert.That(tableC, Is.EqualTo("[dbo].[MockingTable]"));
-        }
-
-        [MSTest.TestMethod]
-        public void ShouldUnwrapNames()
-        {
-            var tableA = TableMetadata.FromQualifiedString("[MYDB].[MySchema].[MockingTable]");
-
-            Assert.That(tableA.TableName, Is.EqualTo("MockingTable"));
-            Assert.That(tableA.SchemaName, Is.EqualTo("MySchema"));
-            Assert.That(tableA.DatabaseName, Is.EqualTo("MYDB"));
-        }
+       
 
         [MSTest.TestMethod]
         public void ShouldGetTableDefinitionFromTableName()

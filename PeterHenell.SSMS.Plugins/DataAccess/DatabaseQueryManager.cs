@@ -10,11 +10,11 @@ namespace PeterHenell.SSMS.Plugins.DataAccess
 {
     class DatabaseQueryManager
     {
-        private string connectionString;
+        private string _connectionString;
 
         public DatabaseQueryManager(string connectionString)
         {
-            this.connectionString = connectionString;
+            this._connectionString = connectionString;
         }
 
 
@@ -26,9 +26,7 @@ namespace PeterHenell.SSMS.Plugins.DataAccess
         /// <returns></returns>
         internal DataSet ExecuteQuery(string query, DataSet ds)
         {
-            //var connectionString = ConnectionManager.GetConnectionStringForCurrentWindow();
-            
-            using (var con = new SqlConnection(connectionString))
+            using (var con = new SqlConnection(_connectionString))
             using (var cmd = new SqlCommand(query, con))
             using (var ad = new SqlDataAdapter(cmd))
             {
@@ -39,8 +37,7 @@ namespace PeterHenell.SSMS.Plugins.DataAccess
 
         internal void ExecuteQuery(string sql, Action<SqlDataReader> streamReaderCallback)
         {
-            //var connectionString = ConnectionManager.GetConnectionStringForCurrentWindow();
-            using (var con = new SqlConnection(connectionString))
+            using (var con = new SqlConnection(_connectionString))
             using (SqlCommand cmd = new SqlCommand(sql, con))
             {
                 cmd.Connection.Open();

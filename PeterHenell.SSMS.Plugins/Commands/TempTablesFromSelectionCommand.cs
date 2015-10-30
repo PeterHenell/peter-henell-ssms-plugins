@@ -44,14 +44,14 @@ namespace PeterHenell.SSMS.Plugins.Commands
 
                     if (ds.Tables.Count == 1)
                     {
-                        sb.Append("INSERT INTO #temp1");
+                        sb.Append("INSERT INTO #Temp1");
 
                         shellManager.AddTextToTopOfSelection(sb.ToString());
 
                         sb.Clear();
                         sb.AppendColumnNameList(ds.Tables[0]);
                         shellManager.AppendToEndOfSelection(
-                                string.Format("{0}SELECT{0}{1}{0}FROM #temp1", Environment.NewLine, sb.ToString())
+                                string.Format("{0}SELECT{0}{1}{0}FROM #Temp1", Environment.NewLine, sb.ToString())
                                 );
                     }
                     else

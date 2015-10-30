@@ -31,7 +31,7 @@ namespace PeterHenell.SSMS.Plugins.ExtensionMethods
         }
 
         public static void AppendDropTempTableIfExists(this StringBuilder sb, string tempTableName) {
-            sb.AppendFormat("IF OBJECT_ID('tempdb..{0}') IS NOT NULL DROP TABLE {0};", tempTableName);
+            sb.AppendFormat("IF OBJECT_ID('TempDB..{0}') IS NOT NULL DROP TABLE {0};", tempTableName);
         }
 
         public static void AppendTempTablesFor(this StringBuilder sb, DataTable metaTable, string tempTableName)
@@ -51,12 +51,12 @@ namespace PeterHenell.SSMS.Plugins.ExtensionMethods
             }
         }
 
-        public static void AppendColumnNameList(this StringBuilder sb, DataTable dt, bool newLineBetweenColumns = true)
+        public static void AppendColumnNameList(this StringBuilder sb, DataTable dt, bool newLineBetweenColumns = true, string columnDelimiter = "\t")
         {
             int columnCount = 1;
             foreach (DataColumn col in dt.Columns)
             {
-                sb.AppendFormat("\t[{0}]", col.ColumnName);
+                sb.AppendFormat("{1}[{0}]", col.ColumnName, columnCount > 1 ? columnDelimiter : string.Empty);
 
                 if (columnCount++ < dt.Columns.Count)
                     sb.Append(",");
@@ -90,7 +90,6 @@ namespace PeterHenell.SSMS.Plugins.ExtensionMethods
 
             if (row.IsNull(col))
             {
-                
                 return "NULL";
             }
 
@@ -110,7 +109,6 @@ namespace PeterHenell.SSMS.Plugins.ExtensionMethods
                 default:
                     return value.ToString();
             }
-
         }
         public static string ByteArrayToString(byte[] ba)
         {

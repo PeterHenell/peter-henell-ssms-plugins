@@ -25,7 +25,7 @@ namespace PeterHenell.SSMS.Plugins.TypeBuilders
 
         public Type CompileResultType(System.Data.DataTable schema)
         {
-            TypeBuilder tb = GetTypeBuilder(schema.TableName);
+            TypeBuilder tb = GetTypeBuilder(schema.TableName.Length > 0 ? schema.TableName : "default");
 
             ConstructorBuilder constructor = tb.DefineDefaultConstructor(MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.RTSpecialName);
 
