@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeterHenell.SSMS.Plugins", "PeterHenell.SSMS.Plugins\PeterHenell.SSMS.Plugins.csproj", "{73ED43D2-5CFD-45E5-A2FD-3B33C657F059}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeterHenell.SSMS.Plugins.PluggableCommands", "PeterHenell.SSMS.Plugins.PluggableCommands\PeterHenell.SSMS.Plugins.PluggableCommands.csproj", "{FE42FDA5-A738-4288-89AA-C19FA1F27D0B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{73ED43D2-5CFD-45E5-A2FD-3B33C657F059}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73ED43D2-5CFD-45E5-A2FD-3B33C657F059}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73ED43D2-5CFD-45E5-A2FD-3B33C657F059}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE42FDA5-A738-4288-89AA-C19FA1F27D0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE42FDA5-A738-4288-89AA-C19FA1F27D0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE42FDA5-A738-4288-89AA-C19FA1F27D0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE42FDA5-A738-4288-89AA-C19FA1F27D0B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

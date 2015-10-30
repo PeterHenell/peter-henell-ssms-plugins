@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using PeterHenell.SSMS.Plugins.Plugins;
 
-namespace PeterHenell.SSMS.Plugins.Tests
+namespace PeterHenell.SSMS.Plugins.PluggableCommands.Tests
 {
     
     [TestFixture]

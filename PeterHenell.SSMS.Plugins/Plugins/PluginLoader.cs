@@ -16,33 +16,30 @@ namespace PeterHenell.SSMS.Plugins.Plugins
             _loadedPlugins = new List<Type>();
         }
 
-        //"{0}\\Plugins\\{1}", System.Environment.CurrentDirectory
         public void LoadPlugin(string pluginFolder, string assemblyName)
         {
             try
             {
-                string assemblyFileName = String.Format(pluginFolder, assemblyName);
+                string assemblyFileName = System.IO.Path.Combine(pluginFolder, assemblyName);
                 Assembly asm = Assembly.LoadFrom(assemblyFileName);
-                Type[] types = asm.GetTypes();
-                foreach (Type thisType in types)
+                Type[] typesInTheAssembly = asm.GetTypes();
+                foreach (Type currentType in typesInTheAssembly)
                 {
-                    Type[] interfaces = thisType.GetInterfaces();
-                    foreach (Type thisInterface in interfaces)
+                    Type[] interfacesOfTheType = currentType.GetInterfaces();
+                    foreach (Type thisInterface in interfacesOfTheType)
                     {
-                        if (thisInterface.GetInterfaces().Any(x => x.IsInstanceOfType(typeof(T))))
+                        Console.WriteLine(thisInterface.AssemblyQualifiedName);
+                        if (thisInterface.IsInstanceOfType(typeof(T)))
                         {
-                            //-- Load the object
-                            _loadedPlugins.Add(thisType);
-                            //object obj = asm.CreateInstance(String.Format("{0}.{1}", thisType.Namespace, thisType.Name));
-                            //return obj as T;
+                            _loadedPlugins.Add(currentType);
                         }
                     }
-
                 }
             }
-            catch
+            catch(Exception e)
             {
                 // This should be logged
+                Console.WriteLine(e.ToString());
             }
         }
 

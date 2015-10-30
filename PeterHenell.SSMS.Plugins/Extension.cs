@@ -61,8 +61,8 @@ namespace PeterHenell.SSMS.Plugins
         }
 
         public string Version { get { return "Peter Henell SSMS Plugins 2015 1.1.0"; } }
-        //public string Author { get { return "Peter Henell"; } }
-        //public string URL { get { return "https://github.com/PeterHenell/peter-henell-ssms-plugins"; } }
+        public string Author { get { return "Peter Henell"; } }
+        public string URL { get { return "https://github.com/PeterHenell/peter-henell-ssms-plugins"; } }
 
     }
 }
