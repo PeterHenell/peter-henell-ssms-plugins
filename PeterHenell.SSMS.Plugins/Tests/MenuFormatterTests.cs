@@ -39,9 +39,9 @@ namespace PeterHenell.SSMS.Plugins.Tests
         [Test]
         public void ShouldCreateGroupsFromInstances()
         {
-            PluginManager<ICommandPlugin> manager = new PluginManager<ICommandPlugin>();
+            var manager = new CommandPluginManager();
             manager.LoadAllPlugins(System.Environment.CurrentDirectory);
-            var plugins = manager.GetPluginInstances(i => true);
+            var plugins = manager.GetPluginInstances();
 
             var groups = formatter.GetMenuGroups(plugins);
             

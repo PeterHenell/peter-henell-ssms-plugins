@@ -34,9 +34,9 @@ namespace PeterHenell.SSMS.Plugins.PluggableCommands.Tests
         [Test]
         public void ShouldInstatiateAllPlugins()
         {
-            PluginManager<ICommandPlugin> manager = new PluginManager<ICommandPlugin>();
+            var manager = new CommandPluginManager();
             manager.LoadAllPlugins(System.Environment.CurrentDirectory);
-            var plugins = manager.GetPluginInstances(i => i.Enabled);
+            var plugins = manager.GetPluginInstances();
 
             Assert.That(plugins.Count, Is.GreaterThanOrEqualTo(5).And.LessThanOrEqualTo(50));
         }
@@ -44,9 +44,9 @@ namespace PeterHenell.SSMS.Plugins.PluggableCommands.Tests
         [Test]
         public void AllPluginsMustHaveMenuGroup()
         {
-            PluginManager<ICommandPlugin> manager = new PluginManager<ICommandPlugin>();
+            var manager = new CommandPluginManager();
             manager.LoadAllPlugins(System.Environment.CurrentDirectory);
-            var plugins = manager.GetPluginInstances(i => i.Enabled);
+            var plugins = manager.GetPluginInstances();
 
             Console.WriteLine(plugins.Count);
             foreach (var pl in plugins)
@@ -62,12 +62,79 @@ namespace PeterHenell.SSMS.Plugins.PluggableCommands.Tests
         [Test]
         public void PluginsShouldBeCached()
         {
-            PluginManager<ICommandPlugin> manager = new PluginManager<ICommandPlugin>();
+            var manager = new CommandPluginManager();
             manager.LoadAllPlugins(System.Environment.CurrentDirectory);
-            var plugins = manager.GetPluginInstances(i => i.Enabled);
-            var pluginsAgain = manager.GetPluginInstances(i => i.Enabled);
+            var plugins = manager.GetPluginInstances();
+            var pluginsAgain = manager.GetPluginInstances();
 
             CollectionAssert.AreEqual(plugins, pluginsAgain);
+        }
+
+        [Test]
+        public void PluginsWillNotBeLoadedIfTheyDoNotHaveIconSet()
+        {
+            var manager = new CommandPluginManager();
+            manager.LoadAllPlugins(System.Environment.CurrentDirectory);
+            var plugins = manager.GetPluginInstances();
+
+            var bad = plugins.FirstOrDefault(x => x.Name == "Bad Mock");
+            Assert.That(bad, Is.Null);
+        }
+
+
+    }
+
+    public class BadPluginMock : ICommandPlugin
+    {
+
+        public string MenuGroup
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public void Init(ISsmsFunctionalityProvider4 provider)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string Caption
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public string[] DefaultBindings
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public bool Enabled
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public void Execute(object parameter)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ICommandImage Icon
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public string Name
+        {
+            get { return "Bad Mock"; }
+        }
+
+        public string Tooltip
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public bool Visible
+        {
+            get { throw new NotImplementedException(); }
         }
     }
 }

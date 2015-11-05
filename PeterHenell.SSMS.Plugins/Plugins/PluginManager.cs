@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace PeterHenell.SSMS.Plugins.Plugins
 {
-    public class PluginManager<T> where T : class
+    
+
+
+    public abstract class PluginManager<T> where T : class
     {
         readonly List<Type> _loadedPlugins = new List<Type>();
         bool initialized = false;
@@ -33,18 +36,27 @@ namespace PeterHenell.SSMS.Plugins.Plugins
         /// until LoadAllPlugins are called again.
         /// </summary>
         /// <returns></returns>
-        public List<T> GetPluginInstances(Predicate<T> filter)
+        protected List<T> GetFilteredPluginInstances(Predicate<T> filter)
         {
             if (!initialized)
             {
                 foreach (var type in _loadedPlugins)
                 {
                     var instance = CreateInstance(type);
-                    if (filter(instance))
+                    // Try-catch to ignore exceptions thrown when calling the filter()-callback
+                    try
                     {
-                        plugins.Add(instance);    
+                        if (filter(instance))
+                        {
+                            plugins.Add(instance);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.ToString());
                     }
                 }
+                // Next time, use the cached list
                 initialized = true;
             }
             

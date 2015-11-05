@@ -148,6 +148,7 @@
       <DependentUpon>TextBoxAndCheckboxesForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Plugins\ICommandPlugin.cs" />
+    <Compile Include="Plugins\CommandPluginManager.cs" />
     <Compile Include="Plugins\PluginLoader.cs" />
     <Compile Include="Plugins\PluginManager.cs" />
     <Compile Include="QueryBuilders\LambdaInsertBuilder.cs" />

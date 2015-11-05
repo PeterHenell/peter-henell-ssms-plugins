@@ -42,12 +42,12 @@ namespace PeterHenell.SSMS.Plugins
         private void LoadCommandPlugins()
         {
             MenuFormatter formatter = new MenuFormatter();
-            var pluginManager = new PluginManager<ICommandPlugin>();
+            var pluginManager = new CommandPluginManager();
 
             try
             {
                 pluginManager.LoadAllPlugins(AssemblyDirectory);
-                var plugins = pluginManager.GetPluginInstances(i => i.Enabled);
+                var plugins = pluginManager.GetPluginInstances();
                 foreach (var plugin in plugins)
                 {
                     plugin.Init(_provider4);
