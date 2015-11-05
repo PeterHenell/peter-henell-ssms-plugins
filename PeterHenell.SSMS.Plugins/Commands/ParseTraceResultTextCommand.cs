@@ -1,4 +1,5 @@
 ﻿using PeterHenell.SSMS.Plugins.DataAccess;
+using PeterHenell.SSMS.Plugins.Plugins;
 using PeterHenell.SSMS.Plugins.Shell;
 using RedGate.SIPFrameworkShared;
 using System;
@@ -6,20 +7,13 @@ using System.Windows.Forms;
 
 namespace PeterHenell.SSMS.Plugins.Commands
 {
-    public class ParseTraceResultText_Command : ISharedCommandWithExecuteParameter
+    public class ParseTraceResultText_Command : ICommandPlugin
     {
         public readonly static string COMMAND_NAME = "ParseTraceResultText_Command";
         
-        private readonly ISsmsFunctionalityProvider4 provider;
+        private ISsmsFunctionalityProvider4 provider;
         ShellManager shellManager;
         private readonly ICommandImage m_CommandImage = new CommandImageNone();
-
-
-        public ParseTraceResultText_Command(ISsmsFunctionalityProvider4 provider)
-        {
-            this.provider = provider;
-            this.shellManager = new ShellManager(provider);
-        }
 
 
         public void Execute(object parameter)
@@ -41,7 +35,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
 
 
         public string Name { get { return COMMAND_NAME ; } }
-        public string Caption { get { return "Generate Temp Tables From Selected Queries"; } }
+        public string Caption { get { return "Parse Trace Results"; } }
         public string Tooltip { get { return "Select a query, the result will be fitted into a generated temporary table."; }}
         public ICommandImage Icon { get { return m_CommandImage; } }
         public string[] DefaultBindings { get { return new[] { "global::Ctrl+Alt+D" }; } }
@@ -51,6 +45,17 @@ namespace PeterHenell.SSMS.Plugins.Commands
         public void Execute()
         {
             
+        }
+
+        public string MenuGroup
+        {
+            get { return "Data Generation"; }
+        }
+
+        public void Init(ISsmsFunctionalityProvider4 provider)
+        {
+            this.provider = provider;
+            this.shellManager = new ShellManager(provider);
         }
     }
 }

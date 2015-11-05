@@ -12,24 +12,18 @@ using System.Data.SqlClient;
 using System.Collections.Generic;
 using PeterHenell.SSMS.Plugins.ExtensionMethods;
 using PeterHenell.SSMS.Plugins.Utils.Generators;
+using PeterHenell.SSMS.Plugins.Plugins;
 
 namespace PeterHenell.SSMS.Plugins.Commands
 {
-    public class GenerateDataForTableCommand : ISharedCommandWithExecuteParameter
+    public class GenerateDataForTableCommand : ICommandPlugin
     {
         public readonly static string COMMAND_NAME = "GenerateDataForTable_Command";
 
-        readonly ISsmsFunctionalityProvider4 provider;
+        ISsmsFunctionalityProvider4 provider;
         readonly ICommandImage m_CommandImage = new CommandImageNone();
-        readonly ShellManager shellManager;
-        readonly ObjectExplorerNodeDescriptorBase currentNode = null;
+        ShellManager shellManager;
         TableMetaDataAccess tableMetaAccess;
-
-        public GenerateDataForTableCommand(ISsmsFunctionalityProvider4 provider)
-        {
-            this.provider = provider;
-            this.shellManager = new ShellManager(provider);
-        }
 
         public void Execute(object parameter)
         {
@@ -119,6 +113,17 @@ namespace PeterHenell.SSMS.Plugins.Commands
         public void Execute()
         {
 
+        }
+
+        public string MenuGroup
+        {
+            get { return "Data Generation"; }
+        }
+
+        public void Init(ISsmsFunctionalityProvider4 provider)
+        {
+            this.provider = provider;
+            this.shellManager = new ShellManager(provider);
         }
     }
 }

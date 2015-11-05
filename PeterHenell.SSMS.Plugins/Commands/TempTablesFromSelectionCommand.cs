@@ -6,23 +6,17 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 using PeterHenell.SSMS.Plugins.ExtensionMethods;
+using PeterHenell.SSMS.Plugins.Plugins;
 
 namespace PeterHenell.SSMS.Plugins.Commands
 {
-    public class TempTablesFromSelectionCommand : ISharedCommandWithExecuteParameter
+    public class TempTablesFromSelectionCommand : ICommandPlugin
     {
         public readonly static string COMMAND_NAME = "GenerateTempTablesFromSelectedQuery_Command";
 
-        private readonly ISsmsFunctionalityProvider4 provider;
+        private ISsmsFunctionalityProvider4 provider;
         ShellManager shellManager;
         private readonly ICommandImage m_CommandImage = new CommandImageNone();
-
-
-        public TempTablesFromSelectionCommand(ISsmsFunctionalityProvider4 provider)
-        {
-            this.provider = provider;
-            this.shellManager = new ShellManager(provider);
-        }
 
 
         public void Execute(object parameter)
@@ -82,6 +76,17 @@ namespace PeterHenell.SSMS.Plugins.Commands
 
         public void SetSelectedDBNode(ObjectExplorerNodeDescriptorBase theSelectedNode)
         {
+        }
+
+        public string MenuGroup
+        {
+            get { return "Data Generation"; }
+        }
+
+        public void Init(ISsmsFunctionalityProvider4 provider)
+        {
+            this.provider = provider;
+            this.shellManager = new ShellManager(provider);
         }
     }
 }

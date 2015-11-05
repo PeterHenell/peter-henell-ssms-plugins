@@ -10,7 +10,6 @@ namespace PeterHenell.SSMS.Plugins.Plugins
 {
     public interface ICommandPlugin : ISharedCommandWithExecuteParameter
     {
-        string CommandName { get; }
         string MenuGroup { get; }
         void Init(ISsmsFunctionalityProvider4 provider);
     }

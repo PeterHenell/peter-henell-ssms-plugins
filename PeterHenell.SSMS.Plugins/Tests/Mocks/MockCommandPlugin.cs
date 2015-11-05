@@ -1,4 +1,5 @@
 ﻿using PeterHenell.SSMS.Plugins.Plugins;
+using RedGate.SIPFrameworkShared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,12 @@ namespace PeterHenell.SSMS.Plugins
     {
         private readonly string commandName;
         private readonly string menuGroup;
+
+        public MockCommandPlugin()
+        {
+            commandName = "Mock";
+            menuGroup = "Test";
+        }
 
         public MockCommandPlugin(string commandName, string menuGroup)
         {
@@ -30,47 +37,45 @@ namespace PeterHenell.SSMS.Plugins
 
         public void Init(RedGate.SIPFrameworkShared.ISsmsFunctionalityProvider4 provider)
         {
-            throw new NotImplementedException();
         }
 
         public string Caption
         {
-            get { throw new NotImplementedException(); }
+            get { return "Mock"; }
         }
 
         public string[] DefaultBindings
         {
-            get { throw new NotImplementedException(); }
+            get { return new[] { "global::Ctrl+Alt+Q" }; }
         }
 
         public bool Enabled
         {
-            get { throw new NotImplementedException(); }
+            get { return false; }
         }
 
         public void Execute(object parameter)
         {
-            throw new NotImplementedException();
         }
 
         public RedGate.SIPFrameworkShared.ICommandImage Icon
         {
-            get { throw new NotImplementedException(); }
+            get { return new CommandImageNone(); }
         }
 
         public string Name
         {
-            get { throw new NotImplementedException(); }
+            get { return "Mock"; }
         }
 
         public string Tooltip
         {
-            get { throw new NotImplementedException(); }
+            get { return "Mock"; }
         }
 
         public bool Visible
         {
-            get { throw new NotImplementedException(); }
+            get { return false; }
         }
     }
 }

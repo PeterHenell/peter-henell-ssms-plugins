@@ -19,12 +19,12 @@ namespace PeterHenell.SSMS.Plugins.Tests
         public void ShouldGroupMenuItemsByName()
         {
             var plugins = new List<ICommandPlugin>();
-            plugins.Add(new MockCommandPlugin("", "HOME"));
-            plugins.Add(new MockCommandPlugin("", "HOME"));
-            plugins.Add(new MockCommandPlugin("", "HOME"));
+            plugins.Add(new MockCommandPlugin("A", "HOME"));
+            plugins.Add(new MockCommandPlugin("B", "HOME"));
+            plugins.Add(new MockCommandPlugin("C", "HOME"));
 
-            plugins.Add(new MockCommandPlugin("", "UTILS"));
-            plugins.Add(new MockCommandPlugin("", "UTILS"));
+            plugins.Add(new MockCommandPlugin("D", "UTILS"));
+            plugins.Add(new MockCommandPlugin("E", "UTILS"));
 
             var groups = formatter.GetMenuGroups(plugins);
             Assert.That(groups.Keys.Count, Is.EqualTo(2));
@@ -34,6 +34,18 @@ namespace PeterHenell.SSMS.Plugins.Tests
 
             var utils = groups["UTILS"]; 
             Assert.That(utils.Count(), Is.EqualTo(2));
+        }
+
+        [Test]
+        public void ShouldCreateGroupsFromInstances()
+        {
+            PluginManager<ICommandPlugin> manager = new PluginManager<ICommandPlugin>();
+            manager.LoadAllPlugins(System.Environment.CurrentDirectory);
+            var plugins = manager.GetPluginInstances(i => true);
+
+            var groups = formatter.GetMenuGroups(plugins);
+            
+            Console.WriteLine(plugins.Count);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using MSTest = Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿
 using NUnit.Framework;
 using System.Data.SqlClient;
 using System.Data;
@@ -7,7 +7,7 @@ using PeterHenell.SSMS.Plugins.Utils.Generators;
 
 namespace PeterHenell.SSMS.Plugins.Tests
 {
-    [MSTest.TestClass]
+    [TestFixture]
     public class QueryGeneratorTest
     {
         private string GetLocalConnection()
@@ -19,7 +19,7 @@ namespace PeterHenell.SSMS.Plugins.Tests
             return builder.ToString();
         }
 
-        [MSTest.TestMethod]
+        [Test]
         public void ShouldTypeFluentlyToGetGeneratedQueries()
         {
             var dt = new DataTable();
@@ -38,7 +38,7 @@ WHERE 1=0;";
             Assert.That(query, Is.EqualTo(expected));
         }
 
-        [MSTest.TestMethod]
+        [Test]
         public void ShouldOutputFakeTableWithInserts()
         {
             var tableMeta = TableMetadata.FromQualifiedString("dbo.Customer");
@@ -49,7 +49,7 @@ WHERE 1=0;";
             Assert.That(actual, Is.EqualTo(expected));
         }
 
-        [MSTest.TestMethod]
+        [Test]
         public void ShouldInsertFromProcedureResult()
         {
             var selectedQuery = "SELECT * FROM Customer;";

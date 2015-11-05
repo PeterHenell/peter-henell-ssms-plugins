@@ -149,6 +149,7 @@
     </Compile>
     <Compile Include="Plugins\ICommandPlugin.cs" />
     <Compile Include="Plugins\PluginLoader.cs" />
+    <Compile Include="Plugins\PluginManager.cs" />
     <Compile Include="QueryBuilders\LambdaInsertBuilder.cs" />
     <Compile Include="Shell\Menu.cs" />
     <Compile Include="Extension.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="Tests\LambdaInsertBuilderTests.cs" />
     <Compile Include="Tests\MenuFormatterTests.cs" />
     <Compile Include="Tests\Mocks\MockCommandPlugin.cs" />
+    <Compile Include="Tests\PluginLoaderTests.cs" />
     <Compile Include="Tests\TableMetaDataTests.cs" />
     <Compile Include="TypeBuilders\DynamicTypeBuilder.cs" />
     <Compile Include="Utils\Generators\DataGenerator.cs" />

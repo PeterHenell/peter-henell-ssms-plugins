@@ -11,24 +11,18 @@ using System.Linq;
 using System.Data.SqlClient;
 using System.Collections.Generic;
 using PeterHenell.SSMS.Plugins.ExtensionMethods;
+using PeterHenell.SSMS.Plugins.Plugins;
 
 namespace PeterHenell.SSMS.Plugins.Commands
 {
-    public class ActualAndExpectedCommand : ISharedCommandWithExecuteParameter
+    public class ActualAndExpectedCommand : ICommandPlugin
     {
         public readonly static string COMMAND_NAME = "ActualAndExpectedCommand";
 
-        private readonly ISsmsFunctionalityProvider4 provider;
+        private ISsmsFunctionalityProvider4 provider;
         ShellManager shellManager;
 
         private readonly ICommandImage m_CommandImage = new CommandImageNone();
-
-
-        public ActualAndExpectedCommand(ISsmsFunctionalityProvider4 provider)
-        {
-            this.provider = provider;
-            this.shellManager = new ShellManager(provider);
-        }
 
         public void Execute(object parameter)
         {
@@ -180,6 +174,17 @@ namespace PeterHenell.SSMS.Plugins.Commands
         public void Execute()
         {
 
+        }
+
+        public string MenuGroup
+        {
+            get { return "TSQLT - Tools"; }
+        }
+
+        public void Init(ISsmsFunctionalityProvider4 provider)
+        {
+            this.provider = provider;
+            this.shellManager = new ShellManager(provider);
         }
     }
 }

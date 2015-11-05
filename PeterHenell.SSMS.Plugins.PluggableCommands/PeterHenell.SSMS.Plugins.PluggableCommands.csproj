@@ -60,7 +60,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tests\PluginLoaderTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PeterHenell.SSMS.Plugins\PeterHenell.SSMS.Plugins.csproj">
@@ -76,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CommandPlugins\" />
+    <Folder Include="Tests\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

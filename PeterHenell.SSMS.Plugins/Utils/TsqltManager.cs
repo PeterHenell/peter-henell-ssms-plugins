@@ -11,6 +11,10 @@ namespace PeterHenell.SSMS.Plugins.Utils
     {
         public static string GetFakeTableStatement(string selectedText)
         {
+            if (string.IsNullOrEmpty(selectedText))
+            {
+                throw new ArgumentException("Selected text is empty");
+            }
             var table = TableMetadata.FromQualifiedString(selectedText);
 
             return FakeTable(table);

@@ -5,54 +5,62 @@ using PeterHenell.SSMS.Plugins.Commands;
 using System.Collections.Generic;
 using PeterHenell.SSMS.Plugins.Utils;
 using System.Windows.Forms;
+using PeterHenell.SSMS.Plugins.Plugins;
+using System.Reflection;
+using System.IO;
+using EnvDTE80;
 
 namespace PeterHenell.SSMS.Plugins
 {
     public class Extension : ISsmsAddin
     {
-        private ISsmsFunctionalityProvider4 m_Provider4;
-        private object m_Dte2;
+        private ISsmsFunctionalityProvider4 _provider4;
+        private DTE2 _Dte2;
 
-        List<ISharedCommandWithExecuteParameter> commands = new List<ISharedCommandWithExecuteParameter>();
+        public static string AssemblyDirectory
+        {
+            get
+            {
+                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                UriBuilder uri = new UriBuilder(codeBase);
+                string path = Uri.UnescapeDataString(uri.Path);
+                return Path.GetDirectoryName(path);
+            }
+        }
 
         public void OnLoad(ISsmsExtendedFunctionalityProvider provider)
         {
-            m_Provider4 = (ISsmsFunctionalityProvider4)provider;
+            _provider4 = (ISsmsFunctionalityProvider4)provider;
+            _Dte2 = _provider4.SsmsDte2 as DTE2;
 
-            m_Dte2 = m_Provider4.SsmsDte2;
-
-            if (m_Provider4 == null)
+            if (_provider4 == null)
                 throw new ArgumentException();
 
+            LoadCommandPlugins();
+        }
 
-            commands.Add(new TempTablesFromSelectionCommand(m_Provider4));
-            commands.Add(new DecompressResultCommand(m_Provider4));
-            commands.Add(new GenerateInsertStatementCommand(m_Provider4));
-            commands.Add(new MockAndInsertCommand(m_Provider4));
-            commands.Add(new ResultToExcelCommand(m_Provider4));
-            commands.Add(new ActualAndExpectedCommand(m_Provider4));
-            commands.Add(new GenerateDataForTableCommand(m_Provider4));
+        private void LoadCommandPlugins()
+        {
+            MenuFormatter formatter = new MenuFormatter();
+            var pluginManager = new PluginManager<ICommandPlugin>();
 
-            // STEP 1: Add command to the provider
-            foreach (var command in commands)
+            try
             {
-                m_Provider4.AddGlobalCommand(command);
+                pluginManager.LoadAllPlugins(AssemblyDirectory);
+                var plugins = pluginManager.GetPluginInstances(i => i.Enabled);
+                foreach (var plugin in plugins)
+                {
+                    plugin.Init(_provider4);
+                    _provider4.AddGlobalCommand(plugin);
+                }
+                var menuGroups = formatter.GetMenuGroups(plugins);
+                formatter.ConfigureMenu(menuGroups, _provider4);
             }
-
-            // STEP 2: Add command to menu
-            m_Provider4.MenuBar.MainMenu.BeginSubmenu("Peter Henell", "Peter Henell")
-                .BeginSubmenu("Code Generation", "Code Generation")
-                .AddCommand(TempTablesFromSelectionCommand.COMMAND_NAME)
-                .AddCommand(DecompressResultCommand.COMMAND_NAME)
-                .AddCommand(GenerateInsertStatementCommand.COMMAND_NAME)
-                .AddCommand(ResultToExcelCommand.COMMAND_NAME)
-                .AddCommand(GenerateDataForTableCommand.COMMAND_NAME)
-                .EndSubmenu()
-                .BeginSubmenu("tSQLt - Tools", "tSQLt - Tools")
-                .AddCommand(MockAndInsertCommand.COMMAND_NAME)
-                .AddCommand(ActualAndExpectedCommand.COMMAND_NAME)
-                .EndSubmenu()
-                .EndSubmenu();
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+                throw;
+            }
         }
 
         public void OnNodeChanged(ObjectExplorerNodeDescriptorBase node)

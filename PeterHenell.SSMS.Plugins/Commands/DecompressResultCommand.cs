@@ -1,4 +1,5 @@
 ﻿using PeterHenell.SSMS.Plugins.DataAccess;
+using PeterHenell.SSMS.Plugins.Plugins;
 using PeterHenell.SSMS.Plugins.Shell;
 using PeterHenell.SSMS.Plugins.Utils;
 using RedGate.SIPFrameworkShared;
@@ -10,20 +11,13 @@ using System.Windows.Forms;
 
 namespace PeterHenell.SSMS.Plugins.Commands
 {
-    public class DecompressResultCommand : ISharedCommandWithExecuteParameter
+    public class DecompressResultCommand : ICommandPlugin
     {
         public readonly static string COMMAND_NAME = "DecompressResultCommand";
 
-        private readonly ISsmsFunctionalityProvider4 provider;
+        private ISsmsFunctionalityProvider4 provider;
         ShellManager shellManager;
         private readonly ICommandImage m_CommandImage = new CommandImageNone();
-
-
-        public DecompressResultCommand(ISsmsFunctionalityProvider4 provider)
-        {
-            this.provider = provider;
-            this.shellManager = new ShellManager(provider);
-        }
 
         public void Execute(object parameter)
         {
@@ -75,5 +69,16 @@ namespace PeterHenell.SSMS.Plugins.Commands
 
         }
 
+
+        public string MenuGroup
+        {
+            get { return "Data Generation"; }
+        }
+
+        public void Init(ISsmsFunctionalityProvider4 provider)
+        {
+            this.provider = provider;
+            this.shellManager = new ShellManager(provider);
+        }
     }
 }

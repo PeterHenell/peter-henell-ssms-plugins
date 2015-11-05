@@ -11,25 +11,26 @@ using System.Linq;
 using System.Data.SqlClient;
 using System.Collections.Generic;
 using PeterHenell.SSMS.Plugins.ExtensionMethods;
+using PeterHenell.SSMS.Plugins.Plugins;
 
 namespace PeterHenell.SSMS.Plugins.Commands
 {
-    public class GenerateInsertStatementCommand : ISharedCommandWithExecuteParameter
+    public class GenerateInsertStatementCommand : ICommandPlugin
     {
         public readonly static string COMMAND_NAME = "GenerateInsertStatement_Command";
 
-        private readonly ISsmsFunctionalityProvider4 provider;
+        private ISsmsFunctionalityProvider4 provider;
         ShellManager shellManager;
-        private ObjectExplorerNodeDescriptorBase currentNode = null;
+        //private ObjectExplorerNodeDescriptorBase currentNode = null;
 
         private readonly ICommandImage m_CommandImage = new CommandImageNone();
 
 
-        public GenerateInsertStatementCommand(ISsmsFunctionalityProvider4 provider)
-        {
-            this.provider = provider;
-            this.shellManager = new ShellManager(provider);
-        }
+        //public GenerateInsertStatementCommand(ISsmsFunctionalityProvider4 provider)
+        //{
+        //    this.provider = provider;
+        //    this.shellManager = new ShellManager(provider);
+        //}
 
         //public void SetSelectedDBNode(ObjectExplorerNodeDescriptorBase theSelectedNode)
         //{
@@ -118,6 +119,17 @@ set rowcount 0;", numRows, selectedText);
         public void Execute()
         {
 
+        }
+
+        public string MenuGroup
+        {
+            get { return "Data Generation"; }
+        }
+
+        public void Init(ISsmsFunctionalityProvider4 provider)
+        {
+            this.provider = provider;
+            this.shellManager = new ShellManager(provider);
         }
     }
 }
