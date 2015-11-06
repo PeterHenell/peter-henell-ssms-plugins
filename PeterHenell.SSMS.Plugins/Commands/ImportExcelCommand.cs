@@ -75,8 +75,8 @@ namespace PeterHenell.SSMS.Plugins.Commands
         }
 
         public string Name { get { return COMMAND_NAME; } }
-        public string Caption { get { return "Import Excel File"; } }
-        public string Tooltip { get { return "Import Excel File"; } }
+        public string Caption { get { return "Import Excel File (Only reads Sheet 1)"; } }
+        public string Tooltip { get { return "Import Excel File (Only reads Sheet 1)"; } }
         public ICommandImage Icon { get { return m_CommandImage; } }
         public string[] DefaultBindings { get { return new[] { "global::Ctrl+Alt+E" }; } }
         public bool Visible { get { return true; } }
