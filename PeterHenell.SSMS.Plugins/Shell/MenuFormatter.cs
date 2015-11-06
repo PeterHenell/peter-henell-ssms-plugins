@@ -34,7 +34,7 @@ namespace PeterHenell.SSMS.Plugins.Shell
             foreach (var groupName in menuGroups.Keys)
             {
                 var sub = peterhenell.BeginSubmenu(groupName, groupName);
-                foreach (var command in menuGroups[groupName])
+                foreach (var command in menuGroups[groupName].OrderBy(x => x.Caption))
                 {
                     sub.AddCommand(command.Name);
                 }
