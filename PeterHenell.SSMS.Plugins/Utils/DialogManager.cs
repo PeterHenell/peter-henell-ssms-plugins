@@ -61,18 +61,33 @@ namespace PeterHenell.SSMS.Plugins.Utils
             }
         }
 
-        
 
-        public static FileInfo ShowExcelSaveFileDialog()
+
+        public static FileInfo ShowExcelSaveFileDialog(string filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*")
         {
             var saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            saveFileDialog.Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*";
+            saveFileDialog.Filter = filter;
 
             var dialogResult = saveFileDialog.ShowDialog();
             if (dialogResult != System.Windows.Forms.DialogResult.OK)
                 return null;
 
             return new FileInfo(saveFileDialog.FileName);
+        }
+
+        public static FileInfo ShowSelectFileDialog(string filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*")
+        {
+            var openFileDialog = new System.Windows.Forms.OpenFileDialog();
+            openFileDialog.Filter = filter;
+
+            var dialogResult = openFileDialog.ShowDialog();
+            if (dialogResult != System.Windows.Forms.DialogResult.OK)
+                return null;
+
+            if (!File.Exists(openFileDialog.FileName))
+                return null;
+
+            return new FileInfo(openFileDialog.FileName);
         }
     }
 }
