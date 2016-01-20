@@ -40,16 +40,9 @@ namespace PeterHenell.SSMS.Plugins.Commands
 
         private void PerformCommand()
         {
-            // select file
-            // choose name of target table
-            // create table
-            // stream excel file into table
-
             var file = DialogManager.ShowSelectFileDialog();
             if (file == null)
                 return;
-
-            //var tableName = "tempImport";
 
             var ok = new Action<string>( (tableName) =>
             {
@@ -65,7 +58,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
             });
 
 
-            DialogManager.GetDialogInputFromUser("Choose target table name", "ExcelImport", ok);
+            DialogManager.GetDialogInputFromUser("Choose target table name (This table will be created)", "ExcelImport", ok);
         }
 
         

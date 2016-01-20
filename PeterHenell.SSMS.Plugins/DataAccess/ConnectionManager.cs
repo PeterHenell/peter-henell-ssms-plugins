@@ -42,15 +42,11 @@ namespace PeterHenell.SSMS.Plugins.DataAccess
 
         internal static string GetConnectionStringForCurrentWindow()
         {
-           
-
             IScriptFactory scriptFactory = ServiceCache.ScriptFactory;
-
             if (scriptFactory != null)
                 return GetConnectionString(scriptFactory.CurrentlyActiveWndConnectionInfo.UIConnectionInfo);
             else
                 throw new InvalidOperationException("ServiceCache.ScriptFactory is null. This usually happens when wrong assemblies have been referenced.");                
-
         }
     }
 }
