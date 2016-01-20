@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Peter Henell")]
 [assembly: AssemblyProduct("PeterHenell.SSMS.Plugins")]
-[assembly: AssemblyCopyright("Copyright © Peter Henell 2014")]
+[assembly: AssemblyCopyright("Copyright © Peter Henell 2014-2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

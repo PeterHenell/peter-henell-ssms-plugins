@@ -1,4 +1,4 @@
-﻿using RedGate.SIPFrameworkShared;
+﻿//using RedGate.SIPFrameworkShared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace PeterHenell.SSMS.Plugins.Plugins
 {
-    public interface ICommandPlugin : ISharedCommandWithExecuteParameter
+    public interface ICommandPlugin 
     {
         string MenuGroup { get; }
-        void Init(ISsmsFunctionalityProvider4 provider);
+        
     }
 }

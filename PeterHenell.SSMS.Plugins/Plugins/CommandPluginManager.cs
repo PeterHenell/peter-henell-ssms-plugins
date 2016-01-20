@@ -6,22 +6,21 @@ using System.Threading.Tasks;
 
 namespace PeterHenell.SSMS.Plugins.Plugins
 {
-    public class CommandPluginManager : PluginManager<ICommandPlugin>
+    public class CommandPluginManager : PluginManager<CommandPluginBase>
     {
-        public List<ICommandPlugin> GetPluginInstances()
+        public List<CommandPluginWrapper> GetPluginInstances()
         {
-            return base.GetFilteredPluginInstances(i => IsValid(i));
+            return base.GetFilteredPluginInstances(i => IsValid(i))
+                        .Select( p => new CommandPluginWrapper(p)).ToList();
         }
 
-        private bool IsValid(ICommandPlugin i)
+        private bool IsValid(CommandPluginBase i)
         {
-            return i.Enabled
-                && i.Icon != null
-                && i.MenuGroup != null
+            return 
+                   i.MenuGroup != null
                 && i.Name != null
                 && i.Caption != null
-                && i.DefaultBindings != null
-                && i.Tooltip != null;
+                && i.ShortcutBinding != null;
         }
     }
 }

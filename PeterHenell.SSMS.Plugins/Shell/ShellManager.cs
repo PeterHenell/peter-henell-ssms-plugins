@@ -2,10 +2,11 @@
 using EnvDTE80;
 using RedGate.SIPFrameworkShared;
 using System;
+using System.Windows.Forms;
 
 namespace PeterHenell.SSMS.Plugins.Shell
 {
-    class ShellManager
+    public class ShellManager
     {
         public ISsmsFunctionalityProvider4 provider { get; private set; }
 
@@ -19,7 +20,7 @@ namespace PeterHenell.SSMS.Plugins.Shell
         /// </summary>
         /// <param name="provider"></param>
         /// <returns>null if no text is selected OR if no document is active</returns>
-        internal  EditPoint GetEditPointAtBottomOfSelection()
+        public EditPoint GetEditPointAtBottomOfSelection()
         {
             DTE2 a = (DTE2)provider.SsmsDte2;
             Document document = a.ActiveDocument;
@@ -34,7 +35,7 @@ namespace PeterHenell.SSMS.Plugins.Shell
             }
             return null;
         }
-        internal EditPoint GetEditPointAtTopOfSelection()
+        public EditPoint GetEditPointAtTopOfSelection()
         {
             DTE2 a = (DTE2)provider.SsmsDte2;
             Document document = a.ActiveDocument;
@@ -51,14 +52,14 @@ namespace PeterHenell.SSMS.Plugins.Shell
             return null;            
         }
 
-        internal  void AppendToEndOfSelection(string text)
+        public void AppendToEndOfSelection(string text)
         {
             var editPoint = GetEditPointAtBottomOfSelection();
             editPoint.Insert(Environment.NewLine + text);
             
         }
 
-        internal string GetSelectedText()
+        public string GetSelectedText()
         {
             var currentWindow = provider.GetQueryWindowManager();
             var selectedText = "";
@@ -79,14 +80,14 @@ namespace PeterHenell.SSMS.Plugins.Shell
             return selectedText;
         }
 
-        internal void AddTextToTopOfSelection(string text)
+        public void AddTextToTopOfSelection(string text)
         {
             var editPoint = GetEditPointAtTopOfSelection();
             editPoint.Insert(text + Environment.NewLine);
             
         }
 
-        internal void ReplaceSelectionWith(string text)
+        public void ReplaceSelectionWith(string text)
         {
             DTE2 a = (DTE2)provider.SsmsDte2;
             Document document = a.ActiveDocument;
@@ -97,6 +98,11 @@ namespace PeterHenell.SSMS.Plugins.Shell
             var endPoint = GetEditPointAtTopOfSelection();
             editPoint.Delete(endPoint);
             editPoint.Insert(text + Environment.NewLine);
+        }
+
+        public static void ShowMessageBox(string message)
+        {
+            MessageBox.Show(message);
         }
     }
 }

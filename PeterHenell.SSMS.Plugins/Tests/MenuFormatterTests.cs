@@ -18,7 +18,7 @@ namespace PeterHenell.SSMS.Plugins.Tests
         [Test]
         public void ShouldGroupMenuItemsByName()
         {
-            var plugins = new List<ICommandPlugin>();
+            var plugins = new List<CommandPluginBase>();
             plugins.Add(new MockCommandPlugin("A", "HOME"));
             plugins.Add(new MockCommandPlugin("B", "HOME"));
             plugins.Add(new MockCommandPlugin("C", "HOME"));
@@ -26,7 +26,7 @@ namespace PeterHenell.SSMS.Plugins.Tests
             plugins.Add(new MockCommandPlugin("D", "UTILS"));
             plugins.Add(new MockCommandPlugin("E", "UTILS"));
 
-            var groups = formatter.GetMenuGroups(plugins);
+            var groups = formatter.GetMenuGroups(plugins.Select(p => new CommandPluginWrapper(p)));
             Assert.That(groups.Keys.Count, Is.EqualTo(2));
 
             var home = groups["HOME"];

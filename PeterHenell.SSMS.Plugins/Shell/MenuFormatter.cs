@@ -18,7 +18,7 @@ namespace PeterHenell.SSMS.Plugins.Shell
         /// </summary>
         /// <param name="plugins"></param>
         /// <returns></returns>
-        public Dictionary<string, List<ICommandPlugin>> GetMenuGroups(List<ICommandPlugin> plugins)
+        public Dictionary<string, List<CommandPluginWrapper>> GetMenuGroups(IEnumerable<CommandPluginWrapper> plugins)
         {
             var groups = plugins.GroupBy(x => x.MenuGroup)
                  .ToDictionary(g => g.Key, g => g.ToList());
@@ -26,7 +26,7 @@ namespace PeterHenell.SSMS.Plugins.Shell
             return groups;
         }
 
-        internal void ConfigureMenu(Dictionary<string, List<ICommandPlugin>> menuGroups, RedGate.SIPFrameworkShared.ISsmsFunctionalityProvider4 _provider4)
+        internal void ConfigureMenu(Dictionary<string, List<CommandPluginWrapper>> menuGroups, RedGate.SIPFrameworkShared.ISsmsFunctionalityProvider4 _provider4)
         {
             //var commandbar = ((DTE2)_provider4.SsmsDte2).CommandBars["Peter Henell"] as Microsoft.VisualStudio.CommandBars.CommandBars;
             //commandbar.ActiveMenuBar.Delete();

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("PeterHenell.SSMS.Plugins.PluggableCommands")]
+[assembly: AssemblyTitle("ExcelReaderTests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Peter Henell")]
-[assembly: AssemblyProduct("PeterHenell.SSMS.Plugins.PluggableCommands")]
+[assembly: AssemblyProduct("ExcelReaderTests")]
 [assembly: AssemblyCopyright("Copyright © Peter Henell 2014-2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("9301f344-58f9-48f3-9548-6ec0b5f6edb3")]
+[assembly: Guid("a15b74f5-7d92-48bf-ab82-359d88e0dd11")]
 
 // Version information for an assembly consists of the following four values:
 //

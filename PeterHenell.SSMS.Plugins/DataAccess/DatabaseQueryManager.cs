@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace PeterHenell.SSMS.Plugins.DataAccess
 {
-    class DatabaseQueryManager
+    public class DatabaseQueryManager
     {
         private string _connectionString;
 
@@ -24,7 +24,7 @@ namespace PeterHenell.SSMS.Plugins.DataAccess
         /// <param name="query"></param>
         /// <param name="ds"></param>
         /// <returns></returns>
-        internal DataSet ExecuteQuery(string query, DataSet ds)
+        public DataSet ExecuteQuery(string query, DataSet ds)
         {
             using (var con = new SqlConnection(_connectionString))
             using (var cmd = new SqlCommand(query, con))
@@ -35,7 +35,7 @@ namespace PeterHenell.SSMS.Plugins.DataAccess
             }
         }
 
-        internal void ExecuteQuery(string sql, Action<SqlDataReader> streamReaderCallback)
+        public void ExecuteQuery(string sql, Action<SqlDataReader> streamReaderCallback)
         {
             using (var con = new SqlConnection(_connectionString))
             using (SqlCommand cmd = new SqlCommand(sql, con))

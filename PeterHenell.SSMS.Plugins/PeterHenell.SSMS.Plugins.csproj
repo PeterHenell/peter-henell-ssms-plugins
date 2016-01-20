@@ -136,7 +136,6 @@
     <Compile Include="Commands\GenerateDataForTableCommand.cs" />
     <Compile Include="Commands\ResultToExcelCommand.cs" />
     <Compile Include="Commands\MockAndInsertCommand.cs" />
-    <Compile Include="Commands\GenerateInsertStatementCommand.cs" />
     <Compile Include="Commands\ParseTraceResultTextCommand.cs" />
     <Compile Include="DataAccess\BulkDataAccess.cs" />
     <Compile Include="DataAccess\ConnectionManager.cs" />
@@ -158,8 +157,10 @@
     <Compile Include="Forms\TextBoxAndCheckboxesForm.Designer.cs">
       <DependentUpon>TextBoxAndCheckboxesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Plugins\CommandPluginWrapper.cs" />
     <Compile Include="Plugins\ICommandPlugin.cs" />
     <Compile Include="Plugins\CommandPluginManager.cs" />
+    <Compile Include="Plugins\CommandPluginBase.cs" />
     <Compile Include="Plugins\PluginLoader.cs" />
     <Compile Include="Plugins\PluginManager.cs" />
     <Compile Include="QueryBuilders\LambdaInsertBuilder.cs" />

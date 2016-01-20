@@ -6,9 +6,6 @@ using System.Threading.Tasks;
 
 namespace PeterHenell.SSMS.Plugins.Plugins
 {
-    
-
-
     public abstract class PluginManager<T> where T : class
     {
         readonly List<Type> _loadedPlugins = new List<Type>();
