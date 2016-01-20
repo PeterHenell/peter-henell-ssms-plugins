@@ -130,13 +130,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\ImportExcelCommand.cs" />
-    <Compile Include="Commands\DecompressResultCommand.cs" />
-    <Compile Include="Commands\ActualAndExpectedCommand.cs" />
-    <Compile Include="Commands\GenerateDataForTableCommand.cs" />
-    <Compile Include="Commands\ResultToExcelCommand.cs" />
-    <Compile Include="Commands\MockAndInsertCommand.cs" />
-    <Compile Include="Commands\ParseTraceResultTextCommand.cs" />
     <Compile Include="DataAccess\BulkDataAccess.cs" />
     <Compile Include="DataAccess\ConnectionManager.cs" />
     <Compile Include="DataAccess\DbTypeConverter.cs" />
@@ -167,7 +160,6 @@
     <Compile Include="Shell\Menu.cs" />
     <Compile Include="Extension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Commands\TempTablesFromSelectionCommand.cs" />
     <Compile Include="Shell\MenuFormatter.cs" />
     <Compile Include="Shell\ShellManager.cs" />
     <Compile Include="DataAccess\DatabaseQueryManager.cs" />
@@ -205,6 +197,9 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Commands\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

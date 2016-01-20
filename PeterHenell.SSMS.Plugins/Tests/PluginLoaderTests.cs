@@ -11,7 +11,7 @@ using RedGate.SIPFrameworkShared;
 
 namespace PeterHenell.SSMS.Plugins.PluggableCommands.Tests
 {
-    
+
     [TestFixture]
     public class PluginLoaderTests
     {
@@ -52,7 +52,7 @@ namespace PeterHenell.SSMS.Plugins.PluggableCommands.Tests
             foreach (var pl in plugins)
             {
                 Console.WriteLine("Validating: " + pl.Name);
-                Assert.That(pl.MenuGroup,Is.Not.Null.Or.Empty);
+                Assert.That(pl.MenuGroup, Is.Not.Null.Or.Empty);
                 Assert.That(pl.Name, Is.Not.Null.And.Not.Empty);
                 Assert.That(pl.DefaultBindings, Is.Not.Null);
                 Assert.That(pl.Enabled, Is.True);
@@ -60,6 +60,7 @@ namespace PeterHenell.SSMS.Plugins.PluggableCommands.Tests
         }
 
         [Test]
+        [Ignore("We should probably not cache since we want to be able to reload.")]
         public void PluginsShouldBeCached()
         {
             var manager = new CommandPluginManager();
@@ -67,7 +68,7 @@ namespace PeterHenell.SSMS.Plugins.PluggableCommands.Tests
             var plugins = manager.GetPluginInstances();
             var pluginsAgain = manager.GetPluginInstances();
 
-            CollectionAssert.AreEqual(plugins, pluginsAgain);
+            CollectionAssert.AreEquivalent(plugins, pluginsAgain);
         }
 
         [Test]
@@ -80,8 +81,6 @@ namespace PeterHenell.SSMS.Plugins.PluggableCommands.Tests
             var bad = plugins.FirstOrDefault(x => x.Name == "Bad Mock");
             Assert.That(bad, Is.Null);
         }
-
-
     }
 
     public class BadPluginMock : ICommandPlugin

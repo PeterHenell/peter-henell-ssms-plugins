@@ -1,7 +1,6 @@
 ﻿using System;
 using RedGate.SIPFrameworkShared;
 using PeterHenell.SSMS.Plugins.Shell;
-using PeterHenell.SSMS.Plugins.Commands;
 using System.Collections.Generic;
 using PeterHenell.SSMS.Plugins.Utils;
 using System.Windows.Forms;

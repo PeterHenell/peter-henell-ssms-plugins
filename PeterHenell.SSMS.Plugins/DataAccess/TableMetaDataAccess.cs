@@ -7,7 +7,7 @@ using System.Text;
 
 namespace PeterHenell.SSMS.Plugins.DataAccess
 {
-    class TableMetaDataAccess
+    public class TableMetaDataAccess
     {
         private string connectionString;
         public TableMetaDataAccess(string connectionString)

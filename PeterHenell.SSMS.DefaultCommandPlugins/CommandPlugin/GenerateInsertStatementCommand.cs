@@ -13,6 +13,15 @@ namespace PeterHenell.SSMS.Plugins.Commands
     {
         public readonly static string COMMAND_NAME = "GenerateInsertStatement_Command";
 
+        public GenerateInsertStatementCommand() :
+            base(COMMAND_NAME,
+                CommandPluginBase.MenuGroups.DataGeneration,
+                "Generate Insert statement for selected query",
+                "global::Ctrl+Alt+G")
+        {
+
+        }
+
         public override void ExecuteCommand()
         {
             Action<string> ok = new Action<string>(result =>
@@ -63,13 +72,6 @@ set rowcount 0;", numRows, selectedText);
         {
         }
 
-        public GenerateInsertStatementCommand() :
-            base(COMMAND_NAME, 
-                 CommandPluginBase.MenuGroups.DataGeneration, 
-                 "Generate Insert statement for selected query", 
-                 "global::Ctrl+Alt+G")
-        {
-
-        }
+       
     }
 }

@@ -35,6 +35,14 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Excel, Version=2.1.2.3, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\ExcelDataReader.2.1.2.3\lib\net45\Excel.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,11 +52,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandPlugin\ActualAndExpectedCommand.cs" />
+    <Compile Include="CommandPlugin\DecompressResultCommand.cs" />
+    <Compile Include="CommandPlugin\GenerateDataForTableCommand.cs" />
     <Compile Include="CommandPlugin\GenerateInsertStatementCommand.cs" />
+    <Compile Include="CommandPlugin\ImportExcelCommand.cs" />
+    <Compile Include="CommandPlugin\MockAndInsertCommand.cs" />
+    <Compile Include="CommandPlugin\ParseTraceResultTextCommand.cs" />
+    <Compile Include="CommandPlugin\ResultToExcelCommand.cs" />
+    <Compile Include="CommandPlugin\TempTablesFromSelectionCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PeterHenell.SSMS.Plugins\PeterHenell.SSMS.Plugins.csproj">

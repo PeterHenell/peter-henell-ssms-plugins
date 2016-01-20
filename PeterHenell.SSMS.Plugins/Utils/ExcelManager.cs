@@ -13,7 +13,7 @@ namespace PeterHenell.SSMS.Plugins.Utils
     public class ExcelManager
     {
 
-        internal static void TableToExcel(System.Data.DataSet ds, FileInfo file)
+        public static void TableToExcel(System.Data.DataSet ds, FileInfo file)
         {
             using (ExcelPackage pck = new ExcelPackage())
             {
