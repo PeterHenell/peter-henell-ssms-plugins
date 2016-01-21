@@ -13,7 +13,8 @@ namespace ExcelReaderTest
         public void CreateTable(string tableName, DataTable meta, string connectionString)
         {
             var sb = new StringBuilder();
-            sb.AppendLine("IF OBJECT_ID('" + tableName + "') IS NOT NULL EXEC('DROP TABLE [" + tableName + "]');");
+            //sb.AppendLine("IF OBJECT_ID('" + tableName + "') IS NOT NULL EXEC('DROP TABLE [" + tableName + "]');");
+            sb.AppendLine("IF OBJECT_ID('" + tableName + "') IS NOT NULL RAISERROR('Table already exists', 16, 1);");
 
             sb.AppendLine("EXEC('create table [" + tableName + "] (");
             sb.AppendLine(string.Join(", ", meta.Columns.Cast<DataColumn>()
