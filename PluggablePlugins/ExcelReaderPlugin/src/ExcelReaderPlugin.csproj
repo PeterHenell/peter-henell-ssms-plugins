@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BulkInsertManager.cs" />
+    <Compile Include="CommandPlugin\MultiSheetExcelImportCommandPlugin.cs" />
     <Compile Include="DDLManager.cs" />
     <Compile Include="ExcelStreamReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

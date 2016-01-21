@@ -45,7 +45,7 @@ namespace PeterHenell.SSMS.Plugins
 
             try
             {
-                pluginManager.LoadAllPlugins(AssemblyDirectory);
+                pluginManager.LoadAllPlugins(Path.Combine(AssemblyDirectory, "Plugins"));
                 var plugins = pluginManager.GetPluginInstances();
                 foreach (var plugin in plugins)
                 {
