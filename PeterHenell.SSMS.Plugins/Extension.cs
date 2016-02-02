@@ -34,8 +34,16 @@ namespace PeterHenell.SSMS.Plugins
 
             if (_provider4 == null)
                 throw new ArgumentException();
+            
+            try
+            {
+                LoadCommandPlugins();
+            }
+            catch (Exception ex)
+            {
 
-            LoadCommandPlugins();
+                Console.WriteLine(ex.ToString());
+            }
         }
 
         private void LoadCommandPlugins()
