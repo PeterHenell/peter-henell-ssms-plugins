@@ -6,7 +6,7 @@ using System.Text;
 
 namespace PeterHenell.SSMS.Plugins.Utils
 {
-    static class NotepadHelper
+    public static class NotepadHelper
     {
         private class Notepad
         {

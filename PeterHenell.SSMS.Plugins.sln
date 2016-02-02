@@ -1,9 +1,21 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeterHenell.SSMS.Plugins", "PeterHenell.SSMS.Plugins\PeterHenell.SSMS.Plugins.csproj", "{73ED43D2-5CFD-45E5-A2FD-3B33C657F059}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PluggablePlugins", "PluggablePlugins", "{EF2C9510-4AD0-4CB9-BD04-10A028D6036E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExcelImportPlugin", "ExcelImportPlugin", "{870C8266-7A55-4E21-AD47-60643395DC19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelReaderPlugin", "PluggablePlugins\ExcelReaderPlugin\src\ExcelReaderPlugin.csproj", "{B1744F27-E049-4F92-B845-E79D5B26405E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExcelReaderTests", "PluggablePlugins\ExcelReaderPlugin\tests\ExcelReaderTests.csproj", "{0E5E9B1C-F662-4144-8631-6D0259898786}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DefaultPlugins", "DefaultPlugins", "{121D1DF1-ED5D-49F7-9C9C-8CA2A9238D35}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeterHenell.SSMS.DefaultCommandPlugins", "PeterHenell.SSMS.DefaultCommandPlugins\PeterHenell.SSMS.DefaultCommandPlugins.csproj", "{1350329E-2820-4520-A876-88490BD97337}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +27,27 @@ Global
 		{73ED43D2-5CFD-45E5-A2FD-3B33C657F059}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73ED43D2-5CFD-45E5-A2FD-3B33C657F059}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73ED43D2-5CFD-45E5-A2FD-3B33C657F059}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1744F27-E049-4F92-B845-E79D5B26405E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1744F27-E049-4F92-B845-E79D5B26405E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1744F27-E049-4F92-B845-E79D5B26405E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1744F27-E049-4F92-B845-E79D5B26405E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E5E9B1C-F662-4144-8631-6D0259898786}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E5E9B1C-F662-4144-8631-6D0259898786}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E5E9B1C-F662-4144-8631-6D0259898786}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E5E9B1C-F662-4144-8631-6D0259898786}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1350329E-2820-4520-A876-88490BD97337}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1350329E-2820-4520-A876-88490BD97337}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1350329E-2820-4520-A876-88490BD97337}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1350329E-2820-4520-A876-88490BD97337}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{870C8266-7A55-4E21-AD47-60643395DC19} = {EF2C9510-4AD0-4CB9-BD04-10A028D6036E}
+		{B1744F27-E049-4F92-B845-E79D5B26405E} = {870C8266-7A55-4E21-AD47-60643395DC19}
+		{0E5E9B1C-F662-4144-8631-6D0259898786} = {870C8266-7A55-4E21-AD47-60643395DC19}
+		{121D1DF1-ED5D-49F7-9C9C-8CA2A9238D35} = {EF2C9510-4AD0-4CB9-BD04-10A028D6036E}
+		{1350329E-2820-4520-A876-88490BD97337} = {121D1DF1-ED5D-49F7-9C9C-8CA2A9238D35}
 	EndGlobalSection
 EndGlobal

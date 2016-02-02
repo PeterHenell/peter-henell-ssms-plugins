@@ -8,7 +8,7 @@ using System.Data.SqlClient;
 
 namespace PeterHenell.SSMS.Plugins.DataAccess
 {
-    class ConnectionManager
+    public class ConnectionManager
     {
         internal static string GetConnectionString(UIConnectionInfo connection, string defaultDatabase = "master")
         {
@@ -25,32 +25,28 @@ namespace PeterHenell.SSMS.Plugins.DataAccess
             return builder.ToString();
         }
 
-        internal static string GetConnectionStringForCurrentNode()
+        //internal static string GetConnectionStringForCurrentNode()
+        //{
+        //    var objectExplorerNode = NodeManager.CurrentNode as IOeNode;
+
+        //    IConnectionInfo ci = null;
+        //    if (objectExplorerNode != null
+        //            && objectExplorerNode.HasConnection
+        //            && objectExplorerNode.TryGetConnection(out ci))
+        //    {
+        //        var builder = new SqlConnectionStringBuilder(ci.ConnectionString);
+        //        return builder.ConnectionString;
+        //    }
+        //    throw new InvalidOperationException("No selected db node or other problem...");
+        //}
+
+        public static string GetConnectionStringForCurrentWindow()
         {
-            var objectExplorerNode = NodeManager.CurrentNode as IOeNode;
-
-            IConnectionInfo ci = null;
-            if (objectExplorerNode != null
-                    && objectExplorerNode.HasConnection
-                    && objectExplorerNode.TryGetConnection(out ci))
-            {
-                var builder = new SqlConnectionStringBuilder(ci.ConnectionString);
-                return builder.ConnectionString;
-            }
-            throw new InvalidOperationException("No selected db node or other problem...");
-        }
-
-        internal static string GetConnectionStringForCurrentWindow()
-        {
-           
-
             IScriptFactory scriptFactory = ServiceCache.ScriptFactory;
-
             if (scriptFactory != null)
                 return GetConnectionString(scriptFactory.CurrentlyActiveWndConnectionInfo.UIConnectionInfo);
             else
                 throw new InvalidOperationException("ServiceCache.ScriptFactory is null. This usually happens when wrong assemblies have been referenced.");                
-
         }
     }
 }

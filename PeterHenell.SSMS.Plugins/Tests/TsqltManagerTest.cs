@@ -1,5 +1,5 @@
 ﻿using System;
-using MSTest = Microsoft.VisualStudio.TestTools.UnitTesting;
+
 using NUnit.Framework;
 using PeterHenell.SSMS.Plugins.Utils;
 using PeterHenell.SSMS.Plugins.DataAccess;
@@ -7,7 +7,7 @@ using System.Data.SqlClient;
 
 namespace PluginTests
 {
-    [MSTest.TestClass]
+    [TestFixture]
     public class TsqltManagerTest
     {
         private string GetLocalConnection()
@@ -19,7 +19,7 @@ namespace PluginTests
             return builder.ToString();
         }
 
-        [MSTest.TestMethod]
+        [Test]
         public void ShouldOutputFakeTableWithInserts()
         {
             string selectedText = "MYDB.MySchema.MockingTable";
@@ -30,7 +30,7 @@ namespace PluginTests
             Assert.That(actual, Is.EqualTo(expected));
         }
 
-        [MSTest.TestMethod]
+        [Test]
         public void ShouldOutputDefaultDatabaseWhenNoDatabaseSpecified()
         {
             string selectedText = "MySchema.MockingTable";
@@ -41,7 +41,7 @@ namespace PluginTests
             Assert.That(actual, Is.EqualTo(expected));
         }
 
-        [MSTest.TestMethod]
+        [Test]
         public void ShouldOutputDefaultSchemaWhenNoSchemaSpecified()
         {
             string selectedText = "MockingTable";
@@ -52,9 +52,10 @@ namespace PluginTests
             Assert.That(actual, Is.EqualTo(expected));
         }
 
-       
 
-        [MSTest.TestMethod]
+
+        [Test]
+        [Ignore]
         public void ShouldGetTableDefinitionFromTableName()
         {
             var tableA = TableMetadata.FromQualifiedString("msdb.[dbo].[syscategories]");
@@ -65,7 +66,8 @@ namespace PluginTests
             Assert.That(actual.Columns.Count, Is.EqualTo(4));
         }
 
-        [MSTest.TestMethod]
+        [Test]
+        [Ignore]
         public void ShouldGenerateInsertIntoMockTable()
         {
             var meta = TableMetadata.FromQualifiedString("msdb.[dbo].[syscategories]");
@@ -89,8 +91,8 @@ namespace PluginTests
         }
 
 
-        [MSTest.TestMethod]
-        [ExpectedException(typeof(Exception))]
+        [Test]
+        [ExpectedException(typeof(ArgumentException))]
         public void ShouldThrowExceptionGivenBadInput()
         {
             string selectedText = "";
