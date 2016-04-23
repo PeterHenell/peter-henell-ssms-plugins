@@ -62,7 +62,7 @@ namespace PeterHenell.SSMS.Plugins.Plugins
                });
             
             BackgroundRunnerForm f = new BackgroundRunnerForm("", "", a);
-            
+            f.Show();
         }
 
         public void Execute()
