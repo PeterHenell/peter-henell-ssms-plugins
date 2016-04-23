@@ -21,7 +21,7 @@ namespace PeterHenell.SSMS.Plugins.DataAccess
             string query = String.Format(@"set rowcount {1}; select * from {0}; set rowcount 0;", table.ToFullString(), limit);
 
             DataSet ds = new DataSet();
-            queryManager.ExecuteQuery(query, ds);
+            queryManager.Fill(query, ds);
 
             if (ds.Tables.Count > 0)
             {
@@ -41,7 +41,7 @@ SET FMTONLY ON;
 select * from {0}; 
 SET FMTONLY OFF;", meta.ToFullString());
             var queryManager = new DatabaseQueryManager(connectionString);
-            queryManager.ExecuteQuery(query, ds);
+            queryManager.Fill(query, ds);
 
             if (ds.Tables.Count == 0)
             {

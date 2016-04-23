@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PeterHenell.SSMS.Plugins
@@ -31,7 +32,7 @@ namespace PeterHenell.SSMS.Plugins
             this.menuGroup = menuGroup;
         }
 
-        public override void ExecuteCommand()
+        public override void ExecuteCommand(CancellationToken token)
         {
             
         }

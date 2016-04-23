@@ -6,6 +6,7 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Text;
+using System.Threading;
 
 namespace PeterHenell.SSMS.Plugins.Commands
 {
@@ -22,7 +23,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
 
         }
 
-        public override void ExecuteCommand()
+        public override void ExecuteCommand(CancellationToken token)
         {
             var selectedText = ShellManager.GetSelectedText();
             var sb = new StringBuilder();

@@ -5,6 +5,7 @@ using System.Data;
 using System.Text;
 using PeterHenell.SSMS.Plugins.ExtensionMethods;
 using PeterHenell.SSMS.Plugins.Plugins;
+using System.Threading;
 
 namespace PeterHenell.SSMS.Plugins.Commands
 {
@@ -12,15 +13,14 @@ namespace PeterHenell.SSMS.Plugins.Commands
     {
         public readonly static string COMMAND_NAME = "GenerateTempTablesFromSelectedQuery_Command";
 
-        public override void ExecuteCommand()
+        public override void ExecuteCommand(CancellationToken token)
         {
-
             string selectedText = ShellManager.GetSelectedText();
             var sb = new StringBuilder();
             using (var ds = new DataSet())
             {
-                var queryManager = new DatabaseQueryManager(ConnectionManager.GetConnectionStringForCurrentWindow());
-                queryManager.ExecuteQuery(string.Format("SET ROWCOUNT 1; {0}", selectedText), ds);
+                var queryManager = new DatabaseQueryManager(ConnectionManager.GetConnectionStringForCurrentWindow(), token);
+                queryManager.Fill(string.Format("SET ROWCOUNT 1; {0}", selectedText), ds);
                 sb.AppendTempTablesFor(ds);
 
                 if (ds.Tables.Count == 1)

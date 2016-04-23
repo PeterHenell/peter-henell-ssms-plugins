@@ -2,6 +2,7 @@
 using PeterHenell.SSMS.Plugins.Plugins;
 using PeterHenell.SSMS.Plugins.Shell;
 using System;
+using System.Threading;
 
 namespace PeterHenell.SSMS.Plugins.Commands
 {
@@ -18,7 +19,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
 
         }
 
-        public override void ExecuteCommand()
+        public override void ExecuteCommand(CancellationToken token)
         {
             // implement command here
         }

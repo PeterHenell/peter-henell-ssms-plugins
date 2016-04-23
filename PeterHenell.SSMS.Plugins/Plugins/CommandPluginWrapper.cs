@@ -3,6 +3,7 @@ using PeterHenell.SSMS.Plugins.Shell;
 using RedGate.SIPFrameworkShared;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -48,20 +49,32 @@ namespace PeterHenell.SSMS.Plugins.Plugins
 
         public void Execute(object parameter)
         {
-
-            var a = new Action(() =>
+            var start = new Action(() =>
                {
                    try
                    {
                        Plugin.ExecuteCommand();
+                   }
+                   catch (SqlException sex)
+                   {
+                       if (sex.Message.Contains("cancelled"))
+                       {
+                           // ignore cancelled errors
+                           return;
+                       }
+                       ShellManager.ShowMessageBox(sex.ToString());
                    }
                    catch (System.Exception ex)
                    {
                        ShellManager.ShowMessageBox(ex.ToString());
                    }
                });
-            
-            BackgroundRunnerForm f = new BackgroundRunnerForm("", "", a);
+            var stop = new Action(() =>
+            {
+                Plugin.TryAbortCommand();
+            });
+
+            BackgroundRunnerForm f = new BackgroundRunnerForm("", "", start, stop);
             f.Show();
         }
 

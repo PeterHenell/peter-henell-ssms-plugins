@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using PeterHenell.SSMS.Plugins.ExtensionMethods;
 using System.IO;
 using PeterHenell.SSMS.Plugins.Plugins;
+using System.Threading;
 
 namespace PeterHenell.SSMS.Plugins.Commands
 {
@@ -18,7 +19,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
     {
         public readonly static string COMMAND_NAME = "ResultToExcel_Command";
 
-        public override void ExecuteCommand()
+        public override void ExecuteCommand(CancellationToken token)
         {
             Action<string> ok = new Action<string>(result =>
             {
@@ -39,7 +40,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
                 if (file == null)
                     return;
 
-                query.ExecuteQuery(selectedQuery, ds);
+                query.Fill(selectedQuery, ds);
                 ExcelManager.TableToExcel(ds, file);
 
             });

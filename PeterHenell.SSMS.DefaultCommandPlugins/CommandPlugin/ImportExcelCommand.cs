@@ -2,6 +2,7 @@
 using PeterHenell.SSMS.Plugins.Utils;
 using System;
 using PeterHenell.SSMS.Plugins.Plugins;
+using System.Threading;
 
 namespace PeterHenell.SSMS.Plugins.Commands
 {
@@ -18,7 +19,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
 
         }
 
-        public override void ExecuteCommand()
+        public override void ExecuteCommand(CancellationToken token)
         {
             var file = DialogManager.ShowSelectFileDialog();
             if (file == null)

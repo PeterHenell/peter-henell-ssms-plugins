@@ -6,6 +6,7 @@ using System.Data;
 using System.Text;
 using PeterHenell.SSMS.Plugins.ExtensionMethods;
 using PeterHenell.SSMS.Plugins.Plugins;
+using System.Threading;
 
 namespace PeterHenell.SSMS.Plugins.Commands
 {
@@ -22,7 +23,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
 
         }
 
-        public override void ExecuteCommand()
+        public override void ExecuteCommand(CancellationToken token)
         {
             Action<string> ok = new Action<string>(result =>
             {
@@ -40,7 +41,7 @@ set rowcount {0};
 {1}; 
 set rowcount 0;", numRows, selectedText);
                 var queryManager = new DatabaseQueryManager(ConnectionManager.GetConnectionStringForCurrentWindow());
-                queryManager.ExecuteQuery(query, ds);
+                queryManager.Fill(query, ds);
 
                 if (ds.Tables.Count > 0)
                 {

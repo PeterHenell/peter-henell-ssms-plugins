@@ -10,6 +10,7 @@ using System.Data.SqlClient;
 using System.Collections.Generic;
 using PeterHenell.SSMS.Plugins.ExtensionMethods;
 using PeterHenell.SSMS.Plugins.Plugins;
+using System.Threading;
 
 namespace PeterHenell.SSMS.Plugins.Commands
 {
@@ -26,7 +27,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
 
         }
 
-        public override void ExecuteCommand()
+        public override void ExecuteCommand(CancellationToken token)
         {
             var options = new MockOptionsDictionary();
 
