@@ -38,7 +38,7 @@
             this.stopBtn.Name = "stopBtn";
             this.stopBtn.Size = new System.Drawing.Size(75, 23);
             this.stopBtn.TabIndex = 0;
-            this.stopBtn.Text = "Stop";
+            this.stopBtn.Text = "Abort";
             this.stopBtn.UseVisualStyleBackColor = true;
             this.stopBtn.Click += new System.EventHandler(this.stopBtn_Click);
             // 

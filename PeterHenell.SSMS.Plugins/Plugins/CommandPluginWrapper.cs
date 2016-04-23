@@ -74,7 +74,7 @@ namespace PeterHenell.SSMS.Plugins.Plugins
                 Plugin.TryAbortCommand();
             });
 
-            BackgroundRunnerForm f = new BackgroundRunnerForm("", "", start, stop);
+            BackgroundRunnerForm f = new BackgroundRunnerForm(Plugin.Caption, "Running", start, stop);
             f.Show();
         }
 
