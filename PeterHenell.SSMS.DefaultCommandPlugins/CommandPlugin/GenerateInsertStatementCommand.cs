@@ -40,7 +40,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
 set rowcount {0}; 
 {1}; 
 set rowcount 0;", numRows, selectedText);
-                var queryManager = new DatabaseQueryManager(ConnectionManager.GetConnectionStringForCurrentWindow());
+                var queryManager = new DatabaseQueryManager(ConnectionManager.GetConnectionStringForCurrentWindow(), token);
                 queryManager.Fill(query, ds);
 
                 if (ds.Tables.Count > 0)

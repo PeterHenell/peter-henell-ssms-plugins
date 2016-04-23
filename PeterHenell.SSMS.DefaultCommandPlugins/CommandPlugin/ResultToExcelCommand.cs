@@ -33,7 +33,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
                 numRows = Math.Max(numRows, 0);
 
                 var selectedQuery = ShellManager.GetSelectedText();
-                DataAccess.DatabaseQueryManager query = new DatabaseQueryManager(ConnectionManager.GetConnectionStringForCurrentWindow());
+                DataAccess.DatabaseQueryManager query = new DatabaseQueryManager(ConnectionManager.GetConnectionStringForCurrentWindow(), token);
                 var ds = new DataSet();
 
                 FileInfo file = DialogManager.ShowExcelSaveFileDialog();

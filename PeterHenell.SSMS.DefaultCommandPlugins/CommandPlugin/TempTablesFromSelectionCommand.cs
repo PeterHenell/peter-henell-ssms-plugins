@@ -51,8 +51,6 @@ namespace PeterHenell.SSMS.Plugins.Commands
 
         }
 
-
-        //public string Name { get { return COMMAND_NAME; } }
         //public string Caption { get { return "Generate Temp Tables From Selected Queries"; } }
         //public string Tooltip { get { return "Select a query, the result will be fitted into a generated temporary table."; } }
         //public ICommandImage Icon { get { return m_CommandImage; } }
