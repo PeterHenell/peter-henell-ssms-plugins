@@ -1,4 +1,5 @@
-﻿using PeterHenell.SSMS.Plugins.Shell;
+﻿using PeterHenell.SSMS.Plugins.Forms;
+using PeterHenell.SSMS.Plugins.Shell;
 using RedGate.SIPFrameworkShared;
 using System;
 using System.Collections.Generic;
@@ -47,14 +48,21 @@ namespace PeterHenell.SSMS.Plugins.Plugins
 
         public void Execute(object parameter)
         {
-            try
-            {
-                Plugin.ExecuteCommand();
-            }
-            catch (System.Exception ex)
-            {
-                ShellManager.ShowMessageBox(ex.ToString());
-            }
+
+            var a = new Action(() =>
+               {
+                   try
+                   {
+                       Plugin.ExecuteCommand();
+                   }
+                   catch (System.Exception ex)
+                   {
+                       ShellManager.ShowMessageBox(ex.ToString());
+                   }
+               });
+            
+            BackgroundRunnerForm f = new BackgroundRunnerForm("", "", a);
+            
         }
 
         public void Execute()
