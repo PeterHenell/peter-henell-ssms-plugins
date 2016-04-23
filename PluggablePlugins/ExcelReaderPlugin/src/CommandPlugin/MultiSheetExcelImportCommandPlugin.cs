@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ExcelReaderTest.CommandPlugin
@@ -17,7 +18,7 @@ namespace ExcelReaderTest.CommandPlugin
 
         }
 
-        public override void ExecuteCommand()
+        public override void ExecuteCommand(CancellationToken token)
         {
             var file = DialogManager.ShowSelectFileDialog();
             if (file == null)

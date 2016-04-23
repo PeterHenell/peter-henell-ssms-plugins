@@ -3,26 +3,46 @@ SQL Server Management Studio Plugins by Peter Henell
 
 Only SSMS 2014 supported at this time.
 
-You may need to install this first
- https://chocolatey.org/packages/SQL2014.SMO
+## Release notes 1.9 
+* During plugin execution a dialog is shown where the execution can be aborted.
+* Plugins now support cancellation through cancellation token.
+* DatabaseQueryManager now supports cancellation through cancellation token.
+* Most of the plugins can now be cancelled.
 
-How to install:
+
+## How to install:
 * Download the latest framework from http://documentation.red-gate.com/display/MA/Redistributing+the+framework
 (This is probably already installed if you are using any of the RedGate Toolkits.)
 * Download the latest version of peter-henell-ssms-plugins from this location: https://github.com/PeterHenell/peter-henell-ssms-plugins/tree/master/released-binaries
-* Unzip the binaries at a location of your choice (You will need to reference this path in a later step).
+* Unzip it at a location of your choice like C:\CoolSoftware\ (You will need to reference this path in a later step).
 * Make an entry in the Registry to tell the SIPframework where to load the add-in from. 
 
 You should create the registry entry in either:
 * 32-bit machines: HKEY_LOCAL_MACHINE\SOFTWARE\Red Gate\SIPFramework\Plugins
 * 64-bit machines: HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Red Gate\SIPFramework\Plugins
 
-Create a new String Value (REG_SZ) with a unique name (of your choice) and set the value to the path of the plugin.
+Create a new String Value (REG_SZ) and name it "PeterHenellPlugins". Right click and choose modifty, then set the value to the path of the plugin.
 
 For example: C:\CoolSoftware\PeterHenell.SSMS.Plugins.dll
 
 Now start SSMS and verify that the plugin have been loaded. There should be a new top menu called PeterHenell.
 
+# How to add your own plugins
+* Add a references to PeterHenell.SSMS.Plugins.dll in your project
+* Create a public class which implements CommandPluginBase
+* Implement your desired functionality inside the ExecuteCommand method.
+* In order for your plugin to be loaded it must be added to the Plugins folder of the installation directory (C:\CoolSoftware\Plugins)
+* The constructor of your class should look similar to this:
+
+```C#
+    public TempTablesFromSelectionCommand() :
+            base(COMMAND_NAME,
+                 CommandPluginBase.MenuGroups.DataGeneration,
+                 "Generate Temp Tables From Selected Queries",
+                 "global::Ctrl+Alt+D")
+        {
+        }
+```    
 # How to use the Plugins and what they do
 Most queries work by selecting a query or table and then running the plugin.
 
