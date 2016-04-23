@@ -10,7 +10,7 @@ Only SSMS 2014 supported at this time.
 * Most of the plugins can now be cancelled.
 
 
-How to install:
+## How to install:
 * Download the latest framework from http://documentation.red-gate.com/display/MA/Redistributing+the+framework
 (This is probably already installed if you are using any of the RedGate Toolkits.)
 * Download the latest version of peter-henell-ssms-plugins from this location: https://github.com/PeterHenell/peter-henell-ssms-plugins/tree/master/released-binaries
