@@ -21,7 +21,7 @@ You should create the registry entry in either:
 * 32-bit machines: HKEY_LOCAL_MACHINE\SOFTWARE\Red Gate\SIPFramework\Plugins
 * 64-bit machines: HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Red Gate\SIPFramework\Plugins
 
-Create a new String Value (REG_SZ) and name it "PeterHenellPlugins". Right click and choose modifty, then set the value to the path of the plugin.
+Create a new String Value (REG_SZ) and name it "PeterHenellPlugins". Right click on it and choose modify, then set the value to the path of the plugin.
 
 For example: C:\CoolSoftware\PeterHenell.SSMS.Plugins.dll
 
