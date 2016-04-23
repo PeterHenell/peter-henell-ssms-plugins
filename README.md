@@ -31,6 +31,7 @@ Now start SSMS and verify that the plugin have been loaded. There should be a ne
 * Add a references to PeterHenell.SSMS.Plugins.dll in your project
 * Create a public class which implements CommandPluginBase
 * Implement your desired functionality inside the ExecuteCommand method.
+* In order for your plugin to be loaded it must be added to the Plugins folder of the installation directory (C:\CoolSoftware\Plugins)
 * The constructor of your class should look similar to this:
 
 ```C#
