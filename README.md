@@ -27,6 +27,21 @@ For example: C:\CoolSoftware\PeterHenell.SSMS.Plugins.dll
 
 Now start SSMS and verify that the plugin have been loaded. There should be a new top menu called PeterHenell.
 
+# How to add your own plugins
+* Add a references to PeterHenell.SSMS.Plugins.dll in your project
+* Create a public class which implements CommandPluginBase
+* Implement your desired functionality inside the ExecuteCommand method.
+* The constructor of your class should look similar to this:
+
+```C#
+    public TempTablesFromSelectionCommand() :
+            base(COMMAND_NAME,
+                 CommandPluginBase.MenuGroups.DataGeneration,
+                 "Generate Temp Tables From Selected Queries",
+                 "global::Ctrl+Alt+D")
+        {
+        }
+```    
 # How to use the Plugins and what they do
 Most queries work by selecting a query or table and then running the plugin.
 
