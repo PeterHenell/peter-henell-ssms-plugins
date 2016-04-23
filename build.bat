@@ -15,8 +15,9 @@ set /A minor=minor+1
 set newversion=%major%.%minor%.%bugfix%
 
 xcopy .\PeterHenell.SSMS.Plugins\bin\Release\*.* .\released-binaries\%newversion% /y /i
-xcopy .\PeterHenell.SSMS.DefaultCommandPlugins\bin\Release\*.dll .\released-binaries\%newversion%\Plugins /y /i
+xcopy .\PeterHenell.SSMS.DefaultCommandPlugins\bin\Release\*.* .\released-binaries\%newversion%\Plugins /y /i
 
+del .\released-binaries\%newversion%.zip
 call "C:\Program Files\7-Zip\7z.exe" a -tzip ".\released-binaries\%newversion%.zip" ".\released-binaries\%newversion%"
 
 rmdir /s /q .\released-binaries\%newversion%

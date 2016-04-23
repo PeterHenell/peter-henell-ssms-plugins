@@ -3,6 +3,13 @@ SQL Server Management Studio Plugins by Peter Henell
 
 Only SSMS 2014 supported at this time.
 
+## Release notes 1.9 
+* During plugin execution a dialog is shown where the execution can be aborted.
+* Plugins now support cancellation through cancellation token.
+* DatabaseQueryManager now supports cancellation through cancellation token.
+* Most of the plugins can now be cancelled.
+
+
 How to install:
 * Download the latest framework from http://documentation.red-gate.com/display/MA/Redistributing+the+framework
 (This is probably already installed if you are using any of the RedGate Toolkits.)
