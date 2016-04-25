@@ -171,7 +171,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shell\MenuFormatter.cs" />
     <Compile Include="Shell\ShellManager.cs" />
-    <Compile Include="DataAccess\DatabaseQueryManager.cs" />
+    <Compile Include="DataAccess\QueryManager.cs" />
     <Compile Include="Shell\Submenu.cs" />
     <Compile Include="Tests\DbTypeConverterTests.cs" />
     <Compile Include="Tests\LambdaInsertBuilderTests.cs" />

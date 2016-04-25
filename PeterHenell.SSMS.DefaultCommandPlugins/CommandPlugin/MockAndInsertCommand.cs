@@ -56,7 +56,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
 
                 var meta = TableMetadata.FromQualifiedString(selectedText);
                 TableMetaDataAccess da = new TableMetaDataAccess(ConnectionManager.GetConnectionStringForCurrentWindow());
-                var table = da.SelectTopNFrom(meta, numRows);
+                var table = da.SelectTopNFrom(meta, token, numRows);
 
                 StringBuilder sb = new StringBuilder();
                 sb.Append(TsqltManager.GetFakeTableStatement(selectedText));
