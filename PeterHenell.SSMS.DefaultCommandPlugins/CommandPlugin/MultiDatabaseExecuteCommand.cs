@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace PeterHenell.SSMS.DefaultCommandPlugins.CommandPlugin
@@ -15,7 +16,7 @@ namespace PeterHenell.SSMS.DefaultCommandPlugins.CommandPlugin
 
         }
 
-        public override void ExecuteCommand()
+        public override void ExecuteCommand(CancellationToken token)
         {
             
         }
