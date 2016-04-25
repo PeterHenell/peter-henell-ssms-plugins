@@ -39,7 +39,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
                 ParseParam(userInput, out numRows);
 
                 var meta = GetTableMetaFromSelectedText();
-                DataTable table = tableMetaAccess.GetTableSchema(meta);
+                DataTable table = tableMetaAccess.GetTableSchema(meta, token);
 
                 DataGenerator generator = new DataGenerator();
                 generator.Fill(table, numRows);

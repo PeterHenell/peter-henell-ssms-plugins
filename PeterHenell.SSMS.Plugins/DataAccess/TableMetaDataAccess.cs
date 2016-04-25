@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace PeterHenell.SSMS.Plugins.DataAccess
 {
@@ -15,38 +16,46 @@ namespace PeterHenell.SSMS.Plugins.DataAccess
             this.connectionString = connectionString;
         }
 
-        public DataTable SelectTopNFrom(TableMetadata table, int limit = 1)
+        public DataTable SelectTopNFrom(TableMetadata table, CancellationToken token, int limit = 1)
         {
-            DatabaseQueryManager queryManager = new DatabaseQueryManager(connectionString);
-            string query = String.Format(@"set rowcount {1}; select * from {0}; set rowcount 0;", table.ToFullString(), limit);
-
-            DataSet ds = new DataSet();
-            queryManager.Fill(query, ds);
-
-            if (ds.Tables.Count > 0)
+            DataTable dt = QueryManager.Run<DataTable>(connectionString, token, (qm) =>
             {
-                return ds.Tables[0];
-            }
-            else
+                string query = String.Format(@"set rowcount {1}; select * from {0}; set rowcount 0;", table.ToFullString(), limit);
+
+                DataSet ds = new DataSet();
+                qm.Fill(query, ds);
+
+                if (ds.Tables.Count > 0)
+                {
+                   return ds.Tables[0];
+                }
+                return null;
+            });
+            
+            if (dt == null)
             {
-                throw new ArgumentException("table does not exist");
+                throw new ArgumentException("table does not exist");    
             }
+            return dt;
         }
 
-        public DataTable GetTableSchema(TableMetadata meta)
+        public DataTable GetTableSchema(TableMetadata meta, CancellationToken token)
         {
             DataSet ds = new DataSet();
             string query = string.Format(@"
 SET FMTONLY ON; 
 select * from {0}; 
 SET FMTONLY OFF;", meta.ToFullString());
-            var queryManager = new DatabaseQueryManager(connectionString);
-            queryManager.Fill(query, ds);
-
-            if (ds.Tables.Count == 0)
+            QueryManager.Run(connectionString, token, (qm) =>
             {
-                throw new InvalidOperationException("Trying to get table schema, got no result.");
-            }
+                qm.Fill(query, ds);
+
+                if (ds.Tables.Count == 0)
+                {
+                    throw new InvalidOperationException("Trying to get table schema, got no result.");
+                }
+            });
+            
 
             var table = ds.Tables[0];
             return table;

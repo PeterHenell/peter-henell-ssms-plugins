@@ -39,8 +39,10 @@ namespace PeterHenell.SSMS.Plugins.Commands
                     errorCount++;
             });
 
-            var queryManager = new DatabaseQueryManager(ConnectionManager.GetConnectionStringForCurrentWindow());
-            queryManager.ExecuteQuery(selectedText, dataReaderCallback);
+            QueryManager.Run(ConnectionManager.GetConnectionStringForCurrentWindow(), token, (queryManager) =>
+                {
+                    queryManager.ExecuteQuery(selectedText, dataReaderCallback);
+                });
 
             if (errorCount > 0)
                 ShellManager.ShowMessageBox("Processed results with some errors, some of the rows contain non-64base strings. The successfull results will be displayed.");

@@ -4,6 +4,7 @@ using NUnit.Framework;
 using PeterHenell.SSMS.Plugins.Utils;
 using PeterHenell.SSMS.Plugins.DataAccess;
 using System.Data.SqlClient;
+using System.Threading;
 
 namespace PluginTests
 {
@@ -61,8 +62,8 @@ namespace PluginTests
             var tableA = TableMetadata.FromQualifiedString("msdb.[dbo].[syscategories]");
 
             TableMetaDataAccess da = new TableMetaDataAccess(GetLocalConnection());
-
-            var actual = da.SelectTopNFrom(tableA);
+            var token = new CancellationTokenSource().Token;
+            var actual = da.SelectTopNFrom(tableA, token);
             Assert.That(actual.Columns.Count, Is.EqualTo(4));
         }
 
@@ -72,8 +73,8 @@ namespace PluginTests
         {
             var meta = TableMetadata.FromQualifiedString("msdb.[dbo].[syscategories]");
             TableMetaDataAccess da = new TableMetaDataAccess(GetLocalConnection());
-
-            var table = da.SelectTopNFrom(meta);
+            var token = new CancellationTokenSource().Token;
+            var table = da.SelectTopNFrom(meta, token);
             var actual = TsqltManager.GenerateInsertFor(table, meta);
 
             var expected = @"INSERT INTO [msdb].[dbo].[syscategories] (

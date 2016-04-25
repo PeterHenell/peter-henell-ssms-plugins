@@ -58,6 +58,7 @@
     <Compile Include="CommandPlugin\GenerateInsertStatementCommand.cs" />
     <Compile Include="CommandPlugin\ImportExcelCommand.cs" />
     <Compile Include="CommandPlugin\MockAndInsertCommand.cs" />
+    <Compile Include="CommandPlugin\MultiDatabaseExecuteCommand.cs" />
     <Compile Include="CommandPlugin\ParseTraceResultTextCommand.cs" />
     <Compile Include="CommandPlugin\ResultToExcelCommand.cs" />
     <Compile Include="CommandPlugin\TempTablesFromSelectionCommand.cs" />
