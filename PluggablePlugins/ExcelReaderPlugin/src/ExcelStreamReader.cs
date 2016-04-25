@@ -66,7 +66,6 @@ namespace ExcelReaderTest
                         action(sheetOperator);
                     }
                 }
-
             }
         }
 

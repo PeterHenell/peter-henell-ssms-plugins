@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using PeterHenell.SSMS.Plugins.ExtensionMethods;
 using System.IO;
 using PeterHenell.SSMS.Plugins.Plugins;
+using System.Threading;
 
 namespace PeterHenell.SSMS.Plugins.Commands
 {
@@ -18,7 +19,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
     {
         public readonly static string COMMAND_NAME = "ResultToExcel_Command";
 
-        public override void ExecuteCommand()
+        public override void ExecuteCommand(CancellationToken token)
         {
             Action<string> ok = new Action<string>(result =>
             {
@@ -32,14 +33,14 @@ namespace PeterHenell.SSMS.Plugins.Commands
                 numRows = Math.Max(numRows, 0);
 
                 var selectedQuery = ShellManager.GetSelectedText();
-                DataAccess.DatabaseQueryManager query = new DatabaseQueryManager(ConnectionManager.GetConnectionStringForCurrentWindow());
+                DataAccess.DatabaseQueryManager query = new DatabaseQueryManager(ConnectionManager.GetConnectionStringForCurrentWindow(), token);
                 var ds = new DataSet();
 
                 FileInfo file = DialogManager.ShowExcelSaveFileDialog();
                 if (file == null)
                     return;
 
-                query.ExecuteQuery(selectedQuery, ds);
+                query.Fill(selectedQuery, ds);
                 ExcelManager.TableToExcel(ds, file);
 
             });

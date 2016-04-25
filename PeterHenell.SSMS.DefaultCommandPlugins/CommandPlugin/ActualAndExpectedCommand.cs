@@ -10,6 +10,7 @@ using System.Data.SqlClient;
 using System.Collections.Generic;
 using PeterHenell.SSMS.Plugins.ExtensionMethods;
 using PeterHenell.SSMS.Plugins.Plugins;
+using System.Threading;
 
 namespace PeterHenell.SSMS.Plugins.Commands
 {
@@ -26,7 +27,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
 
         }
 
-        public override void ExecuteCommand()
+        public override void ExecuteCommand(CancellationToken token)
         {
             var options = new MockOptionsDictionary();
 
@@ -54,8 +55,8 @@ namespace PeterHenell.SSMS.Plugins.Commands
                 var sb = new StringBuilder();
                 using (var ds = new DataSet())
                 {
-                    var queryManager = new DatabaseQueryManager(ConnectionManager.GetConnectionStringForCurrentWindow());
-                    queryManager.ExecuteQuery(string.Format("SET ROWCOUNT {0}; {1}", numRows, selectedText), ds);
+                    var queryManager = new DatabaseQueryManager(ConnectionManager.GetConnectionStringForCurrentWindow(), token);
+                    queryManager.Fill(string.Format("SET ROWCOUNT {0}; {1}", numRows, selectedText), ds);
 
                     if (ds.Tables.Count == 1)
                     {

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -12,6 +13,8 @@ namespace PeterHenell.SSMS.Plugins.Plugins
 
     public abstract class CommandPluginBase
     {
+        private readonly CancellationTokenSource cancellationTokenSource;
+
         public string Name { get; private set; }
         public string Caption { get; private set; }
         public string ShortcutBinding { get; private set; }
@@ -24,6 +27,7 @@ namespace PeterHenell.SSMS.Plugins.Plugins
             this.Caption = caption;
             this.ShortcutBinding = shortcutBinding;
             this.MenuGroup = menuGroup;
+            this.cancellationTokenSource = new CancellationTokenSource();
         }
 
         public void Init(ShellManager shellManager)
@@ -31,7 +35,29 @@ namespace PeterHenell.SSMS.Plugins.Plugins
             this.ShellManager = shellManager;
         }
 
-        public abstract void ExecuteCommand();
+        /// <summary>
+        /// Execute the main command of the plugin
+        /// </summary>
+        public void ExecuteCommand()
+        {
+            var token = this.cancellationTokenSource.Token;
+            ExecuteCommand(token);
+        }
+
+        /// <summary>
+        /// Plugin specific action
+        /// </summary>
+        /// <param name="token"></param>
+        public abstract void ExecuteCommand(CancellationToken token);
+        
+
+        /// <summary>
+        /// Try to abort the running plugin
+        /// </summary>
+        public void TryAbortCommand()
+        {
+            this.cancellationTokenSource.Cancel();
+        }
 
         /// <summary>
         /// Standard Menu Groups used to group commands into menus.
@@ -41,5 +67,7 @@ namespace PeterHenell.SSMS.Plugins.Plugins
             public static string DataGeneration = "Data Generation";
             public static string TSQLTTools = "TSQLT Tools";
         }
+
+
     }
 }

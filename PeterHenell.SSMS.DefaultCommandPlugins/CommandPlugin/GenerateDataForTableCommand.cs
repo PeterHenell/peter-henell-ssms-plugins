@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using PeterHenell.SSMS.Plugins.ExtensionMethods;
 using PeterHenell.SSMS.Plugins.Utils.Generators;
 using PeterHenell.SSMS.Plugins.Plugins;
+using System.Threading;
 
 namespace PeterHenell.SSMS.Plugins.Commands
 {
@@ -29,7 +30,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
 
         }
 
-        public override void ExecuteCommand()
+        public override void ExecuteCommand(CancellationToken token)
         {
             this.tableMetaAccess = new TableMetaDataAccess(ConnectionManager.GetConnectionStringForCurrentWindow());
             Action<string> okAction = new Action<string>(userInput =>
