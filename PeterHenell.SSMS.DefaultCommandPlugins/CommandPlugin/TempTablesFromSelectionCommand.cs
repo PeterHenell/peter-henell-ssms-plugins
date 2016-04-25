@@ -19,8 +19,10 @@ namespace PeterHenell.SSMS.Plugins.Commands
             var sb = new StringBuilder();
             using (var ds = new DataSet())
             {
-                var queryManager = new DatabaseQueryManager(ConnectionManager.GetConnectionStringForCurrentWindow(), token);
-                queryManager.Fill(string.Format("SET ROWCOUNT 1; {0}", selectedText), ds);
+                QueryManager.Run(ConnectionManager.GetConnectionStringForCurrentWindow(), token, (queryManager) =>
+                { 
+                    queryManager.Fill(string.Format("SET ROWCOUNT 1; {0}", selectedText), ds);
+                });
                 sb.AppendTempTablesFor(ds);
 
                 if (ds.Tables.Count == 1)

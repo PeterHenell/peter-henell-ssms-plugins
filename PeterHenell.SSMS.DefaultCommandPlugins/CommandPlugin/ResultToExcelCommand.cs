@@ -33,15 +33,17 @@ namespace PeterHenell.SSMS.Plugins.Commands
                 numRows = Math.Max(numRows, 0);
 
                 var selectedQuery = ShellManager.GetSelectedText();
-                DataAccess.DatabaseQueryManager query = new DatabaseQueryManager(ConnectionManager.GetConnectionStringForCurrentWindow(), token);
-                var ds = new DataSet();
+                QueryManager.Run(ConnectionManager.GetConnectionStringForCurrentWindow(), token, (queryManager) =>
+                {
+                    var ds = new DataSet();
 
-                FileInfo file = DialogManager.ShowExcelSaveFileDialog();
-                if (file == null)
-                    return;
+                    FileInfo file = DialogManager.ShowExcelSaveFileDialog();
+                    if (file == null)
+                        return;
 
-                query.Fill(selectedQuery, ds);
-                ExcelManager.TableToExcel(ds, file);
+                    queryManager.Fill(selectedQuery, ds);
+                    ExcelManager.TableToExcel(ds, file);
+                });
 
             });
 

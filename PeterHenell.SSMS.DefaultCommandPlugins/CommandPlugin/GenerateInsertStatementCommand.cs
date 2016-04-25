@@ -40,9 +40,10 @@ namespace PeterHenell.SSMS.Plugins.Commands
 set rowcount {0}; 
 {1}; 
 set rowcount 0;", numRows, selectedText);
-                var queryManager = new DatabaseQueryManager(ConnectionManager.GetConnectionStringForCurrentWindow(), token);
-                queryManager.Fill(query, ds);
-
+                QueryManager.Run(ConnectionManager.GetConnectionStringForCurrentWindow(), token, (queryManager) =>
+                {
+                    queryManager.Fill(query, ds);
+                });
                 if (ds.Tables.Count > 0)
                 {
                     string output = GenerateInsertFor(ds.Tables[0]);
