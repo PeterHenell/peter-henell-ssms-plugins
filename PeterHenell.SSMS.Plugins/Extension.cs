@@ -34,7 +34,11 @@ namespace PeterHenell.SSMS.Plugins
 
             if (_provider4 == null)
                 throw new ArgumentException();
-            
+
+            var ms = new MemoryStream();
+            var sw = new StreamWriter(ms);
+            Console.SetOut(sw);
+
             try
             {
                 LoadCommandPlugins();
@@ -48,7 +52,7 @@ namespace PeterHenell.SSMS.Plugins
 
         private void LoadCommandPlugins()
         {
-            MenuFormatter formatter = new MenuFormatter();
+            var formatter = new MenuFormatter();
             var pluginManager = new CommandPluginManager();
 
             try

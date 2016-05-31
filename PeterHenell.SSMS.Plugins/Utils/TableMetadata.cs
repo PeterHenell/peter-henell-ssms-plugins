@@ -24,6 +24,18 @@ namespace PeterHenell.SSMS.Plugins.Utils
             string[] parts = qualifiedString.Split('.');
             return FromParts(parts);
         }
+        public static TableMetadata FromParts(string tableName)
+        {
+            return new TableMetadata { TableName = UnWrap(tableName), SchemaName = UnWrap("dbo"), DatabaseName = null };
+        }
+        public static TableMetadata FromParts(string schemaName, string tableName)
+        {
+            return new TableMetadata { TableName = UnWrap(tableName), SchemaName = UnWrap(schemaName), DatabaseName = null };
+        }
+        public static TableMetadata FromParts(string dbName, string schemaName, string tableName)
+        {
+            return new TableMetadata { TableName = UnWrap(tableName), SchemaName = UnWrap(schemaName), DatabaseName = UnWrap(dbName) };
+        }
 
         public static TableMetadata FromParts(String[] parts)
         {

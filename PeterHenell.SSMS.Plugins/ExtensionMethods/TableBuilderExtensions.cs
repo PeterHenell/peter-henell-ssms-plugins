@@ -51,7 +51,7 @@ namespace PeterHenell.SSMS.Plugins.ExtensionMethods
             }
         }
 
-        public static void AppendColumnNameList(this StringBuilder sb, DataTable dt, bool newLineBetweenColumns = true, string columnDelimiter = "\t")
+        public static void AppendColumnNameList(this StringBuilder sb, DataTable dt, bool newLineBetweenColumns = true, string columnDelimiter = " ")
         {
             int columnCount = 1;
             foreach (DataColumn col in dt.Columns)
@@ -71,7 +71,7 @@ namespace PeterHenell.SSMS.Plugins.ExtensionMethods
             foreach (DataRow row in dataTable.Rows)
             {
                 colSep = "";
-                sb.Append(rowSep + "\t(");
+                sb.Append(rowSep + "  (");
                 foreach (DataColumn col in dataTable.Columns)
                 {
                     var value = GetValue(row, col);

@@ -23,11 +23,19 @@ namespace PeterHenell.SSMS.Plugins.Plugins
                 Type[] typesInTheAssembly = asm.GetTypes();
                 foreach (Type currentType in typesInTheAssembly)
                 {
-                    Type[] interfacesOfTheType = currentType.GetInterfaces();
-                    if (typeof(T).IsAssignableFrom(currentType) && !currentType.IsAbstract)
+                    try
                     {
-                        Console.WriteLine(currentType.AssemblyQualifiedName);
-                        loadedPlugins.Add(currentType);
+                        if (typeof(T).IsAssignableFrom(currentType) && !currentType.IsAbstract)
+                        {
+                            Console.WriteLine(currentType.AssemblyQualifiedName);
+                            loadedPlugins.Add(currentType);
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        // This should be logged
+                        Console.WriteLine(e.ToString());
+                        System.Windows.Forms.MessageBox.Show(e.ToString());
                     }
                 }
             }
@@ -35,6 +43,7 @@ namespace PeterHenell.SSMS.Plugins.Plugins
             {
                 // This should be logged
                 Console.WriteLine(e.ToString());
+                System.Windows.Forms.MessageBox.Show(e.ToString());
             }
             return loadedPlugins;
         }
