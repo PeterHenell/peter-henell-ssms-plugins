@@ -3,6 +3,9 @@ SQL Server Management Studio Plugins by Peter Henell
 
 Only SSMS 2014 supported at this time.
 
+## Release notes 1.10 
+* Added Mock All Dependencies Command for TSQLT testing. Select the procedure you wish to unit test and run the command. The command will generate mock-statements for all tables/procedures/functions. 
+
 ## Release notes 1.9 
 * During plugin execution a dialog is shown where the execution can be aborted.
 * Plugins now support cancellation through cancellation token.
