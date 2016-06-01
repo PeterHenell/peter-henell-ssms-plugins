@@ -1,4 +1,5 @@
 ﻿using PeterHenell.SSMS.Plugins.DataAccess;
+using PeterHenell.SSMS.Plugins.DataAccess.DTO;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -41,7 +42,7 @@ namespace PeterHenell.SSMS.Plugins.Utils.Generators
             return this;
         }
 
-        public QueryBuilder Into(Utils.TableMetadata targetTable)
+        public QueryBuilder Into(ObjectMetadata targetTable)
         {
             sb.AppendLine("INTO " + targetTable.ToFullString());
             return this;
@@ -64,24 +65,24 @@ namespace PeterHenell.SSMS.Plugins.Utils.Generators
             return sb.ToString();
         }
 
-        public QueryBuilder From(TableMetadata tableMeta)
+        public QueryBuilder From(ObjectMetadata tableMeta)
         {
             sb.AppendLine("FROM " + tableMeta.ToFullString());
             return this;
         }
 
-        public QueryBuilder MockTable(TableMetadata tableMeta)
+        public QueryBuilder MockTable(ObjectMetadata tableMeta)
         {
             var fakeTable = string.Format("EXEC {0}tSQLt.FakeTable '{1}{2}'",
                 tableMeta.DatabaseName != null ? tableMeta.WrappedDatabaseName + "." : "",
                 tableMeta.SchemaName != null ? tableMeta.WrappedSchemaName + "." : "",
-                tableMeta.WrappedTableName);
+                tableMeta.WrappedObjectName);
 
             sb.AppendLine(fakeTable);
             return this;
         }
 
-        public QueryBuilder CreateTempTableFor(DataTable queryResult, TableMetadata tableMeta)
+        public QueryBuilder CreateTempTableFor(DataTable queryResult, ObjectMetadata tableMeta)
         {
             sb.AppendFormat("CREATE TABLE {0} (", tableMeta.ToFullString());
             sb.AppendLine();
@@ -102,7 +103,7 @@ namespace PeterHenell.SSMS.Plugins.Utils.Generators
             return this;
         }
 
-        public QueryBuilder InsertAllColumns(DataTable queryResult, TableMetadata tableMeta)
+        public QueryBuilder InsertAllColumns(DataTable queryResult, ObjectMetadata tableMeta)
         {
             sb.Append("INSERT INTO " + tableMeta.ToFullString() + " (");
             GetColumnList(queryResult);

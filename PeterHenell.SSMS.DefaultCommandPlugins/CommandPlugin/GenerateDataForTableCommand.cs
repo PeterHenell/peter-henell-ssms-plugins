@@ -12,6 +12,7 @@ using PeterHenell.SSMS.Plugins.ExtensionMethods;
 using PeterHenell.SSMS.Plugins.Utils.Generators;
 using PeterHenell.SSMS.Plugins.Plugins;
 using System.Threading;
+using PeterHenell.SSMS.Plugins.DataAccess.DTO;
 
 namespace PeterHenell.SSMS.Plugins.Commands
 {
@@ -19,7 +20,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
     {
         public readonly static string COMMAND_NAME = "GenerateDataForTable_Command";
 
-        TableMetaDataAccess tableMetaAccess;
+        ObjectMetadataAccess tableMetaAccess;
 
         public GenerateDataForTableCommand() :
             base(COMMAND_NAME,
@@ -32,7 +33,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
 
         public override void ExecuteCommand(CancellationToken token)
         {
-            this.tableMetaAccess = new TableMetaDataAccess(ConnectionManager.GetConnectionStringForCurrentWindow());
+            this.tableMetaAccess = new ObjectMetadataAccess(ConnectionManager.GetConnectionStringForCurrentWindow());
             Action<string> okAction = new Action<string>(userInput =>
             {
                 int numRows = 0;
@@ -54,10 +55,10 @@ namespace PeterHenell.SSMS.Plugins.Commands
 
 
 
-        private TableMetadata GetTableMetaFromSelectedText()
+        private ObjectMetadata GetTableMetaFromSelectedText()
         {
             string selectedText = ShellManager.GetSelectedText();
-            var meta = TableMetadata.FromQualifiedString(selectedText);
+            var meta = ObjectMetadata.FromQualifiedString(selectedText);
             return meta;
         }
 

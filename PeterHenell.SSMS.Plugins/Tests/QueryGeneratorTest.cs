@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Data;
 using PeterHenell.SSMS.Plugins.Utils;
 using PeterHenell.SSMS.Plugins.Utils.Generators;
+using PeterHenell.SSMS.Plugins.DataAccess.DTO;
 
 namespace PeterHenell.SSMS.Plugins.Tests
 {
@@ -26,8 +27,8 @@ namespace PeterHenell.SSMS.Plugins.Tests
             dt.Columns.Add(new DataColumn { ColumnName = "CustomerID", DataType = typeof(long) });
             dt.Columns.Add(new DataColumn { ColumnName = "Name", DataType = typeof(string) });
 
-            var tableMeta = TableMetadata.FromQualifiedString("tempdb.dbo.#Actual");
-            var targetTable = TableMetadata.FromQualifiedString("tempdb.dbo.#Excpected");
+            var tableMeta = ObjectMetadata.FromQualifiedString("tempdb.dbo.#Actual");
+            var targetTable = ObjectMetadata.FromQualifiedString("tempdb.dbo.#Excpected");
             
             var queryGen = new QueryBuilder();
             string expected = @"SELECT [CustomerID], [Name]
@@ -41,7 +42,7 @@ WHERE 1=0;";
         [Test]
         public void ShouldOutputFakeTableWithInserts()
         {
-            var tableMeta = TableMetadata.FromQualifiedString("dbo.Customer");
+            var tableMeta = ObjectMetadata.FromQualifiedString("dbo.Customer");
             var queryGen = new QueryBuilder();
             var actual = queryGen.MockTable(tableMeta).Build();
 
@@ -62,7 +63,7 @@ WHERE 1=0;";
             row.SetField(queryResult.Columns[1], "Skogshuggaren");
             queryResult.Rows.Add(row);
 
-            var targetTable = TableMetadata.FromQualifiedString("tempdb.dbo.#Actual");
+            var targetTable = ObjectMetadata.FromQualifiedString("tempdb.dbo.#Actual");
 
             var queryGen = new QueryBuilder();
             var actual = queryGen.CreateTempTableFor(queryResult, targetTable)

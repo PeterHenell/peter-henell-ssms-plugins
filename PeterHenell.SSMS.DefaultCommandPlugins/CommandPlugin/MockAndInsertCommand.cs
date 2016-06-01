@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using PeterHenell.SSMS.Plugins.ExtensionMethods;
 using PeterHenell.SSMS.Plugins.Plugins;
 using System.Threading;
+using PeterHenell.SSMS.Plugins.DataAccess.DTO;
 
 namespace PeterHenell.SSMS.Plugins.Commands
 {
@@ -55,7 +56,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
                 var selectedText = ShellManager.GetSelectedText();
                 StringBuilder sb = new StringBuilder();
                 var connectionString = ConnectionManager.GetConnectionStringForCurrentWindow();
-                var meta = TableMetadata.FromQualifiedString(selectedText);
+                var meta = ObjectMetadata.FromQualifiedString(selectedText);
                 sb.AppendLine(TsqltManager.MockTableWithRows(token, options, numRows, meta, connectionString));
 
                 ShellManager.ReplaceSelectionWith(sb.ToString());

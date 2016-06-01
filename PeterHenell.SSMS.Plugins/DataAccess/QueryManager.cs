@@ -25,12 +25,12 @@ namespace PeterHenell.SSMS.Plugins.DataAccess
 
         public static void Run(string connectionString, CancellationToken token, Action<QueryManager> action)
         {
-            //using (var manager = new QueryManager(connectionString, token))
-            //{
-            //    action(manager);
-            //    manager._completed = true;
-            //}
-            Run<object>(connectionString, token, (qm) => action);
+            using (var manager = new QueryManager(connectionString, token))
+            {
+                action(manager);
+                manager._completed = true;
+            }
+            //Run<object>(connectionString, token, (qm) => action);
         }
         public static T Run<T>(string connectionString, CancellationToken token, Func<QueryManager, T> action)
         {
@@ -127,6 +127,35 @@ namespace PeterHenell.SSMS.Plugins.DataAccess
             if (_currentCommand != null)
             {
                 _currentCommand.Dispose();
+            }
+        }
+
+        public void Fill(string query, DataTable dt, Dictionary<string, string> parameters)
+        {
+            using (var con = new SqlConnection(_connectionString))
+            using (var cmd = GetCommand(query, con))
+            using (var ad = new SqlDataAdapter(cmd))
+            {
+                foreach (var param in parameters)
+                {
+                    cmd.Parameters.AddWithValue(param.Key, param.Value);
+                }
+
+                ad.Fill(dt);
+            }
+            _completed = true;
+        }
+
+        public T1 ExecuteScalar<T1>(string query)
+        {
+            using (var con = new SqlConnection(_connectionString))
+            using (var cmd = GetCommand(query, con))
+            {
+                //Console.WriteLine(query);
+                con.Open();
+                var result = cmd.ExecuteScalar();
+                _completed = true;
+                return (T1)result;
             }
         }
     }

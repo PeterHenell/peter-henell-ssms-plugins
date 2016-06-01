@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeterHenell.SSMS.Plugins", "PeterHenell.SSMS.Plugins\PeterHenell.SSMS.Plugins.csproj", "{73ED43D2-5CFD-45E5-A2FD-3B33C657F059}"
 EndProject
@@ -16,6 +16,13 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DefaultPlugins", "DefaultPlugins", "{121D1DF1-ED5D-49F7-9C9C-8CA2A9238D35}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeterHenell.SSMS.DefaultCommandPlugins", "PeterHenell.SSMS.DefaultCommandPlugins\PeterHenell.SSMS.DefaultCommandPlugins.csproj", "{1350329E-2820-4520-A876-88490BD97337}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{9DF225AC-A4A5-4C25-8E87-CCE8CD63951F}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

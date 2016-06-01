@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using PeterHenell.SSMS.Plugins.DataAccess.DTO;
 using PeterHenell.SSMS.Plugins.Utils;
 using System;
 using System.Collections.Generic;
@@ -9,14 +10,14 @@ using System.Threading.Tasks;
 namespace PeterHenell.SSMS.Plugins.Tests
 {
     [TestFixture]
-    public class TableMetaDataTests
+    public class ObjectMetadataTests
     {
         [Test]
-        public void ShouldGetFullyQualifiedNamesFromFullyQuailifiedTableMetaData()
+        public void ShouldGetFullyQualifiedNamesFromFullyQuailifiedObjectMetadata()
         {
-            var tableA = TableMetadata.FromQualifiedString("MYDB.MySchema.MockingTable").ToFullString();
-            var tableB = TableMetadata.FromQualifiedString("MySchema.MockingTable").ToFullString();
-            var tableC = TableMetadata.FromQualifiedString("MockingTable").ToFullString();
+            var tableA = ObjectMetadata.FromQualifiedString("MYDB.MySchema.MockingTable").ToFullString();
+            var tableB = ObjectMetadata.FromQualifiedString("MySchema.MockingTable").ToFullString();
+            var tableC = ObjectMetadata.FromQualifiedString("MockingTable").ToFullString();
 
             Assert.That(tableA, Is.EqualTo("[MYDB].[MySchema].[MockingTable]"));
             Assert.That(tableB, Is.EqualTo("[MySchema].[MockingTable]"));
@@ -24,11 +25,11 @@ namespace PeterHenell.SSMS.Plugins.Tests
         }
 
         [Test]
-        public void ShouldGetFullyQualifiedNamesFromTableMetaData()
+        public void ShouldGetFullyQualifiedNamesFromObjectMetadata()
         {
-            var tableA = TableMetadata.FromQualifiedString("[MYDB].[MySchema].[MockingTable]").ToFullString();
-            var tableB = TableMetadata.FromQualifiedString("[MySchema].[MockingTable]").ToFullString();
-            var tableC = TableMetadata.FromQualifiedString("[MockingTable]").ToFullString();
+            var tableA = ObjectMetadata.FromQualifiedString("[MYDB].[MySchema].[MockingTable]").ToFullString();
+            var tableB = ObjectMetadata.FromQualifiedString("[MySchema].[MockingTable]").ToFullString();
+            var tableC = ObjectMetadata.FromQualifiedString("[MockingTable]").ToFullString();
 
             Assert.That(tableA, Is.EqualTo("[MYDB].[MySchema].[MockingTable]"));
             Assert.That(tableB, Is.EqualTo("[MySchema].[MockingTable]"));
@@ -38,9 +39,9 @@ namespace PeterHenell.SSMS.Plugins.Tests
         [Test]
         public void ShouldUnwrapNames()
         {
-            var tableA = TableMetadata.FromQualifiedString("[MYDB].[MySchema].[MockingTable]");
+            var tableA = ObjectMetadata.FromQualifiedString("[MYDB].[MySchema].[MockingTable]");
 
-            Assert.That(tableA.TableName, Is.EqualTo("MockingTable"));
+            Assert.That(tableA.ObjectName, Is.EqualTo("MockingTable"));
             Assert.That(tableA.SchemaName, Is.EqualTo("MySchema"));
             Assert.That(tableA.DatabaseName, Is.EqualTo("MYDB"));
         }

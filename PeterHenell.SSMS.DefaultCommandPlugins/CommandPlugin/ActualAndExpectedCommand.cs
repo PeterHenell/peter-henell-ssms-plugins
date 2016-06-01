@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using PeterHenell.SSMS.Plugins.ExtensionMethods;
 using PeterHenell.SSMS.Plugins.Plugins;
 using System.Threading;
+using PeterHenell.SSMS.Plugins.DataAccess.DTO;
 
 namespace PeterHenell.SSMS.Plugins.Commands
 {
@@ -77,7 +78,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
                                 string.Format("{0}SELECT {1}INTO #Expected{0}FROM #Actual{0}WHERE 1=0;{0}", Environment.NewLine, sb.ToString())
                                 );
                         ShellManager.AppendToEndOfSelection(
-                            TsqltManager.GenerateInsertFor(ds.Tables[0], TableMetadata.FromQualifiedString("#Expected"), false, false));
+                            TsqltManager.GenerateInsertFor(ds.Tables[0], ObjectMetadata.FromQualifiedString("#Expected"), false, false));
                     }
                     else
                     {
@@ -85,8 +86,8 @@ namespace PeterHenell.SSMS.Plugins.Commands
                     }
                 }
 
-                //var meta = TableMetadata.FromQualifiedString(selectedText);
-                //TableMetaDataAccess da = new TableMetaDataAccess(ConnectionManager.GetConnectionStringForCurrentWindow());
+                //var meta = ObjectMetadata.FromQualifiedString(selectedText);
+                //ObjectMetadataAccess da = new ObjectMetadataAccess(ConnectionManager.GetConnectionStringForCurrentWindow());
                 //var table = da.SelectTopNFrom(meta, numRows);
 
                 //StringBuilder sb = new StringBuilder();
