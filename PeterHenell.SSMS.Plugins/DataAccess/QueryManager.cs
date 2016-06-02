@@ -158,5 +158,16 @@ namespace PeterHenell.SSMS.Plugins.DataAccess
                 return (T1)result;
             }
         }
+
+        internal void Fill(string query, DataTable dt)
+        {
+            using (var con = new SqlConnection(_connectionString))
+            using (var cmd = GetCommand(query, con))
+            using (var ad = new SqlDataAdapter(cmd))
+            {
+                ad.Fill(dt);
+            }
+            _completed = true;
+        }
     }
 }

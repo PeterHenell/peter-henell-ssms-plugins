@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using PeterHenell.SSMS.Plugins.ExtensionMethods;
 
 namespace PeterHenell.SSMS.Plugins.Utils.Generators
 {
@@ -22,6 +23,37 @@ namespace PeterHenell.SSMS.Plugins.Utils.Generators
             sb.Append("SELECT ");
             GetColumnList(dt, newLines);
             sb.AppendLine();
+
+            return this;
+        }
+        public QueryBuilder SelectAllRows(DataTable dt, bool newLines = false)
+        {
+            sb.Append("SELECT ");
+            GetColumnList(dt, newLines);
+            FromValues(dt);
+            sb.AppendLine();
+
+            return this;
+        }
+
+        private QueryBuilder FromValues(DataTable dt, int rows = 1)
+        {
+            var datagen = new DataGenerator();
+            datagen.Fill(dt, 1);
+            sb.AppendLine("FROM ( ");
+            ValuesForEachRow(dt);
+            sb.AppendLine(") as res (");
+            GetColumnList(dt, false);
+            sb.AppendLine(");");
+            return this;
+        }
+
+        public QueryBuilder ValuesForEachRow(DataTable dt) {
+            sb.Append("VALUES (");
+
+            sb.AppendListOfRows(dt, true);
+
+            sb.AppendLine(")");
 
             return this;
         }
