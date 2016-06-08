@@ -2,6 +2,7 @@
 using EnvDTE80;
 using RedGate.SIPFrameworkShared;
 using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace PeterHenell.SSMS.Plugins.Shell
@@ -39,7 +40,7 @@ namespace PeterHenell.SSMS.Plugins.Shell
         {
             DTE2 a = (DTE2)provider.SsmsDte2;
             Document document = a.ActiveDocument;
-            
+
             if (document != null)
             {
                 // find the selected text, and return the edit point at the bottom of it.
@@ -49,14 +50,14 @@ namespace PeterHenell.SSMS.Plugins.Shell
 
                 return selection.TopPoint.CreateEditPoint();
             }
-            return null;            
+            return null;
         }
 
         public void AppendToEndOfSelection(string text)
         {
             var editPoint = GetEditPointAtBottomOfSelection();
             editPoint.Insert(Environment.NewLine + text);
-            
+
         }
 
         public string GetSelectedText()
@@ -84,7 +85,7 @@ namespace PeterHenell.SSMS.Plugins.Shell
         {
             var editPoint = GetEditPointAtTopOfSelection();
             editPoint.Insert(text + Environment.NewLine);
-            
+
         }
 
         public void ReplaceSelectionWith(string text)
@@ -103,6 +104,19 @@ namespace PeterHenell.SSMS.Plugins.Shell
         public static void ShowMessageBox(string message)
         {
             MessageBox.Show(message);
+        }
+
+        public void OpenFile(string fileName, bool newWindow)
+        {
+            DTE2 a = (DTE2)provider.SsmsDte2;
+            if (System.IO.File.Exists(@fileName))
+            {
+                a.ExecuteCommand("Open", @"""" + @fileName + @"""");
+            }
+            else
+            {
+                throw new FileNotFoundException(fileName);
+            }
         }
     }
 }
