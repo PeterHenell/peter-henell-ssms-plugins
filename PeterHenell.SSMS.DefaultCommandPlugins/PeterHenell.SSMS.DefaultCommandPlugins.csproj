@@ -78,6 +78,7 @@
     <Compile Include="CommandPlugin\ActualAndExpectedCommand.cs" />
     <Compile Include="CommandPlugin\DecompressResultCommand.cs" />
     <Compile Include="CommandPlugin\GenerateDataForTableCommand.cs" />
+    <Compile Include="CommandPlugin\OpenSelectedObjectScriptCommand.cs" />
     <Compile Include="CommandPlugin\GenerateInsertStatementCommand.cs" />
     <Compile Include="CommandPlugin\ImportExcelCommand.cs" />
     <Compile Include="CommandPlugin\MockAllDependenciesCommand.cs" />

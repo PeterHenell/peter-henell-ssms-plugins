@@ -60,12 +60,19 @@ namespace PeterHenell.SSMS.Plugins.Plugins
         }
 
         /// <summary>
+        /// Options which will be saved when changed.
+        /// </summary>
+        public Dictionary<string, string> PluginOptions = new Dictionary<string, string>();
+
+        /// <summary>
         /// Standard Menu Groups used to group commands into menus.
         /// </summary>
         public static class MenuGroups
         {
             public static string DataGeneration = "Data Generation";
             public static string TSQLTTools = "TSQLT Tools";
+            public static string Liquibase = "Liquibase";
+
         }
 
 
