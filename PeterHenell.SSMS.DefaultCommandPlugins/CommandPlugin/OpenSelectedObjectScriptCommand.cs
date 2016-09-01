@@ -22,7 +22,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
                 "Open sql script for selected object",
                 "global::Ctrl+Alt+f")
         {
-
+            SupportedOptions.Add("Source Base Path", @"c:\src\git\");
         }
 
         public override void ExecuteCommand(CancellationToken token)
@@ -31,20 +31,19 @@ namespace PeterHenell.SSMS.Plugins.Commands
             var meta = ObjectMetadata.FromQualifiedString(selectedText);
 
             var fileName = string.Format("{0}.{1}.sql", meta.SchemaName, meta.ObjectName);
+            var sourceFolder = @"c:\src\git\";
+            var files = Directory.GetFiles(sourceFolder, fileName, SearchOption.AllDirectories);
 
-            var files = Directory.GetFiles(@"c:\src\dwh\", fileName, SearchOption.AllDirectories);
-
-            if (files.Length == 1)
+            if (files.Length > 0)
             {
-                ShellManager.OpenFile(fileName: files[0], newWindow: true);
+                for (int i = 0; i < files.Length; i++)
+                {
+                    ShellManager.OpenFile(fileName: files[i], newWindow: true);
+                }
             }
-            else if (files.Length == 0)
+            else 
             {
-                throw new FileNotFoundException("The script for: " + selectedText + " could not be found");
-            }
-            else
-            {
-                ShellManager.ShowMessageBox("Many files found");
+                throw new FileNotFoundException("The script file for: " + selectedText + " could not be found in " + sourceFolder);
             }
         }
     }

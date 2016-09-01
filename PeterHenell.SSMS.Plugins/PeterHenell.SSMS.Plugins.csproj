@@ -115,6 +115,7 @@
       <HintPath>..\ReferencedDlls\SqlWorkbench.Interfaces.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -154,9 +155,11 @@
       <DependentUpon>TextBoxAndCheckboxesForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Plugins\CommandPluginWrapper.cs" />
+    <Compile Include="Plugins\Config\PluginConfigurationManager.cs" />
     <Compile Include="Plugins\ICommandPlugin.cs" />
     <Compile Include="Plugins\CommandPluginManager.cs" />
     <Compile Include="Plugins\CommandPluginBase.cs" />
+    <Compile Include="Plugins\Config\PluginConfiguration.cs" />
     <Compile Include="Plugins\PluginLoader.cs" />
     <Compile Include="Plugins\PluginManager.cs" />
     <Compile Include="QueryBuilders\LambdaInsertBuilder.cs" />
@@ -172,6 +175,7 @@
     <Compile Include="Tests\Mocks\MockCommandPlugin.cs" />
     <Compile Include="Tests\ObjectDependencyServiceTests.cs" />
     <Compile Include="Tests\PluginLoaderTests.cs" />
+    <Compile Include="Tests\PluginSettingsTest.cs" />
     <Compile Include="Tests\TableMetaDataTests.cs" />
     <Compile Include="Tests\QueryManagerTests.cs" />
     <Compile Include="TypeBuilders\DynamicTypeBuilder.cs" />
@@ -188,6 +192,7 @@
     <Compile Include="Utils\TsqltManager.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="ExampleKey.snk" />
     <None Include="packages.config" />
   </ItemGroup>

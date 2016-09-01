@@ -35,17 +35,16 @@ namespace PeterHenell.SSMS.Plugins
             if (_provider4 == null)
                 throw new ArgumentException();
 
-            var ms = new MemoryStream();
-            var sw = new StreamWriter(ms);
-            Console.SetOut(sw);
-
+            //var ms = new MemoryStream();
+            //var sw = new StreamWriter(ms);
+            //Console.SetOut(sw);
+            
             try
             {
                 LoadCommandPlugins();
             }
             catch (Exception ex)
             {
-
                 Console.WriteLine(ex.ToString());
             }
         }

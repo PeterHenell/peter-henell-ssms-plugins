@@ -1,4 +1,5 @@
-﻿using PeterHenell.SSMS.Plugins.Shell;
+﻿using PeterHenell.SSMS.Plugins.Plugins.Config;
+using PeterHenell.SSMS.Plugins.Shell;
 //using RedGate.SIPFrameworkShared;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace PeterHenell.SSMS.Plugins.Plugins
         public string MenuGroup { get; private set; }
         protected ShellManager ShellManager { get; private set; }
 
-        public CommandPluginBase(string name, string menuGroup, string caption, string shortcutBinding)
+        protected CommandPluginBase(string name, string menuGroup, string caption, string shortcutBinding)
         {
             this.Name = name;
             this.Caption = caption;
@@ -62,7 +63,8 @@ namespace PeterHenell.SSMS.Plugins.Plugins
         /// <summary>
         /// Options which will be saved when changed.
         /// </summary>
-        public Dictionary<string, string> PluginOptions = new Dictionary<string, string>();
+        public PluginConfiguration PluginOptions = new PluginConfiguration();
+        public PluginConfiguration SupportedOptions = new PluginConfiguration();
 
         /// <summary>
         /// Standard Menu Groups used to group commands into menus.

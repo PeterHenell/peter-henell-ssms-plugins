@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PeterHenell.SSMS.Plugins.Plugins.Config;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -69,6 +70,7 @@ namespace PeterHenell.SSMS.Plugins.Plugins
                 var loader = new PluginLoader<T>();
                 _loadedPlugins.AddRange(loader.LoadPluginTypes(path));    
             }
+            
         }
     }
 }
