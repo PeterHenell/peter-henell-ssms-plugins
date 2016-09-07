@@ -71,14 +71,13 @@ namespace PeterHenell.SSMS.Plugins.Plugins.Config
             }
         }
 
-        internal void LoadAll(List<CommandPluginWrapper> plugins)
+        public void LoadAll(List<CommandPluginWrapper> plugins)
         {
             try
             {
                 foreach (var plugin in plugins)
                 {
-
-                    var config = this.Load(plugin.Name);
+                    var config = this.Load(plugin.Caption);
                     if (config.Keys.Count == 0)
                     {
                         // If nothing is loaded, then use the plugin default configuration.
