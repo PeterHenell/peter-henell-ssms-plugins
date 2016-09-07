@@ -9,7 +9,12 @@ namespace PeterHenell.SSMS.Plugins.Plugins.Config
     [Serializable]
     public class PluginConfiguration : Dictionary<string, string>
     {
-        public PluginConfiguration()
+        public PluginConfiguration(string ownerName)
+        {
+            this.OwnerName = ownerName;
+        }
+
+        private PluginConfiguration()
         {
 
         }
@@ -19,5 +24,7 @@ namespace PeterHenell.SSMS.Plugins.Plugins.Config
         {
 
         }
+
+        public string OwnerName { get; set; }
     }
 }

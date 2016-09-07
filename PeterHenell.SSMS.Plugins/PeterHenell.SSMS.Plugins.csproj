@@ -155,6 +155,19 @@
       <DependentUpon>TextBoxAndCheckboxesForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Plugins\CommandPluginWrapper.cs" />
+    <Compile Include="Plugins\Config\ConfigControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Plugins\Config\ConfigControl.Designer.cs">
+      <DependentUpon>ConfigControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Plugins\Config\ConfigurationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Plugins\Config\ConfigurationForm.Designer.cs">
+      <DependentUpon>ConfigurationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Plugins\Config\ConfigurationPlugin.cs" />
     <Compile Include="Plugins\Config\PluginConfigurationManager.cs" />
     <Compile Include="Plugins\ICommandPlugin.cs" />
     <Compile Include="Plugins\CommandPluginManager.cs" />
@@ -205,6 +218,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\TextBoxAndCheckboxesForm.resx">
       <DependentUpon>TextBoxAndCheckboxesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Plugins\Config\ConfigControl.resx">
+      <DependentUpon>ConfigControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Plugins\Config\ConfigurationForm.resx">
+      <DependentUpon>ConfigurationForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

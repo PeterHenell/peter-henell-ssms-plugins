@@ -8,6 +8,7 @@ using PeterHenell.SSMS.Plugins.Plugins;
 using System.Reflection;
 using System.IO;
 using EnvDTE80;
+using PeterHenell.SSMS.Plugins.Plugins.Config;
 
 namespace PeterHenell.SSMS.Plugins
 {
@@ -58,6 +59,10 @@ namespace PeterHenell.SSMS.Plugins
             {
                 pluginManager.LoadAllPlugins(Path.Combine(AssemblyDirectory, "Plugins"));
                 var plugins = pluginManager.GetPluginInstances();
+                
+                // Add config plugin since it is a shared plugin
+                SetupConfigurationPlugin(plugins);
+              
                 foreach (var plugin in plugins)
                 {
                     plugin.Init(_provider4);
@@ -71,6 +76,14 @@ namespace PeterHenell.SSMS.Plugins
                 MessageBox.Show(ex.ToString());
                 throw;
             }
+        }
+
+        private static void SetupConfigurationPlugin(List<CommandPluginWrapper> plugins)
+        {
+            var configManager = new PluginConfigurationManager();
+            configManager.LoadAll(plugins);
+            var configPlugin = plugins.Find(x => x.Plugin.Name == ConfigurationPlugin.PLUGIN_NAME);
+            ((ConfigurationPlugin)configPlugin.Plugin).ConfigManager = configManager;
         }
 
         public void OnNodeChanged(ObjectExplorerNodeDescriptorBase node)

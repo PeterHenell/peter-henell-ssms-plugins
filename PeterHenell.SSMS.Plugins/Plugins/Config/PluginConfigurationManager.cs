@@ -10,36 +10,86 @@ namespace PeterHenell.SSMS.Plugins.Plugins.Config
     public class PluginConfigurationManager
     {
         private static readonly string configBaseDirectory;
+        public List<PluginConfiguration> Configurations { get; set; }
 
         static PluginConfigurationManager()
         {
-            var pathWithEnv = System.Configuration.ConfigurationManager.AppSettings["Plugins.Config.PluginManager.OptionsSaveFolder"];
-            configBaseDirectory = Environment.ExpandEnvironmentVariables(pathWithEnv);
+            //try
+            //{
+            //    var pathWithEnv = System.Configuration.ConfigurationManager.AppSettings["Plugins.Config.PluginManager.OptionsSaveFolder"];
+            //    configBaseDirectory = Environment.ExpandEnvironmentVariables(pathWithEnv);
+            //}
+            //catch (Exception)
+            //{
+            //}
+
+            if (string.IsNullOrEmpty(configBaseDirectory))
+            {
+                configBaseDirectory = ".";
+            }
         }
 
         public PluginConfigurationManager()
         {
+            this.Configurations = new List<PluginConfiguration>();
         }
 
-        public void Save(string configFileName, PluginConfiguration config)
+        public void Save(PluginConfiguration config)
         {
-            var configFilePath = Path.Combine(configBaseDirectory, configFileName);
+            var configFilePath = Path.Combine(configBaseDirectory, config.OwnerName);
             BinarySerializer<PluginConfiguration>.WriteToFile(configFilePath, config, FileMode.Create);
         }
 
-        public PluginConfiguration Load(string configFileName)
+        public PluginConfiguration Load(string pluginName)
         {
             try
             {
-                var configFilePath = Path.Combine(configBaseDirectory, configFileName);
+                var configFilePath = Path.Combine(configBaseDirectory, pluginName);
                 var obj = BinarySerializer<PluginConfiguration>.ReadFromFile(configFilePath);
+                obj.OwnerName = pluginName;
                 return obj;
             }
             catch (Exception ex)
             {
                 // Probably did not the file exist, return an empty configuration
                 Console.WriteLine(ex.ToString());
-                return new PluginConfiguration();
+                return new PluginConfiguration(pluginName);
+            }
+        }
+
+        public void SaveAll()
+        {
+            try
+            {
+                foreach (var config in Configurations)
+                {
+                    Save(config);
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        internal void LoadAll(List<CommandPluginWrapper> plugins)
+        {
+            try
+            {
+                foreach (var plugin in plugins)
+                {
+
+                    var config = this.Load(plugin.Name);
+                    if (config.Keys.Count == 0)
+                    {
+                        // If nothing is loaded, then use the plugin default configuration.
+                        config = plugin.Plugin.SupportedOptions;
+                    }
+                    plugin.Plugin.PluginOptions = config;
+                    Configurations.Add(config);
+                }
+            }
+            catch (Exception)
+            {
             }
         }
     }

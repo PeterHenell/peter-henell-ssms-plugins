@@ -21,6 +21,9 @@ namespace PeterHenell.SSMS.Plugins.Plugins
         public string ShortcutBinding { get; private set; }
         public string MenuGroup { get; private set; }
         protected ShellManager ShellManager { get; private set; }
+        public PluginConfiguration PluginOptions { get; set; }
+        public PluginConfiguration SupportedOptions { get; set; }
+
 
         protected CommandPluginBase(string name, string menuGroup, string caption, string shortcutBinding)
         {
@@ -29,6 +32,8 @@ namespace PeterHenell.SSMS.Plugins.Plugins
             this.ShortcutBinding = shortcutBinding;
             this.MenuGroup = menuGroup;
             this.cancellationTokenSource = new CancellationTokenSource();
+            this.PluginOptions = new PluginConfiguration(name);
+            this.SupportedOptions = new PluginConfiguration(name);
         }
 
         public void Init(ShellManager shellManager)
@@ -63,8 +68,7 @@ namespace PeterHenell.SSMS.Plugins.Plugins
         /// <summary>
         /// Options which will be saved when changed.
         /// </summary>
-        public PluginConfiguration PluginOptions = new PluginConfiguration();
-        public PluginConfiguration SupportedOptions = new PluginConfiguration();
+        
 
         /// <summary>
         /// Standard Menu Groups used to group commands into menus.
@@ -74,9 +78,6 @@ namespace PeterHenell.SSMS.Plugins.Plugins
             public static string DataGeneration = "Data Generation";
             public static string TSQLTTools = "TSQLT Tools";
             public static string Liquibase = "Liquibase";
-
         }
-
-
     }
 }
