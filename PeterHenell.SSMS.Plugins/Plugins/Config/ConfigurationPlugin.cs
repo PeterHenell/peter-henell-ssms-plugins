@@ -10,15 +10,7 @@ namespace PeterHenell.SSMS.Plugins.Plugins.Config
 {
     public class ConfigurationPlugin : CommandPluginBase
     {
-        //private PluginConfigurationManager configManager;
         public PluginConfigurationManager ConfigManager { get; set; }
-
-        //public ConfigurationPlugin(PluginConfigurationManager configManager)
-        //    : this()
-        //{
-        //    this.configManager = configManager;
-        //}
-
         public const string PLUGIN_NAME = "Configuration_Plugin";
 
         public ConfigurationPlugin()
