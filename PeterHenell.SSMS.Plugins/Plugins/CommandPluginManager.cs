@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PeterHenell.SSMS.Plugins.Plugins.Config;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,8 +11,17 @@ namespace PeterHenell.SSMS.Plugins.Plugins
     {
         public List<CommandPluginWrapper> GetPluginInstances()
         {
-            return base.GetFilteredPluginInstances(i => IsValid(i))
+            var plugins = base.GetFilteredPluginInstances(i => IsValid(i))
                         .Select( p => new CommandPluginWrapper(p)).ToList();
+
+            var configManager = new PluginConfigurationManager();
+            foreach (var plugin in plugins)
+            {
+                var options = configManager.Load(plugin.Caption);
+                plugin.Options = options;
+            }
+            
+            return plugins;
         }
 
         private bool IsValid(CommandPluginBase i)

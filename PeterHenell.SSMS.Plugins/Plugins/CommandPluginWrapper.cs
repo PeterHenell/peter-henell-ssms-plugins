@@ -27,6 +27,14 @@ namespace PeterHenell.SSMS.Plugins.Plugins
         public string MenuGroup { get; private set; }
 
         public CommandPluginBase Plugin { get; private set; }
+        public Config.PluginConfiguration Options
+        {
+            get
+            {
+                return Plugin.PluginOptions;
+            }
+            set { Plugin.PluginOptions = value; }
+        }
 
         public CommandPluginWrapper(CommandPluginBase loadedPlugin)
         {
