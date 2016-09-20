@@ -49,7 +49,6 @@ namespace PeterHenell.SSMS.Plugins.Commands
                 ShellManager.AppendToEndOfSelection(output);
             });
 
-
             DialogManager.GetDialogInputFromUser("How many rows to generate? (0-1000)", "10", okAction, cancelCallback);
         }
 
@@ -62,11 +61,11 @@ namespace PeterHenell.SSMS.Plugins.Commands
             return meta;
         }
 
-        private void ParseParam(string result, out int numRows)
+        private void ParseParam(string paramValue, out int numRows)
         {
-            if (!int.TryParse(result, out numRows))
+            if (!int.TryParse(paramValue, out numRows))
             {
-                throw new InvalidOperationException("Please input a valid number");
+                throw new ArgumentException("Please input a valid number");
             }
             if (numRows > 1000)
             {
@@ -90,28 +89,5 @@ namespace PeterHenell.SSMS.Plugins.Commands
         {
         }
 
-        //public string Name { get { return COMMAND_NAME; } }
-        //public string Caption { get { return "Generate Insert X Rows for Selected Table"; } }
-        //public string Tooltip { get { return "Generate Insert With Generated Rows for Selected Table"; } }
-        //public ICommandImage Icon { get { return m_CommandImage; } }
-        //public string[] DefaultBindings { get { return new[] { "global::Ctrl+Alt+I" }; } }
-        //public bool Visible { get { return true; } }
-        //public bool Enabled { get { return true; } }
-
-        //public void Execute()
-        //{
-
-        //}
-
-        //public string MenuGroup
-        //{
-        //    get { return "Data Generation"; }
-        //}
-
-        //public void Init(ISsmsFunctionalityProvider4 provider)
-        //{
-        //    this.provider = provider;
-        //    this.shellManager = new ShellManager(provider);
-        //}
     }
 }

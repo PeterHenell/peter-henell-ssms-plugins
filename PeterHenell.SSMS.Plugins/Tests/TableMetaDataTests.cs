@@ -45,5 +45,18 @@ namespace PeterHenell.SSMS.Plugins.Tests
             Assert.That(tableA.SchemaName, Is.EqualTo("MySchema"));
             Assert.That(tableA.DatabaseName, Is.EqualTo("MYDB"));
         }
+
+        [Test]
+        public void ShouldParseTempDbName()
+        {
+            var input = "#Temp";
+            var tableA = ObjectMetadata.FromQualifiedString(input);
+
+            Assert.That(tableA.ObjectName, Is.EqualTo("#Temp"));
+            Assert.That(tableA.SchemaName, Is.EqualTo(""));
+            Assert.That(tableA.DatabaseName, Is.EqualTo("Tempdb"));
+            Assert.That(tableA.ToFullString(), Is.EqualTo("[Tempdb]..[#Temp]"));
+
+        }
     }
 }
