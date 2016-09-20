@@ -17,7 +17,7 @@ namespace PeterHenell.SSMS.Plugins.Plugins
             var configManager = new PluginConfigurationManager();
             foreach (var plugin in plugins)
             {
-                var options = configManager.Load(plugin.Name);
+                var options = configManager.Load(plugin.Caption);
                 plugin.Options = options;
             }
             

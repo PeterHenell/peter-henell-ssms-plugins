@@ -31,7 +31,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
             var meta = ObjectMetadata.FromQualifiedString(selectedText);
 
             var fileName = string.Format("{0}.{1}.sql", meta.SchemaName, meta.ObjectName);
-            var sourceFolder = PluginOptions["Source Base Path"];// @"c:\src\git\";
+            var sourceFolder = PluginOptions["Source Base Path"];
             var files = Directory.GetFiles(sourceFolder, fileName, SearchOption.AllDirectories);
 
             if (files.Length > 0)
