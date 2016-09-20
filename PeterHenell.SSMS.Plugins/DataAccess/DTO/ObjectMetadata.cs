@@ -12,7 +12,13 @@ namespace PeterHenell.SSMS.Plugins.DataAccess.DTO
         public string DatabaseName { get; private set; }
 
         public string WrappedObjectName { get { return Wrap(ObjectName); } }
-        public string WrappedSchemaName { get { return Wrap(SchemaName); } }
+        public string WrappedSchemaName { get {
+            if (SchemaName == "")
+            {
+                return "";
+            }
+            return Wrap(SchemaName); 
+        } }
         public string WrappedDatabaseName { get { return Wrap(DatabaseName); } }
 
         private ObjectMetadata()
@@ -26,7 +32,12 @@ namespace PeterHenell.SSMS.Plugins.DataAccess.DTO
         }
         public static ObjectMetadata FromParts(string objectName)
         {
+            if (objectName.StartsWith("#"))
+            {
+                return new ObjectMetadata { ObjectName = UnWrap(objectName), SchemaName = UnWrap(""), DatabaseName = "Tempdb" };
+            }
             return new ObjectMetadata { ObjectName = UnWrap(objectName), SchemaName = UnWrap("dbo"), DatabaseName = null };
+            
         }
         public static ObjectMetadata FromParts(string schemaName, string objectName)
         {
@@ -44,12 +55,25 @@ namespace PeterHenell.SSMS.Plugins.DataAccess.DTO
                 throw new ArgumentException("Selected text does not contain any object name");
             }
 
-            int numPartCounter = 0;
-            string dbName = parts.Length == 3 ? parts[numPartCounter++] : null;
-            string schemaName = parts.Length >= 2 ? parts[numPartCounter++] : "dbo";
-            string objectName = parts[numPartCounter];
+            switch (parts.Length)
+            {
+                case 3:
+                    return ObjectMetadata.FromParts(parts[0], parts[1], parts[2]);
+                case 2:
+                    return ObjectMetadata.FromParts(parts[0], parts[1]);
+                case 1:
+                    return ObjectMetadata.FromParts(parts[0]);
+                default:
+                    return ObjectMetadata.FromParts(parts[0]);
+            } 
+                
 
-            return new ObjectMetadata { ObjectName = UnWrap(objectName), SchemaName = UnWrap(schemaName), DatabaseName = UnWrap(dbName) };
+            //int numPartCounter = 0;
+            //string dbName = parts.Length == 3 ? parts[numPartCounter++] : null;
+            //string schemaName = parts.Length >= 2 ? parts[numPartCounter++] : "dbo";
+            //string objectName = parts[numPartCounter];
+
+            //return new ObjectMetadata { ObjectName = UnWrap(objectName), SchemaName = UnWrap(schemaName), DatabaseName = UnWrap(dbName) };
         }
 
         private static string UnWrap(string s)
