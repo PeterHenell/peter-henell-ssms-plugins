@@ -75,6 +75,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandPluginTests\MockAllDependenciesCommandTests.cs" />
+    <Compile Include="ShellExtensionPlugin\OpenFileOnDiskCommand.cs" />
     <Compile Include="CommandPlugin\ActualAndExpectedCommand.cs" />
     <Compile Include="CommandPlugin\DecompressResultCommand.cs" />
     <Compile Include="CommandPlugin\GenerateDataForTableCommand.cs" />

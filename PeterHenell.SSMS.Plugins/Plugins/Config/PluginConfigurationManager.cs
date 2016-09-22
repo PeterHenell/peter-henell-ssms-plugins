@@ -25,7 +25,7 @@ namespace PeterHenell.SSMS.Plugins.Plugins.Config
 
             if (string.IsNullOrEmpty(configBaseDirectory))
             {
-                configBaseDirectory = ".";
+                configBaseDirectory = Environment.ExpandEnvironmentVariables(@"%USERPROFILE%\AppData\Local\PeterHenell\SSMSPlugins\");
             }
         }
 

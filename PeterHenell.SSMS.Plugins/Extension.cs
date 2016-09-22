@@ -9,6 +9,7 @@ using System.Reflection;
 using System.IO;
 using EnvDTE80;
 using PeterHenell.SSMS.Plugins.Plugins.Config;
+using PeterHenell.SSMS.Plugins.Logging;
 
 namespace PeterHenell.SSMS.Plugins
 {
@@ -37,8 +38,8 @@ namespace PeterHenell.SSMS.Plugins
                 throw new ArgumentException();
 
             //var ms = new MemoryStream();
-            //var sw = new StreamWriter(ms);
-            //Console.SetOut(sw);
+            var pw = new PipeTextWriter();
+            Console.SetOut(pw);
             
             try
             {

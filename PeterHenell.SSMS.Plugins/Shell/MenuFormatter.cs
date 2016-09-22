@@ -20,8 +20,10 @@ namespace PeterHenell.SSMS.Plugins.Shell
         /// <returns></returns>
         public Dictionary<string, List<CommandPluginWrapper>> GetMenuGroups(IEnumerable<CommandPluginWrapper> plugins)
         {
-            var groups = plugins.GroupBy(x => x.MenuGroup)
-                 .ToDictionary(g => g.Key, g => g.ToList());
+            var groups = plugins
+                    .Where(x => x.Plugin.VisibleInMenu)    
+                    .GroupBy(x => x.MenuGroup)
+                    .ToDictionary(g => g.Key, g => g.ToList());
 
             return groups;
         }

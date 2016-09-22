@@ -79,6 +79,9 @@
       <HintPath>..\ReferencedDlls\2014\Microsoft.SqlServer.Management.Sdk.Sfc.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.SqlServer.Management.SqlStudio.Explorer">
+      <HintPath>..\ReferencedDlls\Microsoft.SqlServer.Management.SqlStudio.Explorer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.SqlServer.RegSvrEnum, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ReferencedDlls\2014\Microsoft.SqlServer.RegSvrEnum.dll</HintPath>
@@ -154,6 +157,8 @@
     <Compile Include="Forms\TextBoxAndCheckboxesForm.Designer.cs">
       <DependentUpon>TextBoxAndCheckboxesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Logging\Logger.cs" />
+    <Compile Include="Logging\PipeTextWriter.cs" />
     <Compile Include="Plugins\CommandPluginWrapper.cs" />
     <Compile Include="Plugins\Config\ConfigControl.cs">
       <SubType>UserControl</SubType>
@@ -175,7 +180,9 @@
     <Compile Include="Plugins\Config\PluginConfiguration.cs" />
     <Compile Include="Plugins\PluginLoader.cs" />
     <Compile Include="Plugins\PluginManager.cs" />
+    <Compile Include="Plugins\ShellExtension\ShellExtensionPluginBase.cs" />
     <Compile Include="QueryBuilders\LambdaInsertBuilder.cs" />
+    <Compile Include="Shell\Integration\ObjectExplorerIntegration.cs" />
     <Compile Include="Shell\Menu.cs" />
     <Compile Include="Extension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -199,10 +206,11 @@
     <Compile Include="Utils\DialogManager.cs" />
     <Compile Include="Utils\ExcelManager.cs" />
     <Compile Include="Utils\GZipManager.cs" />
-    <Compile Include="Utils\NodeManager.cs" />
+    <Compile Include="Shell\Integration\NodeManager.cs" />
     <Compile Include="Utils\NotepadHelper.cs" />
     <Compile Include="DataAccess\DTO\ObjectMetadata.cs" />
     <Compile Include="Utils\TsqltManager.cs" />
+    <Compile Include="Shell\Integration\WindowManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

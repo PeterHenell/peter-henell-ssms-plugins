@@ -23,17 +23,23 @@ namespace PeterHenell.SSMS.Plugins.Plugins
         protected ShellManager ShellManager { get; private set; }
         public PluginConfiguration PluginOptions { get; set; }
         public PluginConfiguration SupportedOptions { get; set; }
+        /// <summary>
+        /// Gets or sets if this plugin should be visible from the menu.
+        /// Can only altered during plugin load. Once loaded the property is no longer checked.
+        /// </summary>
+        public bool VisibleInMenu { get; set; }
 
 
-        protected CommandPluginBase(string name, string menuGroup, string caption, string shortcutBinding)
+        protected CommandPluginBase(string name, string menuGroup, string caption, string shortcutBinding, bool visibleInMenu = true)
         {
             this.Name = name;
             this.Caption = caption;
             this.ShortcutBinding = shortcutBinding;
             this.MenuGroup = menuGroup;
             this.cancellationTokenSource = new CancellationTokenSource();
-            this.PluginOptions = new PluginConfiguration(name);
-            this.SupportedOptions = new PluginConfiguration(name);
+            this.PluginOptions = new PluginConfiguration(caption);
+            this.SupportedOptions = new PluginConfiguration(caption);
+            this.VisibleInMenu = visibleInMenu;
         }
 
         public void Init(ShellManager shellManager)

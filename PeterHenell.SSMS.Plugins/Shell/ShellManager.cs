@@ -118,5 +118,10 @@ namespace PeterHenell.SSMS.Plugins.Shell
                 throw new FileNotFoundException(fileName);
             }
         }
+        public void ExecuteCommand(string command)
+        {
+            DTE2 a = (DTE2)provider.SsmsDte2;
+            a.ExecuteCommand("Query.Execute");
+        }
     }
 }
