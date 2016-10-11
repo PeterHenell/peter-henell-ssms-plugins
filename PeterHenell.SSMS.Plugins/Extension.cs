@@ -38,8 +38,8 @@ namespace PeterHenell.SSMS.Plugins
                 throw new ArgumentException();
 
             //var ms = new MemoryStream();
-            var pw = new PipeTextWriter();
-            Console.SetOut(pw);
+            var debugWriter = new DebugTextWriter();
+            Console.SetOut(debugWriter);
             
             try
             {

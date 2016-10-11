@@ -18,12 +18,13 @@ namespace PeterHenell.SSMS.Plugins.Logging
         private static void Message(string prefix, string message)
         {
             message = message == null ? string.Empty : message;
-            using (var pipe = new NamedPipeClientStream(".", "PipesOfPiece", PipeDirection.Out))
-            using (var stream = new StreamWriter(pipe))
-            {
-                pipe.Connect();
-                stream.Write(prefix + " [" + message + "]");
-            }
+            //using (var pipe = new NamedPipeClientStream(".", "PipesOfPiece", PipeDirection.Out))
+            //using (var stream = new StreamWriter(pipe))
+            //{
+            //    pipe.Connect();
+            //    stream.Write(prefix + " [" + message + "]");
+            //}
+            Console.Write(prefix + " [" + message + "]");
         }
 
         public static void Error(string message)

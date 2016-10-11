@@ -79,7 +79,12 @@
       <HintPath>..\ReferencedDlls\2014\Microsoft.SqlServer.Management.Sdk.Sfc.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.SqlServer.Management.SqlStudio.Explorer">
+    <Reference Include="Microsoft.SqlServer.Management.SDK.SqlStudio, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ReferencedDlls\Microsoft.SqlServer.Management.SDK.SqlStudio.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Management.SqlStudio.Explorer, Version=12.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\ReferencedDlls\Microsoft.SqlServer.Management.SqlStudio.Explorer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.SqlServer.RegSvrEnum, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
@@ -97,7 +102,15 @@
       <HintPath>..\ReferencedDlls\2014\Microsoft.SqlServer.SmoExtended.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.VisualStudio.OLE.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ReferencedDlls\Microsoft.VisualStudio.OLE.Interop.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.Shell.10.0, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ReferencedDlls\Microsoft.VisualStudio.Shell.10.0.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
@@ -108,6 +121,9 @@
     </Reference>
     <Reference Include="RedGate.SIPFrameworkShared">
       <HintPath>..\ReferencedDlls\RedGate.SIPFrameworkShared.dll</HintPath>
+    </Reference>
+    <Reference Include="SQLEditors">
+      <HintPath>..\ReferencedDlls\SQLEditors.dll</HintPath>
     </Reference>
     <Reference Include="SqlPackageBase, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -157,6 +173,7 @@
     <Compile Include="Forms\TextBoxAndCheckboxesForm.Designer.cs">
       <DependentUpon>TextBoxAndCheckboxesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Logging\DebugTextWriter.cs" />
     <Compile Include="Logging\Logger.cs" />
     <Compile Include="Logging\PipeTextWriter.cs" />
     <Compile Include="Plugins\CommandPluginWrapper.cs" />
@@ -188,7 +205,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shell\MenuFormatter.cs" />
     <Compile Include="Shell\ShellManager.cs" />
-    <Compile Include="Shell\Submenu.cs" />
     <Compile Include="Tests\DbTypeConverterTests.cs" />
     <Compile Include="Tests\LambdaInsertBuilderTests.cs" />
     <Compile Include="Tests\MenuFormatterTests.cs" />

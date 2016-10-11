@@ -21,8 +21,9 @@ namespace PeterHenell.SSMS.Plugins.Logging
             using (var stream = new StreamWriter(pipe))
             {
                 pipe.Connect();
-                stream.WriteLine(value);
+                stream.WriteLineAsync(value);
             }
+            //Console.WriteLine(value);
         }
     }
 }

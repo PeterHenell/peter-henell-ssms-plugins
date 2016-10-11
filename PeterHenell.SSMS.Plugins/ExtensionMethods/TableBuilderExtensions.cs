@@ -99,10 +99,12 @@ namespace PeterHenell.SSMS.Plugins.ExtensionMethods
                     return ((bool)value) ? 1 : 0;
                 case "system.string":
                 case "system.guid":
-                    return string.Format("'{0}'", value);
                 case "system.datetime":
+                case "system.datetimeoffset":
                     return string.Format("'{0}'", value);
                 case "system.decimal":
+                case "system.float":
+                case "system.double":
                     return value.ToString().Replace(",", ".");
                 case "system.byte[]":
                     return ByteArrayToString((byte[])value);

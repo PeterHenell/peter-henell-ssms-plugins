@@ -1,6 +1,5 @@
 ﻿using EnvDTE;
 using EnvDTE80;
-using Microsoft.SqlServer.Management.SqlStudio.Explorer;
 using Microsoft.SqlServer.Management.UI.VSIntegration;
 using Microsoft.SqlServer.Management.UI.VSIntegration.ObjectExplorer;
 using PeterHenell.SSMS.Plugins.Shell.Integration;

@@ -31,12 +31,21 @@ namespace PeterHenell.SSMS.Plugins.Forms
             this.startAction = startAction;
             this.stopAction = stopAction;
 
-            startAction.BeginInvoke(callback, null);
+            startAction.BeginInvoke(completedCallback, null);
         }
 
-        private void callback(IAsyncResult ar)
+        private void completedCallback(IAsyncResult ar)
         {
-            this.Close();
+            CloseWindow();
+        }
+
+        private void CloseWindow()
+        {
+            this.InvokeIfRequired( () =>
+            {
+                if (this.Visible)
+                    this.Close();
+            });
         }
 
         private void stopBtn_Click(object sender, EventArgs e)
@@ -51,8 +60,35 @@ namespace PeterHenell.SSMS.Plugins.Forms
             }
             finally
             {
-                this.Close();
+                CloseWindow();
+            }
+        }
+
+        private void InvokeIfRequired(Action action) 
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new Action(() => action()));
+            }
+            else
+            {
+                action();
             }
         }
     }
+
+    //public static class ControlExtensions
+    //{
+    //    public static void InvokeIfRequired<T>(this T c, Action<T> action) where T : Control
+    //    {
+    //        if (c.InvokeRequired)
+    //        {
+    //            c.Invoke(new Action(() => action(c)));
+    //        }
+    //        else
+    //        {
+    //            action(c);
+    //        }
+    //    }
+    //}
 }

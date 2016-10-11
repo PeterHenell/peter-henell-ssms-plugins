@@ -62,6 +62,7 @@ namespace PeterHenell.SSMS.Plugins.Commands
                        });
                     if (ds.Tables.Count == 1)
                     {
+
                         sb.AppendDropTempTableIfExists("#Actual");
                         sb.AppendLine();
                         sb.AppendDropTempTableIfExists("#Expected");

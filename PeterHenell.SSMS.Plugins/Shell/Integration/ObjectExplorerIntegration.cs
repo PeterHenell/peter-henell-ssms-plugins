@@ -1,5 +1,5 @@
 ﻿using Microsoft.SqlServer.Management.Sdk.Sfc;
-using Microsoft.SqlServer.Management.SqlStudio.Explorer;
+using global::Microsoft.SqlServer.Management.SqlStudio.Explorer;
 using Microsoft.SqlServer.Management.UI.VSIntegration;
 using Microsoft.SqlServer.Management.UI.VSIntegration.ObjectExplorer;
 using System;
@@ -81,33 +81,33 @@ namespace PeterHenell.SSMS.Plugins.Shell.Integration
             /// <param name="e">The <see cref="System.Windows.Forms.TreeViewEventArgs"/> instance containing the event data.</param>
             private void TreeView_AfterExpand(object sender, System.Windows.Forms.TreeViewEventArgs e)
             {
-                if (e.Node.FullPath.Substring(e.Node.FullPath.LastIndexOf(@"\") + 1).StartsWith("Indexes"))
-                {
-                    string tableName = e.Node.Parent.Text;
-                    int tableImageIndex = e.Node.Parent.ImageIndex;
+                //if (e.Node.FullPath.Substring(e.Node.FullPath.LastIndexOf(@"\") + 1).StartsWith("Indexes"))
+                //{
+                //    string tableName = e.Node.Parent.Text;
+                //    int tableImageIndex = e.Node.Parent.ImageIndex;
 
-                    string databaseName = e.Node.Parent.Parent.Parent.Text;
+                //    string databaseName = e.Node.Parent.Parent.Parent.Text;
 
-                    // Wait for the async node expand to finish or we could miss indexes
-                    while ((e.Node as HierarchyTreeNode).Expanding)
-                    {
-                        Application.DoEvents();
-                    }
+                //    // Wait for the async node expand to finish or we could miss indexes
+                //    while ((e.Node as HierarchyTreeNode).Expanding)
+                //    {
+                //        Application.DoEvents();
+                //    }
 
-                    foreach (TreeNode node in e.Node.Nodes)
-                    {
-                        // TODO: Add code to open object file from disk.
-                        // Here be code to be done.
+                //    foreach (TreeNode node in e.Node.Nodes)
+                //    {
+                //        // TODO: Add code to open object file from disk.
+                //        // Here be code to be done.
 
 
-                        //if (node.Text != "(Heap)")
-                        //{
-                        //    string connectionString = GetConnectionString(node);
+                //        //if (node.Text != "(Heap)")
+                //        //{
+                //        //    string connectionString = GetConnectionString(node);
 
-                        //    AddIndexPageNodes(connectionString, node, databaseName, tableName, NodeName(node), 1);
-                        //}
-                    }
-                }
+                //        //    AddIndexPageNodes(connectionString, node, databaseName, tableName, NodeName(node), 1);
+                //        //}
+                //    }
+                //}
             }
 
             /// <summary>
@@ -142,23 +142,24 @@ namespace PeterHenell.SSMS.Plugins.Shell.Integration
             /// <returns></returns>
             private string GetConnectionString(TreeNode node)
             {
-                INodeInformation service = null;
-                IServiceProvider provider = node as IServiceProvider;
+                //INodeInformation service = null;
+                //IServiceProvider provider = node as IServiceProvider;
 
-                if (provider != null)
-                {
-                    service = provider.GetService(typeof(INodeInformation)) as INodeInformation;
-                }
+                //if (provider != null)
+                //{
+                //    service = provider.GetService(typeof(INodeInformation)) as INodeInformation;
+                //}
 
-                Urn urn = new Urn(service.Context);
+                //Urn urn = new Urn(service.Context);
 
-                //System.Diagnostics.Debug.Print(service.Connection.ConnectionString);
+                ////System.Diagnostics.Debug.Print(service.Connection.ConnectionString);
 
-                SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(service.Connection.ConnectionString);
+                //SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(service.Connection.ConnectionString);
 
-                builder.InitialCatalog = urn.GetAttribute("Name", "Database");
+                //builder.InitialCatalog = urn.GetAttribute("Name", "Database");
 
-                return builder.ToString();
+                //return builder.ToString();
+                throw new NotImplementedException("Hm");
             }
 
             ///// <summary>
@@ -261,21 +262,22 @@ namespace PeterHenell.SSMS.Plugins.Shell.Integration
             }
 
             // http://stackoverflow.com/questions/13999352/ssms-2012-addin-objectexplorerservice-not-available-in-ssmsaddindenali
-            public ObjectExplorerService GetObjectExplorer()
+            public IObjectExplorerService GetObjectExplorer()
             {
                 /* Microsoft.SqlServer.Management.UI.VSIntegration.ServiceCache
                  * is from SqlPackageBase.dll and not from Microsoft.SqlServer.SqlTools.VSIntegration.dll
                  * the code below just throws null exception if you have wrong reference */
 
-                //var objExplorerService = (ObjectExplorerService)ServiceCache.ServiceProvider.GetService(typeof(IObjectExplorerService));
+                var objExplorerService = (ObjectExplorerService)ServiceCache.ServiceProvider.GetService(typeof(IObjectExplorerService));
+                
 
                 ////http://sqlblog.com/blogs/jonathan_kehayias/archive/2009/08/22/sql-2008-r2-breaks-ssms-addins.aspx
-                //ObjectExplorerService objExplorerService = (ObjectExplorerService)ServiceCache.ServiceProvider.GetService(typeof(IObjectExplorerService));
+                //var objExplorerService = ServiceCache.ServiceProvider.GetService(typeof(IObjectExplorerService));
                 //// Test to get using name instead of array position
-                //ContextService cs = (ContextService)objExplorerService.Container.Components["ContextService"];
+                ContextService cs = (ContextService)objExplorerService.Container.Components["ContextService"];
 
                 // Add events to the explorerContext when it have been found
-                //cs.ObjectExplorerContext.CurrentContextChanged += new NodesChangedEventHandler(Provider_SelectionChanged);
+                cs.ObjectExplorerContext.CurrentContextChanged += new NodesChangedEventHandler(Provider_SelectionChanged);
 
                 
                 
@@ -298,6 +300,11 @@ namespace PeterHenell.SSMS.Plugins.Shell.Integration
                 //INavigationContextProvider provider = contextService.ObjectExplorerContext;
                 //provider.CurrentContextChanged += new NodesChangedEventHandler(ObjectExplorerContext_CurrentContextChanged);
                 return null;
+            }
+
+            private void Provider_SelectionChanged(object sender, NodesChangedEventArgs args)
+            {
+                Console.WriteLine(args.ChangedNodes);
             }
         }
     
