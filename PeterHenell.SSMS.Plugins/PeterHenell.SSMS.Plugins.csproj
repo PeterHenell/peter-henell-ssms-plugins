@@ -199,6 +199,7 @@
     <Compile Include="Plugins\PluginManager.cs" />
     <Compile Include="Plugins\ShellExtension\ShellExtensionPluginBase.cs" />
     <Compile Include="QueryBuilders\LambdaInsertBuilder.cs" />
+    <Compile Include="QueryBuilders\QueryBuilder.cs" />
     <Compile Include="Shell\Integration\ObjectExplorerIntegration.cs" />
     <Compile Include="Shell\Menu.cs" />
     <Compile Include="Extension.cs" />

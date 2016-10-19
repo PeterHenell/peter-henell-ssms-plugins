@@ -53,25 +53,45 @@ namespace PeterHenell.SSMS.Plugins.Shell.Integration
             //    }
             //}
 
+
+            //private TreeView GetObjectExplorerTreeView()
+            //{
+            //    //Type t = ServiceCache.GetObjectExplorer().GetType();
+
+            //    //FieldInfo field = t.GetField("tree", BindingFlags.NonPublic | BindingFlags.Instance);
+
+            //    //if (field != null)
+            //    //{
+            //    //    return (TreeView)field.GetValue(ServiceCache.GetObjectExplorer());
+            //    //}
+            //    //else
+            //    //{
+            //    //    return null;
+            //    //}
+            //    throw new NotImplementedException("All this code might work, more or less when GetObjectExplorer have been implemented");
+            //}
+
             /// <summary>
             /// Gets the object explorer tree view.
             /// </summary>
             /// <returns></returns>
-            private TreeView GetObjectExplorerTreeView()
+            public TreeView GetObjectExplorerTreeView()
             {
-                //Type t = ServiceCache.GetObjectExplorer().GetType();
-
-                //FieldInfo field = t.GetField("tree", BindingFlags.NonPublic | BindingFlags.Instance);
-
-                //if (field != null)
-                //{
-                //    return (TreeView)field.GetValue(ServiceCache.GetObjectExplorer());
-                //}
+                //var Package = IServiceProvider
+                var objectExplorerService = GetObjectExplorerService();
+                //var objectExplorerService = (IObjectExplorerService)objectExplorerService.GetService(typeof(IObjectExplorerService));
+                if (objectExplorerService != null)
+                {
+                    var oesTreeProperty = objectExplorerService.GetType().GetProperty("Tree", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.IgnoreCase);
+                    if (oesTreeProperty != null)
+                        return (TreeView)oesTreeProperty.GetValue(objectExplorerService, null);
+                    //else
+                    //    debug_message("Object Explorer Tree property not found.");
+                }
                 //else
-                //{
-                //    return null;
-                //}
-                throw new NotImplementedException("All this code might work, more or less when GetObjectExplorer have been implemented");
+                //    debug_message("objectExplorerService == null");
+
+                return null;
             }
 
             /// <summary>
@@ -81,33 +101,33 @@ namespace PeterHenell.SSMS.Plugins.Shell.Integration
             /// <param name="e">The <see cref="System.Windows.Forms.TreeViewEventArgs"/> instance containing the event data.</param>
             private void TreeView_AfterExpand(object sender, System.Windows.Forms.TreeViewEventArgs e)
             {
-                //if (e.Node.FullPath.Substring(e.Node.FullPath.LastIndexOf(@"\") + 1).StartsWith("Indexes"))
-                //{
-                //    string tableName = e.Node.Parent.Text;
-                //    int tableImageIndex = e.Node.Parent.ImageIndex;
+                if (e.Node.FullPath.Substring(e.Node.FullPath.LastIndexOf(@"\") + 1).StartsWith("Indexes"))
+                {
+                    string tableName = e.Node.Parent.Text;
+                    int tableImageIndex = e.Node.Parent.ImageIndex;
+                    
+                    string databaseName = e.Node.Parent.Parent.Parent.Text;
 
-                //    string databaseName = e.Node.Parent.Parent.Parent.Text;
+                    // Wait for the async node expand to finish or we could miss indexes
+                    while ((e.Node as HierarchyTreeNode).Expanding)
+                    {
+                        Application.DoEvents();
+                    }
 
-                //    // Wait for the async node expand to finish or we could miss indexes
-                //    while ((e.Node as HierarchyTreeNode).Expanding)
-                //    {
-                //        Application.DoEvents();
-                //    }
-
-                //    foreach (TreeNode node in e.Node.Nodes)
-                //    {
-                //        // TODO: Add code to open object file from disk.
-                //        // Here be code to be done.
+                    foreach (TreeNode node in e.Node.Nodes)
+                    {
+                        // TODO: Add code to open object file from disk.
+                        // Here be code to be done.
 
 
-                //        //if (node.Text != "(Heap)")
-                //        //{
-                //        //    string connectionString = GetConnectionString(node);
-
-                //        //    AddIndexPageNodes(connectionString, node, databaseName, tableName, NodeName(node), 1);
-                //        //}
-                //    }
-                //}
+                        //if (node.Text != "(Heap)")
+                        //{
+                        //    string connectionString = GetConnectionString(node);
+                        Console.WriteLine(node.Text);
+                        //    AddIndexPageNodes(connectionString, node, databaseName, tableName, NodeName(node), 1);
+                        //}
+                    }
+                }
             }
 
             /// <summary>
@@ -262,24 +282,26 @@ namespace PeterHenell.SSMS.Plugins.Shell.Integration
             }
 
             // http://stackoverflow.com/questions/13999352/ssms-2012-addin-objectexplorerservice-not-available-in-ssmsaddindenali
-            public IObjectExplorerService GetObjectExplorer()
+            public IObjectExplorerService GetObjectExplorerService()
             {
                 /* Microsoft.SqlServer.Management.UI.VSIntegration.ServiceCache
                  * is from SqlPackageBase.dll and not from Microsoft.SqlServer.SqlTools.VSIntegration.dll
                  * the code below just throws null exception if you have wrong reference */
 
                 var objExplorerService = (ObjectExplorerService)ServiceCache.ServiceProvider.GetService(typeof(IObjectExplorerService));
-                
+                return objExplorerService;
 
                 ////http://sqlblog.com/blogs/jonathan_kehayias/archive/2009/08/22/sql-2008-r2-breaks-ssms-addins.aspx
                 //var objExplorerService = ServiceCache.ServiceProvider.GetService(typeof(IObjectExplorerService));
                 //// Test to get using name instead of array position
-                ContextService cs = (ContextService)objExplorerService.Container.Components["ContextService"];
+                //ContextService cs = (ContextService)objExplorerService.Container.Components["ContextService"];
 
-                // Add events to the explorerContext when it have been found
-                cs.ObjectExplorerContext.CurrentContextChanged += new NodesChangedEventHandler(Provider_SelectionChanged);
+                //// Add events to the explorerContext when it have been found
+                //cs.ObjectExplorerContext.CurrentContextChanged += new NodesChangedEventHandler(Provider_SelectionChanged);
 
-                
+
+                //INavigationContextProvider provider = cs.ObjectExplorerContext;
+                //provider.ItemsRefreshed.Event += ItemsRefreshed_Event;
                 
                 //int count = objExplorerService.Container.Components.Count;
 
@@ -299,13 +321,18 @@ namespace PeterHenell.SSMS.Plugins.Shell.Integration
                 //}
                 //INavigationContextProvider provider = contextService.ObjectExplorerContext;
                 //provider.CurrentContextChanged += new NodesChangedEventHandler(ObjectExplorerContext_CurrentContextChanged);
-                return null;
+                //return null;
             }
 
-            private void Provider_SelectionChanged(object sender, NodesChangedEventArgs args)
-            {
-                Console.WriteLine(args.ChangedNodes);
-            }
+            //private void ItemsRefreshed_Event(object sender, NodesChangedEventArgs args)
+            //{
+            //    args.ChangedNodes.Add()
+            //}
+
+            //private void Provider_SelectionChanged(object sender, NodesChangedEventArgs args)
+            //{
+            //    Console.WriteLine(args.ChangedNodes);
+            //}
         }
     
 

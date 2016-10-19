@@ -17,7 +17,7 @@ namespace PeterHenell.SSMS.Plugins
     {
         private ISsmsFunctionalityProvider4 _provider4;
         private DTE2 _Dte2;
-
+        
         public static string AssemblyDirectory
         {
             get
@@ -33,11 +33,11 @@ namespace PeterHenell.SSMS.Plugins
         {
             _provider4 = (ISsmsFunctionalityProvider4)provider;
             _Dte2 = _provider4.SsmsDte2 as DTE2;
-
+            ISsmsExtendedFunctionalityProvider a;
+            
             if (_provider4 == null)
                 throw new ArgumentException();
 
-            //var ms = new MemoryStream();
             var debugWriter = new DebugTextWriter();
             Console.SetOut(debugWriter);
             

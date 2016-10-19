@@ -7,6 +7,7 @@ using System.Text;
 using PeterHenell.SSMS.Plugins.ExtensionMethods;
 using PeterHenell.SSMS.Plugins.Plugins;
 using System.Threading;
+using System.IO;
 
 namespace PeterHenell.SSMS.Plugins.Commands
 {
@@ -46,8 +47,22 @@ set rowcount 0;", numRows, selectedText);
                 });
                 if (ds.Tables.Count > 0)
                 {
-                    string output = GenerateInsertFor(ds.Tables[0]);
-                    ShellManager.AppendToEndOfSelection(output);
+                    if (ds.Tables[0].Rows.Count > 50000)
+                    {
+                        //ShellManager.ShowMessageBox("The result of this query is too large to render in SSMS. Please select a location for the script to be saved.");
+                        //var file = DialogManager.ShowSaveFileDialog("SQL files (*.sql)|*.sql|All files (*.*)|*.*");
+                        var filename = Path.GetTempFileName();
+                        using (var writer = File.CreateText(filename))
+                        {
+                            WriteInsertFor(ds.Tables[0], writer);
+                        }
+                        ShellManager.OpenFile(filename, true);
+                    }
+                    else
+                    {
+                        string output = GenerateInsertFor(ds.Tables[0]);
+                        ShellManager.AppendToEndOfSelection(output);
+                    }
                 }
                 else
                 {
@@ -64,10 +79,19 @@ set rowcount 0;", numRows, selectedText);
             sb.AppendLine("INSERT INTO ### (");
             sb.AppendColumnNameList(dataTable);
             sb.AppendLine(")");
-            sb.AppendLine("VALUES ");
-            sb.AppendListOfRows(dataTable);
-            sb.Append(";");
+            sb.AppendLine("EXEC(' ");
+            sb.AppendListOfSelects(dataTable);
+            sb.Append("');");
             return sb.ToString();
+        }
+        private void WriteInsertFor(DataTable dataTable, TextWriter writer)
+        {
+            writer.WriteLine("INSERT INTO ### (");
+            QueryBuilders.QueryBuilder.AppendColumnNameList(writer, dataTable);
+            writer.WriteLine(")");
+            writer.WriteLine("EXEC(' ");
+            QueryBuilders.QueryBuilder.AppendListOfSelects(writer, dataTable);
+            writer.WriteLine("');");
         }
 
         private void cancelCallback()

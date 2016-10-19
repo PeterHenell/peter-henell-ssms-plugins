@@ -52,32 +52,5 @@ namespace PeterHenell.SSMS.Plugins.Commands
         {
 
         }
-
-        //public string Caption { get { return "Generate Temp Tables From Selected Queries"; } }
-        //public string Tooltip { get { return "Select a query, the result will be fitted into a generated temporary table."; } }
-        //public ICommandImage Icon { get { return m_CommandImage; } }
-        //public string[] DefaultBindings { get { return new[] { "global::Ctrl+Alt+D" }; } }
-        //public bool Visible { get { return true; } }
-        //public bool Enabled { get { return true; } }
-
-        //public void Execute()
-        //{
-
-        //}
-
-        //public void SetSelectedDBNode(ObjectExplorerNodeDescriptorBase theSelectedNode)
-        //{
-        //}
-
-        //public string MenuGroup
-        //{
-        //    get { return "Data Generation"; }
-        //}
-
-        //public void Init(ISsmsFunctionalityProvider4 provider)
-        //{
-        //    this.provider = provider;
-        //    this.shellManager = new ShellManager(provider);
-        //}
     }
 }

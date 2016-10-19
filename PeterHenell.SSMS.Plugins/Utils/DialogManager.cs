@@ -89,5 +89,17 @@ namespace PeterHenell.SSMS.Plugins.Utils
 
             return new FileInfo(openFileDialog.FileName);
         }
+
+        public static FileInfo ShowSaveFileDialog(string filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*")
+        {
+            var saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            saveFileDialog.Filter = filter;
+
+            var dialogResult = saveFileDialog.ShowDialog();
+            if (dialogResult != System.Windows.Forms.DialogResult.OK)
+                return null;
+
+            return new FileInfo(saveFileDialog.FileName);
+        }
     }
 }

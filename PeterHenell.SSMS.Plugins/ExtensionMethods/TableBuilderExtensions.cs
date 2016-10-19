@@ -9,6 +9,8 @@ namespace PeterHenell.SSMS.Plugins.ExtensionMethods
 {
     public static class TableBuilderExtensions
     {
+        // this class have been deprecated.
+
         public static void AppendTableDefinitionFrom(this StringBuilder sb, DataTable metaTable, string tempTableName)
         {
             sb.AppendLine();
@@ -30,7 +32,8 @@ namespace PeterHenell.SSMS.Plugins.ExtensionMethods
             sb.AppendLine();
         }
 
-        public static void AppendDropTempTableIfExists(this StringBuilder sb, string tempTableName) {
+        public static void AppendDropTempTableIfExists(this StringBuilder sb, string tempTableName)
+        {
             sb.AppendFormat("IF OBJECT_ID('TempDB..{0}') IS NOT NULL DROP TABLE {0};", tempTableName);
         }
 
@@ -82,6 +85,24 @@ namespace PeterHenell.SSMS.Plugins.ExtensionMethods
                 }
                 sb.Append(")");
                 rowSep = ", " + Environment.NewLine;
+            }
+        }
+        public static void AppendListOfSelects(this StringBuilder sb, DataTable dataTable)
+        {
+            string rowSep = "";
+            string colSep = "";
+            foreach (DataRow row in dataTable.Rows)
+            {
+                colSep = "";
+                sb.Append(rowSep + "  SELECT ");
+                foreach (DataColumn col in dataTable.Columns)
+                {
+                    var value = GetValue(row, col).ToString().Replace("'", "''");
+                    sb.Append(colSep + value);
+                    colSep = ", ";
+                    //sb.AppendLine();
+                }
+                rowSep = Environment.NewLine;
             }
         }
         private static object GetValue(DataRow row, DataColumn col)

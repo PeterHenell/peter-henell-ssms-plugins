@@ -37,6 +37,10 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ClassLibrary2, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Elders.PowerCollections.1.0.0\lib\net45\ClassLibrary2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Excel, Version=2.1.2.3, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\ExcelDataReader.2.1.2.3\lib\net45\Excel.dll</HintPath>
@@ -74,7 +78,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommandPluginTests\DataSetCompareCommandTests\DataSetComparerTests.cs" />
     <Compile Include="CommandPluginTests\MockAllDependenciesCommandTests.cs" />
+    <Compile Include="CommandPlugin\DataSetComparer\DataSetComparer.cs" />
+    <Compile Include="CommandPlugin\DataSetComparer\DataSetComparerCommand.cs" />
+    <Compile Include="CommandPlugin\DataSetComparer\DataSetExtensions.cs" />
     <Compile Include="ShellExtensionPlugin\OpenFileOnDiskCommand.cs" />
     <Compile Include="CommandPlugin\ActualAndExpectedCommand.cs" />
     <Compile Include="CommandPlugin\DecompressResultCommand.cs" />
