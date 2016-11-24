@@ -51,5 +51,23 @@ namespace PeterHenell.SSMS.Plugins.Tests
             Console.WriteLine(res.ToString());
         }
 
+
+        [Test]
+        public void ShouldMockHierarchialIDValues()
+        {
+            // Due to bug
+            var token = new CancellationTokenSource().Token;
+            var service = new ObjectDependencyService();
+            var options = new PeterHenell.SSMS.Plugins.Utils.TsqltManager.MockOptionsDictionary();
+            options.EachColumnInSelectOnNewRow = false;
+            options.EachColumnInValuesOnNewRow = false;
+
+
+            var meta = ObjectMetadata.FromQualifiedString("REPORT.70_getShortRiskDetailed_IRT");
+            var deps = service.GetDependencies(meta, GetLocalConnection(), token);
+            
+            var res = TsqltManager.MockAllDependencies(token, options, GetLocalConnection(), deps);
+            Console.WriteLine(res.ToString());
+        }
     }
 }

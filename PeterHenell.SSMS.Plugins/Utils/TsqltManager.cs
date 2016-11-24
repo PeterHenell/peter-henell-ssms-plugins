@@ -123,6 +123,18 @@ namespace PeterHenell.SSMS.Plugins.Utils
                     case "system.decimal":
                         value = 1.0M;
                         break;
+                    case "microsoft.sqlserver.types.sqlhierarchyid":
+                        // Because we cannot know which version of the sqlTypes-assembly, we must use reflect
+                        // to get the parse method from the col.DataType and then call it with a SqlString parameter.
+                        Type type = col.DataType;
+                        System.Reflection.MethodInfo info = type.GetMethod(
+                            "Parse", 
+                            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.FlattenHierarchy);
+
+                        object v = info.Invoke(null, new object[] { new System.Data.SqlTypes.SqlString("/200/201/") });
+                        value = v;
+                        Console.WriteLine();
+                        break;
                     default:
                         value = 123;
                         break;

@@ -122,6 +122,7 @@ namespace PeterHenell.SSMS.Plugins.ExtensionMethods
                 case "system.guid":
                 case "system.datetime":
                 case "system.datetimeoffset":
+                case "microsoft.sqlserver.types.sqlhierarchyid":
                     return string.Format("'{0}'", value);
                 case "system.decimal":
                 case "system.float":
