@@ -62,14 +62,5 @@ namespace PeterHenell.SSMS.Plugins.Commands
         {
 
         }
-
-        //public string Name { get { return COMMAND_NAME; } }
-        //public string Caption { get { return "Execute and save result as Excel"; } }
-        //public string Tooltip { get { return "Executes and saves the result of the selected command as an Excel file"; } }
-        //public ICommandImage Icon { get { return m_CommandImage; } }
-        //public string[] DefaultBindings { get { return new[] { "global::Ctrl+Alt+E" }; } }
-        //public bool Visible { get { return true; } }
-        //public bool Enabled { get { return true; } }
-
     }
 }

@@ -83,6 +83,7 @@
     <Compile Include="CommandPlugin\DataSetComparer\DataSetComparer.cs" />
     <Compile Include="CommandPlugin\DataSetComparer\DataSetComparerCommand.cs" />
     <Compile Include="CommandPlugin\DataSetComparer\DataSetExtensions.cs" />
+    <Compile Include="CommandPlugin\ForEachRowTemplateCommand.cs" />
     <Compile Include="ShellExtensionPlugin\OpenFileOnDiskCommand.cs" />
     <Compile Include="CommandPlugin\ActualAndExpectedCommand.cs" />
     <Compile Include="CommandPlugin\DecompressResultCommand.cs" />

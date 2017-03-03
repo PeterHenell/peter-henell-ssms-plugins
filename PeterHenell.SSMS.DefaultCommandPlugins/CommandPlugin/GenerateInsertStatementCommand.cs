@@ -55,6 +55,7 @@ set rowcount 0;", numRows, selectedText);
                         using (var writer = File.CreateText(filename))
                         {
                             WriteInsertFor(ds.Tables[0], writer);
+                            writer.Flush();
                         }
                         ShellManager.OpenFile(filename, true);
                     }
