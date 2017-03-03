@@ -1,0 +1,3 @@
+[submodule "MSSQLDataSetTools"]
+	path = MSSQLDataSetTools
+	url = git@github.com:PeterHenell/MSSQLDataSetTools.git
